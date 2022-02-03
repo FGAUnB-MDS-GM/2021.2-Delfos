@@ -23,12 +23,12 @@ Principais caracteristicas:
 
 Entregas:
 Unidade 1:
-(Documento do arquivo)[https://docs.google.com/document/d/1HR7rtHgrEGjItuvbkPORHD0XW5b7364EYPoJ9nsxj6I/edit?usp=sharing]
-(Slide Descritivo[])
+[Documento do arquivo](https://docs.google.com/document/d/1HR7rtHgrEGjItuvbkPORHD0XW5b7364EYPoJ9nsxj6I/edit?usp=sharing)
+[Slide Descritivo]()
 
 Links úteis:
 
-- (Figma)[https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1]
+- [Figma](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
 
  #26/01/22 Criação do Git e Readme
  #03/02/22 Atualização do Readme
