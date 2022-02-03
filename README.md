@@ -23,7 +23,7 @@ Principais caracteristicas:
 
 Entregas:
 Unidade 1:
-[Documento do arquivo](https://docs.google.com/document/d/1HR7rtHgrEGjItuvbkPORHD0XW5b7364EYPoJ9nsxj6I/edit?usp=sharing)
+[Documento do arquivo](https://docs.google.com/document/d/1HR7rtHgrEGjItuvbkPORHD0XW5b7364EYPoJ9nsxj6I/edit?usp=sharing) e 
 [Slide Descritivo]()
 
 Links úteis:
