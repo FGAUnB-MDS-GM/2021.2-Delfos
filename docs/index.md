@@ -1,3 +1,15 @@
+# O Projeto
+
+## Versão 1.0
+
+## Autores
+
+### - João Ricardo Firmino de Almeida
+### - Nicolas Roberto de Queiroz
+### - Rafael Xavier Canabrava
+### - Renann de Oliveira Gomes
+### - Tiago Leão Buson
+
 # Visão Geral do produto {#header}
 
 ## Declarção do problema
