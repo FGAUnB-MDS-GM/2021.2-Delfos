@@ -1,11 +1,13 @@
 # 2021.2-Delfos
 
 ## Equipe:
- - João Ricardo Firmino de Almeida
- - Nicolas Roberto de Queiroz
- - Rafael Xavier Canabrava
- - Renann de Oliveira Gomes
- - Tiago Leão Buson
+| Nome                          | Matrícula        |
+|:-----------------------------:|:----------------:|
+|João Ricardo Firmino de Almeida| 190046562        |
+|Nicolas Roberto de Queiroz     | 200042360        |
+|Rafael Xavier Canabrava        | 200026551        |
+|Renann de Oliveira Gomes       | 200043030        |
+|Tiago Leão Buson               | 200034162        |
 
 
 ## Sobre o Projeto:
