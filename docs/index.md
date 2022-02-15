@@ -39,6 +39,36 @@
 
 Organizar tarefas diárias, de forma que o usuário tenha uma visão clara das tarefas colocadas no aplicativo, com a possibilidade de adicionar e separar tarefas em contexto ou grupos. Existirá também a funcionalidade de lembretes e a opção de adicionar um widget na tela inicial, melhorando a acessibilidade ao aplicativo. Sendo essencial manter o aplicativo leve e fazer que não dependa de conexão com a internet para desempenhar suas principais funções
 
+## Escopo do produto
+
+### Requisitos Funcionais
+
+- A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação ou um alarme sobre determinada atividade
+- Deverá ser possível agrupar atividades 
+- Um calendário estará disponível para que em cada dia possam ser adicionados grupos de atividades
+- Uma atividade pode ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
+
+| Requisitos Funcionais	                                                                                                                           | Prioridade |
+|-------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação ou um alarme sobre determinada atividade | Alta       |
+| Deverá ser possível agrupar atividades                                                                                                          | Baixa      |
+| Um calendário estará disponível para que em cada dia possam ser adicionados grupos de atividades.                                               | Média      |
+| Uma atividade pode ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)  | Alta       |
+
+### Requisitos Não-funcionais
+
+- O app não precisará de conexão com a internet para funcionar
+- Haverá disponibilidade tanto para sistemas Android quanto para IOS
+- Ocupará no máximo 500 mb de  memória do dispositivo
+- O app terá um widget para que fique destacado na área de trabalho
+
+| Classificação  | Requisitos Não-funcionais                                          |
+|----------------|--------------------------------------------------------------------|
+| Produto        | O app não precisará de conexão com a internet para funcionar       |
+| Suporte        | Haverá disponibilidade tanto para sistemas Android quanto para IOS |
+| Armazenamento  | Ocupará no máximo 500 mb de  memória do dispositivo                |
+| Funcionalidade | O app terá um widget para que fique destacado na área de trabalho  |
+
 # Abordagem de desenvolvimento de software
 
 ## Metodologia
@@ -77,7 +107,7 @@ A comunicação do time será efetuada através do whatsapp, e o gerenciamento d
 
 ## Unidade 1
 
-Lições aprendidas na unidade 1
+Aprendemos nessa unidade diversas maneiras de abordar o desenvolvimento de um projeto, além de como escolher qual forma é a mais adequada para o projeto que escolhemos, dependendo do escopo do projeto e da complexidade do mesmo.
 
 ## Unidade 2
 
