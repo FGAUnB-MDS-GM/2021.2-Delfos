@@ -16,12 +16,12 @@
 
 ## Unidade 1
 
-### [Documento de Visão do Produto e do Projeto](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade1)
-### [Vídeo de Apresentação](https://www.youtube.com/watch?v=jTiSDy7NduE&ab_channel=NicolasRoberto "Link do Youtube")
+[Documento de Visão do Produto e do Projeto](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade1)
+[Vídeo de Apresentação](https://www.youtube.com/watch?v=jTiSDy7NduE&ab_channel=NicolasRoberto "Link do Youtube")
 
 ## Unidade 2
 
-### [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade2)
+[Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade2)
 
 ## Unidade 3
 
