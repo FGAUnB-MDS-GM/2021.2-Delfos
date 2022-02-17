@@ -6,7 +6,7 @@ theme: jekyll-theme-architect
 
 # O Projeto
 
-## Versão 2.0
+## Versão 2.1
 
 ## Autores
 
@@ -49,17 +49,32 @@ Organizar tarefas diárias, de forma que o usuário tenha uma visão clara das t
 
 ### Requisitos Funcionais
 
-- A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação ou um alarme sobre determinada atividade
+- A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação sobre determinada atividade
 - Deverá ser possível agrupar atividades 
-- Um calendário estará disponível para que em cada dia possam ser adicionados grupos de atividades
-- Uma atividade pode ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
+- Um calendário estará disponível para que em cada dia possam ser adicionadas atividades
+- Uma atividade poderá ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
+- A aplicação deverá ter um filtro de atividades
+- A aplicação deverá realizar os CRUDs de atividade
+- O usuário poderá escolher quantas vezes será emitida uma notificação
+- O usuário poderá selecionar a data de início e término de uma atividade
 
-| Requisitos Funcionais	                                                                                                                           | Prioridade |
-|-------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação ou um alarme sobre determinada atividade | Alta       |
-| Deverá ser possível agrupar atividades                                                                                                          | Baixa      |
-| Um calendário estará disponível para que em cada dia possam ser adicionados grupos de atividades.                                               | Média      |
-| Uma atividade pode ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)  | Alta       |
+
+| Requisitos Funcionais	                                                                                                                            | Prioridade |
+|--------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação sobre determinada atividade               | Alta       |
+| Deverá ser possível agrupar atividades                                                                                                           | Baixa      |
+| Um calendário estará disponível para que em cada dia possam ser adicionadas atividades.                                                          | Média      |
+| Uma atividade poderá ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda) | Alta       |
+| A aplicação deverá ter um filtro de atividades                                                                                                   | Baixa      |
+| A aplicação deverá realizar os CRUDs de atividade                                                                                                | Alta       |
+| O usuário poderá escolher quantas vezes será emitida uma notificação                                                                             | Baixa      |
+| O usuário poderá selecionar a data de início e término de uma atividade                                                                          | Baixa      |
+
+Prioridades:
+  - Alta - Funcionalidade básica e essencial para o sistema
+  - Média - Funcionalidade importante
+  - Baixa - Funcionalidade desejável e complementar ao sistema
+
 
 ### Requisitos Não-funcionais
 
@@ -67,13 +82,20 @@ Organizar tarefas diárias, de forma que o usuário tenha uma visão clara das t
 - Haverá disponibilidade tanto para sistemas Android quanto para IOS
 - Ocupará no máximo 500 mb de  memória do dispositivo
 - O app terá um widget para que fique destacado na área de trabalho
+- O app deve ser desenvolvido em react-native
+- O versionamento do app deve ser feito pelo GitHub
+- A aplicação deve ser documentada através do GitPages
+
 
 | Classificação  | Requisitos Não-funcionais                                          |
 |----------------|--------------------------------------------------------------------|
 | Produto        | O app não precisará de conexão com a internet para funcionar       |
-| Suporte        | Haverá disponibilidade tanto para sistemas Android quanto para IOS |
-| Armazenamento  | Ocupará no máximo 500 mb de  memória do dispositivo                |
-| Funcionalidade | O app terá um widget para que fique destacado na área de trabalho  |
+| Organizacional | Haverá disponibilidade tanto para sistemas Android quanto para IOS |
+| Produto        | Ocupará no máximo 500 mb de  memória do dispositivo                |
+| Produto        | O app terá um widget para que fique destacado na área de trabalho  |
+| Organizacional | O app deve ser desenvolvido em react-native                        |
+| Organizacional | O versionamento do app deve ser feito pelo GitHub                  |
+| Organizacional | A aplicação deve ser documentada através do GitPages               |
 
 # Abordagem de desenvolvimento de software
 
@@ -138,3 +160,5 @@ Lições aprendidas na unidade 5
 # [Video de apresentação](https://www.youtube.com/watch?v=jTiSDy7NduE&ab_channel=NicolasRoberto "Link do Youtube")
 
 [Voltar ao inicio](#header)
+
+[Voltar à página inicial](https://fgaunb-mds-gm.github.io/2021.2-Delfos/)
