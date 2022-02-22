@@ -18,7 +18,7 @@ export const Header = styled.View`
 `;
 
 export const ButtonGroups = styled.View`
-  width: 30px
+  width: 30px;
   margin-left: 10px;
   justify-content: center;
 `;
@@ -52,7 +52,7 @@ export const Title = styled.Text`
 
 export const Search = styled.View`
   width: 100%;
-  margin: 10px 
+  margin: 10px ;
   flex-direction: row;
 
   align-items: center;
@@ -93,3 +93,4 @@ export const ButtonAddTodo = styled(RectButton)`
 `;
 
 export const Content = styled.View``;
+

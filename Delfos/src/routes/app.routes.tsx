@@ -2,23 +2,47 @@ import React from "react";
 import { Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components';
 
 import { Home } from "../screens/Home";
 import { OneTimeFilter } from "../screens/OneTimeFilter";
 import { SemanalFilter } from "../screens/SemanalFilter";
 import { BackgroundLinear } from "../components/BackgroundLinear";
+import { AddTodo } from "../screens/AddTodo";
 
 export type AppRoutesParamList = {
   Home: undefined;
   OneTimeFilter: undefined;
   SemanalFilter: undefined;
+  AddTodo: undefined;
+  TabRoutes: undefined;
 };
 
-const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>();
+export function AppRoutes(){
+  
+  const { Navigator, Screen } = createNativeStackNavigator<AppRoutesParamList>();
 
-export function AppRoutes() {
+  return (
+    <Navigator>
+      <Screen
+        name="TabRoutes"
+        component={TabRoutes}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="AddTodo"
+        component={AddTodo}
+        options={{ headerShown: false }}
+      />
+    </Navigator>
+  );
+}
+
+export function TabRoutes() {
+
   const theme = useTheme();
+  const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>();
 
   return (
     <Navigator
@@ -76,3 +100,4 @@ export function AppRoutes() {
     </Navigator>
   );
 }
+

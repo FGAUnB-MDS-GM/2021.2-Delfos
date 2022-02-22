@@ -1,12 +1,13 @@
 import React, { ReactNode } from "react";
-import { LinearGradient } from "expo-linear-gradient";
+import { LinearGradientProps } from "expo-linear-gradient";
 import theme from '../../global/theme';
 import { LinearGradientColor } from './styles';
 import { View } from "react-native";
 
-type Props = {
+
+interface Props {
   children?: ReactNode;
-  type?: "secondary",
+  type?: "secondary";
 }
 
 export function BackgroundLinear({ children, type }: Props) {

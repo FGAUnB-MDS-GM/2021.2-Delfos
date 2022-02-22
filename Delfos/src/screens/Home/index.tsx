@@ -16,17 +16,19 @@ import {
   ButtonAddTodo,
   TitleBox,
   Content,
-
 } from './styles';
+
 import { BackgroundLinear } from "../../components/BackgroundLinear";
 import { MenuButton } from "../../components/MenuButton";
 import { SearchButton } from "../../components/SearchButton";
 import { Alert } from "react-native";
 import { TodoCard } from "../../components/TodoCard";
+import { useNavigation } from "@react-navigation/native";
 
 
 export function Home() {
   const theme = useTheme();
+  const { navigate } =useNavigation();
 
   function handleOpenModalGrupos() {
     Alert.alert("abrir modal")
@@ -46,6 +48,7 @@ export function Home() {
   function handleAdd(){
     Alert.alert("Adicionar um Todo para fazer")
     /* aidicona um todo e deve encaminhar para telade criação de ToDo*/
+    navigate('AddTodo');
 
   }
   return (
@@ -77,7 +80,7 @@ export function Home() {
         </BackgroundLinear>
 
         <Listagem>
-          <TodoCard onPress={handleTest} />
+          <TodoCard onPress={handleTest} name="Aula de Geografia"/>
         </Listagem>
       </Content>
       <Footer>

@@ -7,6 +7,8 @@ export default {
     text: '#000000',
     text_light: '#DCDCDC',
     white: '#FFFFFF',
+    success: '#34E430',
+    cancel: '#EB3838',
   },
 
   fonts: {

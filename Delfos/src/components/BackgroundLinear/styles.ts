@@ -1,5 +1,11 @@
 import styled from "styled-components/native";
-import { LinearGradient } from "expo-linear-gradient";
+import { LinearGradient, LinearGradientProps } from "expo-linear-gradient";
+import { ReactNode } from "react";
+
+interface Props extends LinearGradientProps {
+  children?: ReactNode;
+  type?: "secondary",
+}
 
 export const LinearGradientColor = styled(LinearGradient).attrs({
   style: {
@@ -7,4 +13,5 @@ export const LinearGradientColor = styled(LinearGradient).attrs({
   },
 })`
   border-radius: 10px;
+  margin-bottom: 10px;
 `;

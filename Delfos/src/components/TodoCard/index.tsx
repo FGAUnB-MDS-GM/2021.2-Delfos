@@ -15,15 +15,18 @@ import {
   Details,
 } from './styles';
 
+interface Props extends RectButtonProps {
+  name?: string;
+}
 
-export function TodoCard({ ...rest }: RectButtonProps) {
+export function TodoCard({ name, ...rest }: Props) {
   const theme = useTheme()
 
   return (
     <BackgroundLinear>
       <Container>
         <ToDo>
-          Aula de Métodos
+          {name}
         </ToDo>
         <Details>
           <DatesAndHour>
