@@ -104,6 +104,8 @@ export const FinalButton = styled.View`
 
   align-items: center;
   justify-content: space-between;
+
+  padding: 10px 10px;
 `;
 export const CancelButton = styled(RectButton)`
   width: 100px;
@@ -127,9 +129,12 @@ export const ConfirmButton = styled(RectButton)`
 `;
 
 export const InputTime = styled.View`
+
+  height: 60px;
+
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 export const InputTimeText = styled.TextInput.attrs({
@@ -138,10 +143,17 @@ export const InputTimeText = styled.TextInput.attrs({
   maxLength: 2,
   })`
 
+  text-align: center;
 
+  width: 50px;
   color: ${({ theme }) => theme.colors.text};
   font-family: ${({theme})=> theme.fonts.text};
-  font-size: 20px;
+  font-size: 30px;
+`;
 
-  padding: 5px 10px;
+export const WeekDaySelectBox = styled.View`
+  height: 55px;
+
+  justify-content: center;
+  align-items: center;
 `;

@@ -12,6 +12,8 @@ import Constants from 'expo-constants';
 import { BackgroundLinear } from "../../components/BackgroundLinear";
 import { MenuButton } from "../../components/MenuButton";
 import { TodoCard } from "../../components/TodoCard";
+import { WeekDayButton } from "../../components/WeekDayButton";
+
 import {
   Calendar,
   DayProps,
@@ -36,11 +38,13 @@ import {
   ConfirmButton,
   InputTime,
   InputTimeText,
+  WeekDaySelectBox,
 
 } from './styles';
 import { RectButtonProps } from "react-native-gesture-handler";
 import theme from "../../global/theme";
 import { useNavigation } from "@react-navigation/native";
+import { setWeek } from "date-fns/esm";
 
 interface RentalPeriod {
   startFormatted: string;
@@ -334,6 +338,11 @@ export function AddTodo() {
     }
   }
 
+  function handleSetWeekDay(weekDay: number){
+    setWeekDay(weekDay)
+    console.log(weekDay)
+  }
+
   async function handleCancel() {
     Alert.alert('Cancelamento', 'Cancelamento feito com sucesso');
     await Notifications.cancelAllScheduledNotificationsAsync();
@@ -442,10 +451,6 @@ export function AddTodo() {
       </BackgroundLinear>
 
       <Listagem>
-        <Calendar
-          markedDates={markedDates}
-          onDayPress={handleChangeDate}
-        />
         <BackgroundLinear type="secondary">
           <InputTime>
 
@@ -456,7 +461,7 @@ export function AddTodo() {
             {
               withEnd &&
               <>
-                <TextButton style={{ fontSize: 15 }}>até</TextButton>
+                <TextButton style={{ fontSize: 15, margin: 10 }}>até</TextButton>
 
                 <InputTimeText onChangeText={setEndHour} />
                 <TextButton style={{ fontSize: 15 }}> : </TextButton>
@@ -472,6 +477,22 @@ export function AddTodo() {
             numberOfLines={1}
             onChangeText={setMessage}
           />
+        </BackgroundLinear>
+
+        <BackgroundLinear>
+          <GestureHandlerRootView>
+            <ToggleButton
+              isActive={withEnd}
+              onPress={handleWithEndButton}
+            >
+              <TextButton>Tempo para encerrar</TextButton>
+              <Feather
+                name={withEnd ? "toggle-right" : "toggle-left"}
+                size={30}
+                color={withEnd ? theme.colors.secondary : theme.colors.white}
+              />
+            </ToggleButton>
+          </GestureHandlerRootView>
         </BackgroundLinear>
 
         <BackgroundLinear>
@@ -522,59 +543,37 @@ export function AddTodo() {
           </GestureHandlerRootView>
         </BackgroundLinear>
 
-        <BackgroundLinear>
-          <GestureHandlerRootView>
-            <ToggleButton
-              isActive={withEnd}
-              onPress={handleWithEndButton}
-            >
-              <TextButton>Hora para acabar?</TextButton>
-              <Feather
-                name={withEnd ? "toggle-right" : "toggle-left"}
-                size={30}
-                color={withEnd ? theme.colors.secondary : theme.colors.white}
-              />
-            </ToggleButton>
-          </GestureHandlerRootView>
-        </BackgroundLinear>
+        {
+          weekly && 
+          <BackgroundLinear>
+            <WeekDaySelectBox>
+              <WeekDayButton setWeekDay={handleSetWeekDay}/>
+            </WeekDaySelectBox>
+          </BackgroundLinear>
+        }
 
-        <BackgroundLinear>
-          <GestureHandlerRootView>
-            <ToggleButton
-              isActive={notificationButton}
-              onPress={handleNotificationButton}
-            >
-              <TextButton>Notificação</TextButton>
-              <Feather
-                name={notificationButton ? "toggle-right" : "toggle-left"}
-                size={30}
-                color={notificationButton ? theme.colors.secondary : theme.colors.white}
-              />
-            </ToggleButton>
-          </GestureHandlerRootView>
-        </BackgroundLinear>
-
-        <FinalButton>
-          <GestureHandlerRootView>
-            <CancelButton onPress={handleCancel}>
-              <Feather
-                name="x"
-                color={theme.colors.white}
-                size={30}
-              />
-            </CancelButton>
-          </GestureHandlerRootView>
-          <GestureHandlerRootView>
-            <ConfirmButton onPress={handleConfirm}>
-              <Feather
-                name="check"
-                color={theme.colors.white}
-                size={30}
-              />
-            </ConfirmButton>
-          </GestureHandlerRootView>
-        </FinalButton>
       </Listagem>
+
+      <FinalButton>
+        <GestureHandlerRootView>
+          <CancelButton onPress={handleCancel}>
+            <Feather
+              name="x"
+              color={theme.colors.white}
+              size={30}
+            />
+          </CancelButton>
+        </GestureHandlerRootView>
+        <GestureHandlerRootView>
+          <ConfirmButton onPress={handleConfirm}>
+            <Feather
+              name="check"
+              color={theme.colors.white}
+              size={30}
+            />
+          </ConfirmButton>
+        </GestureHandlerRootView>
+      </FinalButton>
     </Container>
   );
 }
