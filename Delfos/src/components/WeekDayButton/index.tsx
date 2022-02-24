@@ -17,19 +17,30 @@ const days = [
 
 interface Props extends RectButtonProps {
   setWeekDay: (weekDay: number) => void;
+  weekDaySelected: number
 }
 
 const eu = days.indexOf("D")
 
-export function WeekDayButton({setWeekDay, ...rest}: Props) {
+export function WeekDayButton({ weekDaySelected, setWeekDay, ...rest }: Props) {
   return (
     <Container>
       {days.map(item => (
         <WeekDayView key={item.toString()}>
           <GestureHandlerRootView>
-            <WeekDay onPress={()=> setWeekDay(days.indexOf(item)+1)} {...rest}>
+            <WeekDay
+              onPress={() => setWeekDay(days.indexOf(item) + 1)}
+              weekDaySelected={weekDaySelected}
+              itemIndex={days.indexOf(item) + 1}
+              {...rest}
+            >
 
-              <WeekDayText>{item}</WeekDayText>
+              <WeekDayText
+                weekDaySelected={weekDaySelected}
+                itemIndex={days.indexOf(item) + 1}
+              >
+                {item}
+              </WeekDayText>
 
             </WeekDay>
           </GestureHandlerRootView>

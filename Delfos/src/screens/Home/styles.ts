@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
-import { TextInput, TextInputProps } from 'react-native';
+import {FlatListProps, FlatList, TextInput, TextInputProps } from 'react-native';
 import theme from '../../global/theme';
 import { RectButton } from 'react-native-gesture-handler';
+import { NotificationRequest } from "expo-notifications";
 
 export const Container = styled.View`
   justify-content: space-between;
@@ -72,10 +73,11 @@ export const SearchInput = styled(TextInput).attrs({
     border-right-width: 2px;
 `;
 
-export const Listagem = styled.View`
-  padding: 10px;
-
-`;
+export const Listagem = styled(FlatList as new (props: FlatListProps<NotificationRequest>)=> FlatList<NotificationRequest>).attrs({
+  contentContainerStyle:{
+    padding: 10,
+  }
+})``;
 
 export const Footer = styled.View`
 

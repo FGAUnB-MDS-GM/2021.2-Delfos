@@ -6,7 +6,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { PermissionStatus } from 'expo-modules-core';
 import * as Notifications from 'expo-notifications';
-import { Notification } from 'expo-notifications';
 import Constants from 'expo-constants';
 
 import { BackgroundLinear } from "../../components/BackgroundLinear";
@@ -55,6 +54,11 @@ interface ToggleButton extends RectButtonProps {
   isActive: boolean
 }
 
+interface idAlarms {
+  id: string;
+  checked: boolean;
+}
+
 //setando o padrão de notificações 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -72,6 +76,8 @@ export function AddTodo() {
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
+  //Usar asyncStorege para salvar esse Array
+  const [idAlarms, setIdAlarms] = useState<idAlarms[]>([]);
 
 
   useEffect(() => {
@@ -126,7 +132,7 @@ export function AddTodo() {
   }
 
   async function scheduleNotificationSecond(message: string, repeat: boolean, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-    await Notifications.scheduleNotificationAsync({
+    const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Delfos te lembrou!!",
         body: message,
@@ -137,8 +143,11 @@ export function AddTodo() {
       },
     });
 
+    setIdAlarms(rest=> [...rest, {id, checked: false}]);
+    
+
     if (endMinute != null && endHour != null) {
-      await Notifications.scheduleNotificationAsync({
+      const id = await Notifications.scheduleNotificationAsync({
         content: {
           title: "Delfos te lembrou!!",
           body: `ENCERRAMENTO ${message}`,
@@ -149,11 +158,13 @@ export function AddTodo() {
         },
       });
     }
+
+    console.log(idAlarms)
   }
 
   async function scheduleNotificationWeekly(message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
 
-    await Notifications.scheduleNotificationAsync({
+    const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Delfos te lembrou!!",
         body: message,
@@ -165,6 +176,8 @@ export function AddTodo() {
         repeats: true,
       },
     });
+
+
     if (endMinute != null && endHour != null) {
       await Notifications.scheduleNotificationAsync({
         content: {
@@ -316,6 +329,7 @@ export function AddTodo() {
       console.log('weekly true')
     } else {
       setWeekly(false);
+      setWeekDay(0);
       console.log('weekly false')
     }
   }
@@ -338,7 +352,7 @@ export function AddTodo() {
     }
   }
 
-  function handleSetWeekDay(weekDay: number){
+  function handleSetWeekDay(weekDay: number) {
     setWeekDay(weekDay)
     console.log(weekDay)
   }
@@ -346,11 +360,12 @@ export function AddTodo() {
   async function handleCancel() {
     Alert.alert('Cancelamento', 'Cancelamento feito com sucesso');
     await Notifications.cancelAllScheduledNotificationsAsync();
-    alarmesSetados();
+    //alarmesSetados();
+    //console.log(idAlarms)
 
   }
 
-  function handleConfirm() {
+  async function handleConfirm() {
     Alert.alert('Confirmado', 'Todo anotado com sucesso');
     //setAlarm();
     const startHourNumber = Number.parseInt(startHour);
@@ -381,7 +396,8 @@ export function AddTodo() {
       let hour = startHourNumber - new Date().getHours();
       let minute = startMinuteNumber - new Date().getMinutes();
 
-
+      //lógica para pegar o intervalo de tempo entre o tempo atual e o 
+      // tempo que foi setado pelo usuário
       if (hour == 0) {
         if (minute < 0) {
           hour = 23 + hour
@@ -400,6 +416,12 @@ export function AddTodo() {
         }
       }
 
+      if (minute < 0) {
+        minute = 60 + minute
+        hour = hour - 1
+      }
+
+      //mesma lógica anterior, contudo agora aplicada para o horário de encerramento
       let hourEnd = endHourNumber - new Date().getHours();
       let minuteEnd = endMinuteNumber - new Date().getMinutes();
 
@@ -423,7 +445,8 @@ export function AddTodo() {
 
       console.log(hour, minute);
 
-      scheduleNotificationSecond(message, repeat, minute, hour, minuteEnd, hourEnd);
+      await scheduleNotificationSecond(message, repeat, minute, hour);
+      
     }
   }
 
@@ -544,10 +567,10 @@ export function AddTodo() {
         </BackgroundLinear>
 
         {
-          weekly && 
+          weekly &&
           <BackgroundLinear>
             <WeekDaySelectBox>
-              <WeekDayButton setWeekDay={handleSetWeekDay}/>
+              <WeekDayButton setWeekDay={handleSetWeekDay} weekDaySelected={weekDay} />
             </WeekDaySelectBox>
           </BackgroundLinear>
         }
