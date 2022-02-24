@@ -6,7 +6,8 @@ theme: jekyll-theme-architect
 
 # O Projeto
 
-## Versão 2.1
+## Versão 0.12
+[Template do documento](https://docs.google.com/document/d/19BKNKYkIJTsT76UW47YChdQIxYEuyy6_r2m8N6qFm7M/edit#)
 
 ## Autores
 
@@ -20,11 +21,11 @@ theme: jekyll-theme-architect
 
 ## Declarção do problema
 
-| O problema | Desorganização |
-| ----------- | ----------- |
-| Afeta      | Qualquer pessoa que deseje lembrar de algo no futuro. |
-| Cujo impacto é | Não lembrar de algo que pode gerar descumprimento do planejamento, acúmulo de atividades e o efeito “bola de neve”. |
-| Uma solução de sucesso seria | Salvar lembretes com alguma mensagem escolhida pelo usuário e alerta-lo no horário desejado. |
+| O problema                   | É o descomprimento de atividades planejadas.                                                                                                    |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| Afeta                        | Alunos e professores.                                                                                                                           |
+| Cujo impacto é               | O descumprimento de uma ou mais atividades previamente planejada, levando a diminuição do rendimento ou a um completo fracasso com a atividade. |
+| Uma solução de sucesso seria | Salvar lembretes com alguma mensagem escolhida pelo usuário e alerta-lo no horário desejado.                                                    |
 
 ## Declaração de posição de produto
 
@@ -33,7 +34,7 @@ theme: jekyll-theme-architect
 3. **Quem são os usuários-alvo e clientes do produto?** Qualquer pessoa com interesse em ferramentas de organização, desde estudantes até pessoas com compromissos diversificados.
 4. **Por que os clientes deveriam utilizar / comprar este produto?** Por ter uma interface intuitiva facilitando o uso, além dos lembretes em notificações por push, assim tornando muito mais prática a organização de listas, tarefas ou compromissos.
 
-| Para                | Pessoas com interesse em organização pessoal                                                                         |
+| Para                | Alunos e professores.                                                                         |
 |---------------------|----------------------------------------------------------------------------------------------------------------------|
 | Quem                | Deseja se organizar melhor ou que esqueça facilmente de seus afazeres                                                |
 | O (nome do produto) | O Delfos                                                                                                             |
@@ -43,32 +44,32 @@ theme: jekyll-theme-architect
 
 ## Objetivos do produto
 
-Organizar tarefas diárias, de forma que o usuário tenha uma visão clara das tarefas colocadas no aplicativo, com a possibilidade de adicionar e separar tarefas em contexto ou grupos. Existirá também a funcionalidade de lembretes e a opção de adicionar um widget na tela inicial, melhorando a acessibilidade ao aplicativo. Sendo essencial manter o aplicativo leve e fazer que não dependa de conexão com a internet para desempenhar suas principais funções
+De maneira intuitiva proporcionar ao cliente uma forma de se organizar e se lembrar de todas as suas atividades planejadas.
 
 ## Escopo do produto
 
 ### Requisitos Funcionais
 
-- A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação sobre determinada atividade
-- Deverá ser possível agrupar atividades 
-- Um calendário estará disponível para que em cada dia possam ser adicionadas atividades
-- Uma atividade poderá ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
-- A aplicação deverá ter um filtro de atividades
-- A aplicação deverá realizar os CRUDs de atividade
-- O usuário poderá escolher quantas vezes será emitida uma notificação
-- O usuário poderá selecionar a data de início e término de uma atividade
+- Deverá ser possível criar atividades
+- Deverá ser possível deletar atividades
+- Deverá ser possível editar atividades
+- Deverá ser possível buscar e filtrar atividades
+- Deverá ser possível configurar um horário no qual será emitida uma notificação sobre determinada atividade
+- Deverá ser possível agrupar atividades
+- Deverá haver um calendário para que em cada dia possam ser adicionadas atividades
+- Deverá ser possível configurar atividades para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
 
 
-| Requisitos Funcionais	                                                                                                                            | Prioridade |
-|--------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| A aplicação deverá ter a opção de que seja configurado um horário no qual será emitida uma notificação sobre determinada atividade               | Alta       |
-| Deverá ser possível agrupar atividades                                                                                                           | Baixa      |
-| Um calendário estará disponível para que em cada dia possam ser adicionadas atividades.                                                          | Média      |
-| Uma atividade poderá ser configurada para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda) | Alta       |
-| A aplicação deverá ter um filtro de atividades                                                                                                   | Baixa      |
-| A aplicação deverá realizar os CRUDs de atividade                                                                                                | Alta       |
-| O usuário poderá escolher quantas vezes será emitida uma notificação                                                                             | Baixa      |
-| O usuário poderá selecionar a data de início e término de uma atividade                                                                          | Baixa      |
+
+| N°  | Requisitos Funcionais	                                                             | Prioridade |
+|-----|-----------------------------------------------------------------------------------|------------|
+| RF1 | Deverá ser possível cadastrar atividades                                          | Alta       |
+| RF2 | Deverá ser possível deletar atividades                                            | Alta       |
+| RF3 | Deverá ser possível editar atividades                                             | Alta       |
+| RF4 | Deverá ser possível visualizar atividades                                         | Alta       |
+| RF5 | Deverá ser possível filtrar atividades                                            | Média      |
+| RF6 | Deverá ser possível agrupar atividades                                            | Média      |
+| RF7 | Deverá haver um calendário para que em cada dia possam ser adicionadas atividades | Baixa      |
 
 Prioridades:
   - Alta - Funcionalidade básica e essencial para o sistema
@@ -87,23 +88,30 @@ Prioridades:
 - A aplicação deve ser documentada através do GitPages
 
 
-| Classificação  | Requisitos Não-funcionais                                          |
-|----------------|--------------------------------------------------------------------|
-| Produto        | O app não precisará de conexão com a internet para funcionar       |
-| Organizacional | Haverá disponibilidade tanto para sistemas Android quanto para IOS |
-| Produto        | Ocupará no máximo 500 mb de  memória do dispositivo                |
-| Produto        | O app terá um widget para que fique destacado na área de trabalho  |
-| Organizacional | O app deve ser desenvolvido em react-native                        |
-| Organizacional | O versionamento do app deve ser feito pelo GitHub                  |
-| Organizacional | A aplicação deve ser documentada através do GitPages               |
+| Classificação  | Requisitos Não-funcionais                                          | Prioridade |
+|----------------|--------------------------------------------------------------------|------------|
+|  Implementação | A aplicação deve ser documentada através do GitPages               | Alta       |
+| Implementação  | O app deve ser desenvolvido em react-native                        | Alta       |
+| Implementação  | O versionamento do app deve ser feito pelo GitHub                  | Alta       |
+| Portabilidade  | Haverá disponibilidade tanto para sistemas Android quanto para IOS | Alta       |
+|  Produto       | Ocupará no máximo 500 mb de  memória do dispositivo                | Média      |
+| Usabilidade    | O app não precisará de conexão com a internet para funcionar       | Média      |
+| Funcionalidade | O app terá um widget para que fique destacado na área de trabalho  | Baixa      |
+
+## Mínimo Produto Viável (MVP)
+
+[Link Canvas MVP 1](https://miro.com/app/board/uXjVOK02Oh0=/)
 
 # Abordagem de desenvolvimento de software
 
 ## Metodologia
 
 Levando em consideração os prazos já existentes da matéria e os prazos curtos de entrega da mesma, foi decidido em grupo a abordagem de metodologia ágil. Com o escopo de projeto médio e sem diversas modificações. A escolha se deu em um método Iterativo e Incremental (Scrum), com sprints de uma semana.
+
+
 O escopo do projeto a ser desenvolvido é médio, com uma equipe de cinco integrantes, todos com pouquíssima experiência com as tecnologias a serem utilizadas. Os integrantes do grupo trabalharão em todos os aspectos do projeto, como desenvolvedores fullstack. O projeto será desenvolvido em React Native, Typescript, e terá como objetivo ser um aplicativo mobile.
-A comunicação do time será efetuada através do whatsapp, e o gerenciamento do fluxo do projeto utilizando o Trello e o Google Doc, com a possibilidade de ser substituído pelo Zenhub se a equipe assim preferir. As sprints retro e review serão efetuadas ao final de cada sprint utilizando o Microsoft Teams, Discord ou Telegram. O design do produto será idealizado utilizando o Figma. 
+A comunicação do time será efetuada através do Whatsapp, e o gerenciamento do fluxo do projeto utilizando o Trello e o Google Doc, com a possibilidade de ser substituído pelo Zenhub se a equipe assim preferir. As sprints retro e review serão efetuadas ao final de cada sprint utilizando o Microsoft Teams, Discord ou Telegram. O design do produto será idealizado utilizando o Figma.
+ 
 
 ## Processo
 
@@ -135,11 +143,11 @@ A comunicação do time será efetuada através do whatsapp, e o gerenciamento d
 
 ## Unidade 1
 
-Aprendemos nessa unidade diversas maneiras de abordar o desenvolvimento de um projeto, além de como escolher qual forma é a mais adequada para o projeto que escolhemos, dependendo do escopo do projeto e da complexidade do mesmo.
+A primeira unidade deu ao grupo instrução para que fosse possível a escolha de uma metodologia de desenvolvimento, visto que nenhum dos integrantes possuía conhecimento sobre esse assunto e não sabia qual metodologia se encaixaria melhor no projeto.
 
 ## Unidade 2
 
-Lições aprendidas na unidade 2
+A segunda unidade proporcionou ao grupo noções sobre a elicitação, análise, especificação e validação de requisitos, tópicos essenciais para a Engenharia de Requisitos. O backlog quanto o MVP nos dão uma direção para que não percamos tempo ou desenvolvamos um software que não resolva o problema identificado pela equipe.
 
 ## Unidade 3
 
@@ -157,7 +165,7 @@ Lições aprendidas na unidade 5
 
 ## Referência
 
-# [Video de apresentação](https://www.youtube.com/watch?v=jTiSDy7NduE&ab_channel=NicolasRoberto "Link do Youtube")
+# [Video de apresentação](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto "Link do Youtube")
 
 [Voltar ao inicio](#header)
 

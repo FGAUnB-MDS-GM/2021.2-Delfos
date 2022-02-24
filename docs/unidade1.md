@@ -6,7 +6,7 @@ theme: jekyll-theme-architect
 
 # O Projeto
 
-## Versão 1.0
+## Versão 0.1
 
 ## Autores
 
