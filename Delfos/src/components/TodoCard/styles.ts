@@ -1,6 +1,10 @@
 import { RectButton } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 
+interface CheckedProps {
+  checked?: boolean
+}
+
 export const Container = styled.View`
   width: 100%;
   height: 45px;
@@ -16,8 +20,8 @@ export const Container = styled.View`
 
 export const ToDo = styled.Text`
   font-size: 20px;
-  font-family: ${({theme})=> theme.fonts.text};
-  color: ${({theme})=> theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.text};
+  color: ${({ theme }) => theme.colors.text};
 
 `;
 
@@ -32,25 +36,25 @@ export const DatesAndHour = styled.View`
   justify-content: center;
   align-items: center;
 `;
-export const Dates = styled.Text`
+export const Dates = styled.Text<CheckedProps>`
   font-size: 12px;
-  font-family: ${({theme})=> theme.fonts.text};
-  color: ${({theme})=> theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.text};
+  color: ${({ theme, checked }) => checked ? theme.colors.text_light : theme.colors.text};
 `;
-export const Hours = styled.Text`
+export const Hours = styled.Text<CheckedProps>`
   font-size: 12px;
-  font-family: ${({theme})=> theme.fonts.number};
-  color: ${({theme})=> theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.number};
+  color: ${({ theme, checked }) => checked ? theme.colors.text_light : theme.colors.text};
 
 `;
-export const MarkedIcon = styled(RectButton)`
+export const MarkedIcon = styled(RectButton)<CheckedProps>`
   width: 45px;
   height: 45px;
 
   justify-content: center;
   align-items: center;
 
-  background-color: ${({theme})=> theme.colors.secondary};
+  background-color: ${({ theme, checked }) => checked ? theme.colors.primary : theme.colors.secondary};
 
   border-radius: 10px;
 `;

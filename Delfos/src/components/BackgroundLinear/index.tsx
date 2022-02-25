@@ -8,9 +8,10 @@ import { View } from "react-native";
 interface Props {
   children?: ReactNode;
   type?: "secondary";
+  checked?: boolean;
 }
 
-export function BackgroundLinear({ children, type }: Props) {
+export function BackgroundLinear({ checked, children, type }: Props) {
 
   let color1 = theme.colors.primary;
   let color2 = theme.colors.primary_light;
@@ -18,6 +19,11 @@ export function BackgroundLinear({ children, type }: Props) {
   if (type === "secondary") {
     color1 = theme.colors.secondary;
     color2 = theme.colors.secondary_light;
+  }
+
+  if (checked){
+    color1 = theme.colors.primary_dark;
+    color2 = theme.colors.primary_dark;
   }
 
   return (

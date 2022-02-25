@@ -43,7 +43,6 @@ import {
 import { RectButtonProps } from "react-native-gesture-handler";
 import theme from "../../global/theme";
 import { useNavigation } from "@react-navigation/native";
-import { setWeek } from "date-fns/esm";
 
 interface RentalPeriod {
   startFormatted: string;

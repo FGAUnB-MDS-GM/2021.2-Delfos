@@ -49,7 +49,11 @@ export function OneTimeFilter() {
       </BackgroundLinear>
 
       <Listagem>
-        <TodoCard onPress={handleTest}/>
+        <TodoCard
+          name={"teste"}
+          trigger={{type: "teste"}}
+          onPress={handleTest}
+        />
       </Listagem>
     </Container>
   );
