@@ -10,6 +10,7 @@ export default {
     white: '#FFFFFF',
     success: '#34E430',
     cancel: '#EB3838',
+    overlay: 'rgba(0,0,0,0.7)',
   },
 
   fonts: {

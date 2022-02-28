@@ -9,6 +9,7 @@ export const Container = styled.View`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  flex: 1;
 
 `;
 
@@ -87,8 +88,9 @@ export const ListagemChecked = styled(FlatList as new (props: FlatListProps<Alar
 })``;
 
 export const Footer = styled.View`
-
+  flex: 1;
   padding: 10px;
+  justify-content: flex-end;
 `;
 
 export const ButtonAddTodo = styled(RectButton)`
@@ -101,5 +103,7 @@ export const ButtonAddTodo = styled(RectButton)`
 
 `;
 
-export const Content = styled.View``;
+export const Content = styled.View`
+  flex: 1;
+`;
 

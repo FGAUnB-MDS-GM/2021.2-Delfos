@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from "styled-components";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from 'expo-notifications';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NotificationRequest } from "expo-notifications";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -25,10 +28,11 @@ import {
 import { BackgroundLinear } from "../../components/BackgroundLinear";
 import { MenuButton } from "../../components/MenuButton";
 import { SearchButton } from "../../components/SearchButton";
-import { Alert } from "react-native";
 import { TodoCard } from "../../components/TodoCard";
-import { useNavigation } from "@react-navigation/native";
-import { NotificationRequest } from "expo-notifications";
+import { ModalView } from "../../components/ModalView";
+import { Groups } from "../../components/Groups";
+import { ButtonAdd } from "../../components/ButtonAdd";
+
 
 
 export interface TriggerAlarmsCheckedProps {
@@ -51,13 +55,7 @@ export function Home() {
   const [alarmsArray, setAlarmsArray] = useState<NotificationRequest[]>([]);
   const { navigate } = useNavigation();
   const [alarmsCheckeds, setAlarmsCheckeds] = useState<AlarmsCheckedProps[]>([]);
-
-  async function handleOpenModalGrupos() {
-    Alert.alert("abrir modal")
-    /* abre o modal com os grupos de ToDos criados pelo usuário*/
-    const dataKey = `@delfos:alarmschecked`;
-    AsyncStorage.setItem(dataKey, "")
-  }
+  const [openModal, setOpenModal] = useState(false);
 
   function handleSearch() {
     Alert.alert("Buscando ToDos pelo nome")
@@ -116,6 +114,18 @@ export function Home() {
     //console.log(response);
   }
 
+  function handleOpenModal(){
+    //Comando para limpar o AsyncStorage :
+    //const dataKey = `@delfos:alarmschecked`;
+    //AsyncStorage.setItem(dataKey, "")
+    console.log('Open Modal')
+    setOpenModal(true);
+  }
+
+  function handleCloseModal(){
+    console.log('Close Modal')
+    setOpenModal(false);
+  }
   useFocusEffect(useCallback(() => {
     getAlarms();
     loadAlarmsChecked();
@@ -128,7 +138,7 @@ export function Home() {
           <Header>
             <ButtonGroups>
               <MenuButton
-                onPress={handleOpenModalGrupos}
+                onPress={handleOpenModal}
               />
             </ButtonGroups>
             <HeaderHome>
@@ -175,18 +185,11 @@ export function Home() {
 
       </Content>
       <Footer>
-        <BackgroundLinear>
-          <GestureHandlerRootView>
-            <ButtonAddTodo onPress={handleAdd}>
-              <Feather
-                name="plus-circle"
-                size={40}
-                color={theme.colors.white}
-              />
-            </ButtonAddTodo>
-          </GestureHandlerRootView>
-        </BackgroundLinear>
+        <ButtonAdd icon="plus-circle" onPress={handleAdd}/>
       </Footer>
+      <ModalView visible={openModal} closeModal={handleCloseModal}>
+        <Groups/>
+      </ModalView>
     </Container>
   );
 }
