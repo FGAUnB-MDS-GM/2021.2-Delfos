@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { useTheme } from "styled-components";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from 'expo-notifications';
-import { useFocusEffect } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NotificationRequest } from "expo-notifications";
 import { useNavigation } from "@react-navigation/native";
@@ -82,13 +82,13 @@ export function Home() {
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
       await Notifications.cancelScheduledNotificationAsync(idTodo);
 
-    } catch(error){
+    } catch (error) {
       console.log(error)
       Alert.alert('Erro', "Infelizmente não foi possível marcar como feito")
     }
   }
 
-  async function loadAlarmsChecked(){
+  async function loadAlarmsChecked() {
     const dataKey = `@delfos:alarmschecked`;
     const response = await AsyncStorage.getItem(dataKey);
     const localAlarmsCheckeds = response ? JSON.parse(response) : [];
@@ -114,7 +114,7 @@ export function Home() {
     //console.log(response);
   }
 
-  function handleOpenModal(){
+  function handleOpenModal() {
     //Comando para limpar o AsyncStorage :
     //const dataKey = `@delfos:alarmschecked`;
     //AsyncStorage.setItem(dataKey, "")
@@ -122,7 +122,7 @@ export function Home() {
     setOpenModal(true);
   }
 
-  function handleCloseModal(){
+  function handleCloseModal() {
     console.log('Close Modal')
     setOpenModal(false);
   }
@@ -130,6 +130,17 @@ export function Home() {
     getAlarms();
     loadAlarmsChecked();
   }, [alarmsCheckeds]));
+
+  function teste(id: string){
+    console.log(id);
+    setOpenModal(false);
+  }
+
+  function testeNavigate(){
+    handleAdd();
+    setOpenModal(false);
+    
+  }
 
   return (
     <Container>
@@ -142,9 +153,10 @@ export function Home() {
               />
             </ButtonGroups>
             <HeaderHome>
+
               <TitleBox>
                 <Title>
-                  Just Do it!
+                  Delfos!
                 </Title>
               </TitleBox>
               <Search>
@@ -185,10 +197,10 @@ export function Home() {
 
       </Content>
       <Footer>
-        <ButtonAdd icon="plus-circle" onPress={handleAdd}/>
+        <ButtonAdd icon="plus-circle" onPress={handleAdd} />
       </Footer>
       <ModalView visible={openModal} closeModal={handleCloseModal}>
-        <Groups/>
+        <Groups handleSelectGroup={teste} handleCreateGroup={testeNavigate} />
       </ModalView>
     </Container>
   );

@@ -17,4 +17,5 @@ export const Bar = styled.View`
   background-color: ${({theme})=> theme.colors.text};
   align-self: center;
   margin-top: 13px;
+
 `;
