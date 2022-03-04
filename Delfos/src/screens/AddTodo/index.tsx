@@ -3,6 +3,7 @@ import { Alert, Platform } from "react-native";
 import { addDays, format } from 'date-fns';
 import { Feather } from '@expo/vector-icons';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { PermissionStatus } from 'expo-modules-core';
 import * as Notifications from 'expo-notifications';
@@ -42,7 +43,8 @@ import {
 } from './styles';
 import { RectButtonProps } from "react-native-gesture-handler";
 import theme from "../../global/theme";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { GroupProps } from "../Home";
 
 interface RentalPeriod {
   startFormatted: string;
@@ -56,6 +58,10 @@ interface ToggleButton extends RectButtonProps {
 interface idAlarms {
   id: string;
   checked: boolean;
+}
+
+interface Params {
+  groupSelected: GroupProps;
 }
 
 //setando o padrão de notificações 
@@ -76,7 +82,8 @@ export function AddTodo() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   //Usar asyncStorege para salvar esse Array
-  const [idAlarms, setIdAlarms] = useState<idAlarms[]>([]);
+  const route = useRoute();
+  const { groupSelected } = route.params as Params;
 
 
   useEffect(() => {
@@ -130,21 +137,104 @@ export function AddTodo() {
     return token;
   }
 
+  async function addNewAlarmsAsyncStorage(
+    type: string,
+    idAlarm: string,
+    message: string,
+    seconds?: number,
+    repeat?: boolean,
+    weekday?: number,
+    hour?: number,
+    minute?: number,
+  ) {
+
+    try {
+      const dataKey = `@delfos:alarmsSchedule${groupSelected.groupName}`
+      const response = await AsyncStorage.getItem(dataKey);
+      const currentData = response ? JSON.parse(response) : [];
+
+      if (type == 'timeInterval') {
+        const newData = [
+          ...currentData,
+          {
+            identifier: idAlarm,
+            body: message,
+            trigger: {
+              type: type,
+              repeat: repeat,
+              seconds: seconds,
+            }
+          }
+        ]
+        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+      }
+
+      if (type == "daily") {
+        const newData = [
+          ...currentData,
+          {
+            identifier: idAlarm,
+            body: message,
+            trigger: {
+              type: type,
+              repeat: true,
+              hour: hour,
+              minute: minute,
+            }
+          }
+        ]
+
+        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+      }
+
+      if (type == "weekly") {
+        const newData = [
+          ...currentData,
+          {
+            identifier: idAlarm,
+            body: message,
+            trigger: {
+              type: type,
+              weekday: weekday,
+              repeat: true,
+              hour: hour,
+              minute: minute,
+            }
+          }
+        ]
+
+        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+      }
+
+
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Erro', "Infelizmente não foi possível criar esse ToDo, tente novamente!")
+    }
+  }
+
   async function scheduleNotificationSecond(message: string, repeat: boolean, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
+
+    const type = "timeInterval"
+    const totalIntervalTime = startMinute * 60 + startHour * 3600;
+
     const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Delfos te lembrou!!",
         body: message,
       },
       trigger: {
-        seconds: startMinute * 60 + startHour * 3600,
+        seconds: totalIntervalTime,
         repeats: repeat,
       },
     });
 
-    setIdAlarms(rest=> [...rest, {id, checked: false}]);
-    
+    addNewAlarmsAsyncStorage(type, id, message, totalIntervalTime, repeat)
 
+    //Criar uma verificação se o tempo que foi inserido para encerrar a tarefa
+    // é de fato maior que o tempo que foi inserido para começar a tarefa.
+    // e com isso gerar um mensagem para o usuário 
     if (endMinute != null && endHour != null) {
       const id = await Notifications.scheduleNotificationAsync({
         content: {
@@ -152,17 +242,18 @@ export function AddTodo() {
           body: `ENCERRAMENTO ${message}`,
         },
         trigger: {
-          seconds: endMinute * 60 + endHour * 3600,
+          seconds: totalIntervalTime,
           repeats: repeat,
         },
       });
-    }
 
-    console.log(idAlarms)
+      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO ${message}`, totalIntervalTime)
+    }
   }
 
   async function scheduleNotificationWeekly(message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
 
+    const type = "weekly";
     const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Delfos te lembrou!!",
@@ -176,9 +267,10 @@ export function AddTodo() {
       },
     });
 
+    addNewAlarmsAsyncStorage(type, id, message, undefined, undefined, weekday, startHour, startMinute);
 
     if (endMinute != null && endHour != null) {
-      await Notifications.scheduleNotificationAsync({
+      const id = await Notifications.scheduleNotificationAsync({
         content: {
           title: "Delfos te lembrou!!",
           body: `ENCERRAMENTO ${message}`,
@@ -190,11 +282,15 @@ export function AddTodo() {
           repeats: true,
         },
       });
+
+      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO ${message}`, undefined, undefined, weekday, endHour, endMinute);
     }
   }
 
   async function scheduleNotificationDaily(message: string, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-    await Notifications.scheduleNotificationAsync({
+
+    const type = "daily";
+    const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Delfos te lembrou!!",
         body: message,
@@ -206,8 +302,10 @@ export function AddTodo() {
       },
     });
 
-    if (endMinute != null && endHour != null)
-      await Notifications.scheduleNotificationAsync({
+    addNewAlarmsAsyncStorage(type, id, message, undefined, undefined, undefined, startHour, startMinute);
+
+    if (endMinute != null && endHour != null) {
+      const id = await Notifications.scheduleNotificationAsync({
         content: {
           title: "Delfos te lembrou!!",
           body: `ENCERRAMENTO! ${message} `,
@@ -218,9 +316,11 @@ export function AddTodo() {
           repeats: true,
         },
       });
+      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO! ${message} `, undefined, undefined, undefined, endHour, endMinute);
+    }
   }
 
-
+  //função só pra verificar todos os alarmes setados de TODOS os grupos
   async function alarmesSetados() {
     const alarmes = await Notifications.getAllScheduledNotificationsAsync();
     console.log(alarmes);
@@ -341,26 +441,13 @@ export function AddTodo() {
     }
   }
 
-  function handleNotificationButton() {
-    if (!notificationButton) {
-      setNotificationButton(true);
-      console.log("Notificando")
-    } else {
-      setNotificationButton(false);
-      console.log("N notificando")
-    }
-  }
-
   function handleSetWeekDay(weekDay: number) {
     setWeekDay(weekDay)
     console.log(weekDay)
   }
 
   async function handleCancel() {
-    Alert.alert('Cancelamento', 'Cancelamento feito com sucesso');
-    await Notifications.cancelAllScheduledNotificationsAsync();
-    //alarmesSetados();
-    //console.log(idAlarms)
+    navigation.navigate('Home');
 
   }
 
@@ -445,7 +532,7 @@ export function AddTodo() {
       console.log(hour, minute);
 
       await scheduleNotificationSecond(message, repeat, minute, hour);
-      
+
     }
   }
 

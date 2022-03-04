@@ -3,13 +3,13 @@ import styled from "styled-components/native";
 export const Container = styled.View``;
 
 export const Header = styled.View`
-  width: 100%
+  width: 100%;
   height: 150px;
   margin-top: 40px;
 `;
 
 export const ButtonGroups = styled.View`
-  width: 30px
+  width: 30px;
   margin-left: 10px;
   justify-content: center;
 `;

@@ -11,9 +11,13 @@ export const Container = styled.View`
 
   border-color: black;
   border-width: 2px;
+  border-radius: 10px;
 
   margin-bottom: 10px;
   padding: 0px 10px;
+
+  justify-content: space-between;
+  align-items: center;
 
 `;
 

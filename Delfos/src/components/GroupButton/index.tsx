@@ -1,20 +1,27 @@
 import React from "react";
-import { Text } from "react-native";
+import { View } from "react-native";
 import { GestureHandlerRootView, RectButton, RectButtonProps } from "react-native-gesture-handler";
-import {Feather} from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 import {
   Container,
   ViewButton,
   TextButton,
 } from './styles';
+import { useTheme } from "styled-components";
+import { GroupProps } from "../Groups";
 
 interface Props extends RectButtonProps {
   id: string;
-  disableGroup: (id: string)=> void;
+  disableGroup: (id: string, enable: boolean) => void;
+  deleteGroup: (id: string, enable: boolean) => void;
+  enable: boolean;
 }
 
-export function GroupButton({ id, disableGroup, ...rest }: Props) {
+export function GroupButton({ id,  enable, disableGroup, deleteGroup, ...rest }: Props) {
+
+  const theme = useTheme();
+
   return (
     <Container>
       <GestureHandlerRootView>
@@ -25,14 +32,34 @@ export function GroupButton({ id, disableGroup, ...rest }: Props) {
         </RectButton>
       </GestureHandlerRootView>
 
-      <GestureHandlerRootView>
-        <RectButton onPress={()=> disableGroup}>
-          <Feather
-            name="toggle-left"
-            size= {40}
-          />
-        </RectButton>
-      </GestureHandlerRootView>
+      <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+        <GestureHandlerRootView>
+          <RectButton onPress={() => deleteGroup(id, enable)} style={{marginHorizontal: 15}}>
+            <Feather
+              name="x-circle"
+              size={30}
+              color={theme.colors.cancel}
+            />
+          </RectButton>
+        </GestureHandlerRootView>
+
+        <GestureHandlerRootView>
+          <RectButton onPress={() => disableGroup(id, enable)}>
+            {enable ?
+              <Feather
+                name="toggle-left"
+                size={40}
+                color={theme.colors.white}
+              />
+              : <Feather
+                name="toggle-right"
+                size={40}
+                color={theme.colors.text}
+              />
+            }
+          </RectButton>
+        </GestureHandlerRootView>
+      </View>
     </Container>
   );
 }

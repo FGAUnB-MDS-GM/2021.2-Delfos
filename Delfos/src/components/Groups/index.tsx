@@ -1,167 +1,196 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
 import { BackgroundLinear } from "../BackgroundLinear";
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from 'expo-notifications';
+import { useFocusEffect } from "@react-navigation/native";
 
 import {
   Container,
   Group,
+  Overlay,
+  Content,
+  Title,
+  InputNameGroup,
+
 } from './styles';
+
 import { ButtonAdd } from "../ButtonAdd";
 import { GroupButton } from "../GroupButton";
-import { View } from "react-native";
+import { Alert, Modal, View } from "react-native";
+import { CancelButton, ConfirmButton } from "../../screens/AddTodo/styles";
+import { AlarmsCheckedProps, TriggerAlarmsCheckedProps } from "../../screens/Home";
 
-interface GroupsProps {
-  id: string;
-  data: string;
+
+export interface GroupProps {
+  groupName: string;
   enable: boolean;
 }
 
-const localGroups = [
-  {
-    id: "Grupo 1",
-    data: "dadada",
-    enable: true
-  },
-  {
-    id: "2",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "3",
-    data: "uiuiui",
-    enable: true
-  },
-  {
-    id: "4",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "5",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "6",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "7",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "8",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "9",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "10",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "11",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "12",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "13",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "14",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "15",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "16",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "17",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "18",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "19",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "20",
-    data: "asasa",
-    enable: true
-  },
-  {
-    id: "21",
-    data: "asasa",
-    enable: true
-  },
-
-
-]
 
 interface Props {
-  handleSelectGroup: (id: string) => void;
-  handleCreateGroup: () => void;
+  handleSelectGroup: (group: GroupProps) => void;
+  verifyStatusGroup: (group: GroupProps) => void;
+  deleteGroup: (group: GroupProps) => void;
 }
 
-function setEnable (id: string){
-  //funçaõ que vai mudar o estado de determinado Grupo para Disable
-  //  e em seguida desmarcar todos os ToDos que estiverem dentro daquele grupo 
-  // a propridade "data" é o que deveria ser um Array de string de id.
-}
+export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Props) {
 
-export function Groups({ handleSelectGroup, handleCreateGroup }: Props) {
-
-  const [asyncGroups, setAsyncGroups] = useState([]);
+  const [asyncGroups, setAsyncGroups] = useState<GroupProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [modalCreateGroup, setModalCreateGroup] = useState(false);
+  const [newGroupName, setNewGroupName] = useState("");
+  const [groupAlarms, setGroupAlarms] = useState<AlarmsCheckedProps[]>([])
+  const [modalDeleteGroup, setModalDeleteGroup] = useState(false);
 
   const theme = useTheme();
 
   function teste() {
     console.log("teste")
   }
+
+  function handleCreateGroup() {
+    setModalCreateGroup(true);
+
+  }
+
+  async function handleConfirmCreateGroup() {
+
+    try {
+      const dataKey = `@delfos:localgroups`;
+      const response = await AsyncStorage.getItem(dataKey);
+      const currentData = response ? JSON.parse(response) : [];
+
+      const newData = [
+        ...currentData,
+        {
+          groupName: newGroupName,
+          enable: true
+        }
+      ]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+      setModalCreateGroup(false);
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Erro', "Infelizmente não foi possível criar o grupo")
+    }
+
+  }
+
+  function handleCancelCreateGroup() {
+    setModalCreateGroup(false);
+  }
+
+  //Função para limpar o AsyncStorage
+  /*
+  async function cleanGroupStorage() {
+    try {
+      await AsyncStorage.clear();
+    } catch (error) {
+      console.log('Error', error)
+      Alert.alert("Erro", "Não foi possível limpar");
+    }
+  }
+  */
+
+  async function loadGroups() {
+    const dataKey = `@delfos:localgroups`;
+    const response = await AsyncStorage.getItem(dataKey);
+    const responseArray = response ? JSON.parse(response) : [];
+
+    setAsyncGroups(responseArray);
+  }
+
+  useFocusEffect(useCallback(() => {
+    loadGroups()
+  }, [asyncGroups]))
+
   return (
     <Container>
       <Group
-        data={localGroups}
-        keyExtractor={item => item.id}
+        data={asyncGroups}
+        keyExtractor={item => item.groupName}
         renderItem={({ item }) => (
-          <GroupButton id={item.id} onPress={()=>handleSelectGroup(item.id)} disableGroup={()=> setEnable(item.id)}/>
+          <GroupButton
+            enable={item.enable}
+            id={item.groupName} onPress={() => handleSelectGroup(item)}
+            disableGroup={() => verifyStatusGroup(item)}
+            deleteGroup={()=> deleteGroup(item)}
+          />
         )}
       />
 
-      <View style={{ width: "100%", marginBottom: 20}}>
-        <ButtonAdd icon="plus-circle" style={{ width: "100%" }} onPress={handleCreateGroup}/>
+      <View style={{ width: "100%", marginBottom: 20, paddingHorizontal: 10 }}>
+        <ButtonAdd icon="plus-circle" onPress={handleCreateGroup} />
       </View>
+
+      {/*Transformar isso em um COMPONENTE, assim que possível*/}
+      <Modal visible={modalCreateGroup}>
+        <Overlay>
+          <Content>
+            <Title>
+              Nome do Grupo
+            </Title>
+            <InputNameGroup onChangeText={setNewGroupName} />
+            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", paddingHorizontal: 10, marginTop: 15 }}>
+              <GestureHandlerRootView>
+                <CancelButton onPress={handleCancelCreateGroup}>
+                  <Feather
+                    name="x"
+                    color={theme.colors.white}
+                    size={30}
+                  />
+                </CancelButton>
+              </GestureHandlerRootView>
+              <GestureHandlerRootView>
+                <ConfirmButton onPress={handleConfirmCreateGroup}>
+                  <Feather
+                    name="check"
+                    color={theme.colors.white}
+                    size={30}
+                  />
+                </ConfirmButton>
+              </GestureHandlerRootView>
+
+            </View>
+          </Content>
+        </Overlay>
+      </Modal>
+
+      {/*Transformar isso em componente pelo amor de DEUS aaaaaaaaaaaa*/}
+      <Modal visible={modalDeleteGroup}>
+        <Overlay>
+          <Content>
+            <Title>
+              Tem certeza que deseja deletar?
+            </Title>
+            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", paddingHorizontal: 10, marginTop: 15 }}>
+              <GestureHandlerRootView>
+                <CancelButton onPress={handleCancelCreateGroup}>
+                  <Feather
+                    name="x"
+                    color={theme.colors.white}
+                    size={30}
+                  />
+                </CancelButton>
+              </GestureHandlerRootView>
+              <GestureHandlerRootView>
+                <ConfirmButton onPress={handleConfirmCreateGroup}>
+                  <Feather
+                    name="check"
+                    color={theme.colors.white}
+                    size={30}
+                  />
+                </ConfirmButton>
+              </GestureHandlerRootView>
+
+            </View>
+          </Content>
+        </Overlay>
+      </Modal>
     </Container>
   );
 }

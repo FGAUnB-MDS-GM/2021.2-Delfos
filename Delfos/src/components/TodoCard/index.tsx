@@ -27,9 +27,10 @@ interface Props extends RectButtonProps {
     weekday?: number;
   }
   checked?: boolean;
+  handleDelete?: () => void;
 }
 
-export function TodoCard({ name, trigger,checked, ...rest }: Props) {
+export function TodoCard({ name, trigger, checked, handleDelete, ...rest }: Props) {
   const theme = useTheme()
 
   function getDayWeekName(weekDayNumber: number) {
@@ -55,9 +56,24 @@ export function TodoCard({ name, trigger,checked, ...rest }: Props) {
               {trigger.minute ? trigger.minute : ""}
             </Hours>
           </DatesAndHour>
+          {
+            checked &&
+            <GestureHandlerRootView>
+              <MarkedIcon checked={checked} onPress={handleDelete} style={{marginRight: 5}}>
+                <Feather
+                  name={"x-circle"}
+                  size={35}
+                  color={theme.colors.cancel}
+                />
+              </MarkedIcon>
+            </GestureHandlerRootView>
+          }
           <GestureHandlerRootView>
             <MarkedIcon checked={checked} {...rest}>
-              <Feather name={checked ? "check-square" :"square"} size={35} color={theme.colors.text} />
+              <Feather
+                name={checked ? "check-square" : "square"}
+                size={35}
+                color={theme.colors.text} />
             </MarkedIcon>
           </GestureHandlerRootView>
         </Details>

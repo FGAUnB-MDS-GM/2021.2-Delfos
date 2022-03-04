@@ -20,6 +20,11 @@ export const Header = styled.View`
   margin-top: 40px;
 `;
 
+export const Content = styled.View`
+  flex: 1;
+
+`;
+
 export const ButtonGroups = styled.View`
   width: 30px;
   margin-left: 10px;
@@ -45,12 +50,19 @@ export const TitleBox = styled.View`
 
   background-color: ${({ theme }) => theme.colors.secondary};
 
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 export const Title = styled.Text`
   font-size: 36px;
   font-family: ${({ theme }) => theme.fonts.text};
+`;
+
+export const SubTitle = styled.Text`
+  font-size: 20px;
+  font-family: ${({ theme }) => theme.fonts.text};
+  color: ${({theme})=> theme.colors.text};
+
 `;
 
 export const Search = styled.View`
@@ -79,18 +91,21 @@ export const Listagem = styled(FlatList as new (props: FlatListProps<Notificatio
   contentContainerStyle:{
     padding: 10,
   }
-})``;
+})`
+`;
 
 export const ListagemChecked = styled(FlatList as new (props: FlatListProps<AlarmsCheckedProps>)=> FlatList<AlarmsCheckedProps>).attrs({
   contentContainerStyle:{
     padding: 10,
   }
-})``;
+})`
+`;
 
 export const Footer = styled.View`
-  flex: 1;
   padding: 10px;
   justify-content: flex-end;
+
+  
 `;
 
 export const ButtonAddTodo = styled(RectButton)`
@@ -103,7 +118,5 @@ export const ButtonAddTodo = styled(RectButton)`
 
 `;
 
-export const Content = styled.View`
-  flex: 1;
-`;
+
 

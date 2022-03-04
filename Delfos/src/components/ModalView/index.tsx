@@ -11,13 +11,12 @@ import {
 
 interface Props extends ModalProps {
   children: ReactNode;
-  closeModal: () => void;
 }
 function teste() {
   console.log('teste')
 }
 
-export function ModalView({ children, closeModal, ...rest }: Props) {
+export function ModalView({ children, ...rest }: Props) {
   return (
     <Modal
       transparent

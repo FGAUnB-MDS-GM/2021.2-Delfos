@@ -17,8 +17,8 @@ export function BackgroundLinear({ checked, children, type }: Props) {
   let color2 = theme.colors.primary_light;
 
   if (type === "secondary") {
-    color1 = theme.colors.secondary;
-    color2 = theme.colors.secondary_light;
+    color1 = theme.colors.secondary_light;
+    color2 = theme.colors.secondary;
   }
 
   if (checked){

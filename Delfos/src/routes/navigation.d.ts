@@ -1,10 +1,10 @@
 //declarar globalmente que a lista de parametros 
 // vai usar a tipagem declarada
 
-import { AppRoutesParamList } from "./app.routes";
+import { ParamListBase } from "@react-navigation/native";
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends AppRoutesParamList {}
+    interface RootParamList extends ParamListBase {}
   }
 }
