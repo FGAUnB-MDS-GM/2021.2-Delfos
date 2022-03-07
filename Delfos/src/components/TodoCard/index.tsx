@@ -59,7 +59,7 @@ export function TodoCard({ name, trigger, checked, handleDelete, ...rest }: Prop
           {
             checked &&
             <GestureHandlerRootView>
-              <MarkedIcon checked={checked} onPress={handleDelete} style={{marginRight: 5}}>
+              <MarkedIcon checked={checked} onPress={handleDelete} style={{ marginRight: 5 }}>
                 <Feather
                   name={"x-circle"}
                   size={35}
@@ -68,14 +68,19 @@ export function TodoCard({ name, trigger, checked, handleDelete, ...rest }: Prop
               </MarkedIcon>
             </GestureHandlerRootView>
           }
-          <GestureHandlerRootView>
-            <MarkedIcon checked={checked} {...rest}>
-              <Feather
-                name={checked ? "check-square" : "square"}
-                size={35}
-                color={theme.colors.text} />
-            </MarkedIcon>
-          </GestureHandlerRootView>
+
+          {/** Infelizmente não pensei em uma forma de remarcar os ToDos de Timeinterval
+           * quando descobrir isso basta retirar essa lógica de verificação */ }
+          { trigger.type != "timeInterval" &&
+            <GestureHandlerRootView>
+              <MarkedIcon checked={checked} {...rest}>
+                <Feather
+                  name={checked ? "check-square" : "square"}
+                  size={35}
+                  color={theme.colors.text} />
+              </MarkedIcon>
+            </GestureHandlerRootView>
+          }
         </Details>
       </Container>
     </BackgroundLinear>

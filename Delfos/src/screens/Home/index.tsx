@@ -33,6 +33,7 @@ import { TodoCard } from "../../components/TodoCard";
 import { ModalView } from "../../components/ModalView";
 import { Groups } from "../../components/Groups";
 import { ButtonAdd } from "../../components/ButtonAdd";
+import { scheduleNotificationDaily, scheduleNotificationSecond, scheduleNotificationWeekly } from "../AddTodo";
 
 
 
@@ -68,7 +69,9 @@ export function Home() {
 
   async function handleSearch() {
     Alert.alert("Buscando ToDos pelo nome")
-    /* abre o modal com os grupos de ToDos criados pelo usuário*/
+    /* busca os ToDos criados pelo usuário pelo nome*/
+    const teste = await Notifications.getAllScheduledNotificationsAsync();
+    console.log(teste)
   }
 
   async function handleCheckTodo(idTodo: string, body: string | null, trigger: TriggerAlarmsCheckedProps) {
@@ -140,8 +143,20 @@ export function Home() {
   }
 
   function handleScheduleCheckTodo(item: AlarmsCheckedProps) {
-    //função para poder remarcar o ToDo que uma vez foi marcado como feito!!
+    ScheduleCheckTodo(item);
     console.log(item);
+  }
+
+  async function ScheduleCheckTodo(item: AlarmsCheckedProps) {
+    if (item.trigger.type == "daily") {
+      scheduleNotificationDaily(groupSelected.groupName, item.body!, item.trigger.minute!, item.trigger.hour!);
+      handleDelete(item.identifier);
+
+    } else {
+      scheduleNotificationWeekly(groupSelected.groupName, item.body!, item.trigger.minute!, item.trigger.hour!, item.trigger.weekday!)
+      handleDelete(item.identifier);
+    }
+
   }
 
   function handleAdd() {
@@ -291,14 +306,19 @@ export function Home() {
     }
   }
 
-  async function handleDelete(id: string){
+  async function handleDelete(id: string) {
+    try {
 
-    const dataKey = `@delfos:alarmschecked${groupSelected.groupName}`;
- 
-    const remainingAlarmsChekeds = alarmsCheckeds.filter(item => item.identifier != id);
+      const dataKey = `@delfos:alarmschecked${groupSelected.groupName}`;
 
-    await AsyncStorage.setItem(dataKey, JSON.stringify(remainingAlarmsChekeds));
-    
+      const remainingAlarmsChekeds = alarmsCheckeds.filter(item => item.identifier != id);
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(remainingAlarmsChekeds));
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Erro", "Infelizmente não foi possível remarcar essa ToDo")
+
+    }
   }
 
   useFocusEffect(useCallback(() => {
@@ -362,7 +382,7 @@ export function Home() {
               onPress={() => handleScheduleCheckTodo(item)}
               name={item.body}
               trigger={item.trigger}
-              handleDelete={()=> handleDelete(item.identifier)}
+              handleDelete={() => handleDelete(item.identifier)}
             />}
         />
 

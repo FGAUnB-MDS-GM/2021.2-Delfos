@@ -72,6 +72,190 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+async function addNewAlarmsAsyncStorage(
+  groupName: string,
+  type: string,
+  idAlarm: string,
+  message: string,
+  seconds?: number,
+  repeat?: boolean,
+  weekday?: number,
+  hour?: number,
+  minute?: number,
+
+) {
+
+  try {
+    const dataKey = `@delfos:alarmsSchedule${groupName}`
+    const response = await AsyncStorage.getItem(dataKey);
+    const currentData = response ? JSON.parse(response) : [];
+
+    if (type == 'timeInterval') {
+      const newData = [
+        ...currentData,
+        {
+          identifier: idAlarm,
+          body: message,
+          trigger: {
+            type: type,
+            repeat: repeat,
+            seconds: seconds,
+          }
+        }
+      ]
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+    }
+
+    if (type == "daily") {
+      const newData = [
+        ...currentData,
+        {
+          identifier: idAlarm,
+          body: message,
+          trigger: {
+            type: type,
+            repeat: true,
+            hour: hour,
+            minute: minute,
+          }
+        }
+      ]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+    }
+
+    if (type == "weekly") {
+      const newData = [
+        ...currentData,
+        {
+          identifier: idAlarm,
+          body: message,
+          trigger: {
+            type: type,
+            weekday: weekday,
+            repeat: true,
+            hour: hour,
+            minute: minute,
+          }
+        }
+      ]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+    }
+
+
+
+  } catch (error) {
+    console.log(error)
+    Alert.alert('Erro', "Infelizmente não foi possível criar esse ToDo, tente novamente!")
+  }
+}
+
+export async function scheduleNotificationSecond(groupName: string, message: string, repeat: boolean, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
+
+  const type = "timeInterval"
+  const totalIntervalTime = startMinute * 60 + startHour * 3600;
+
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Delfos te lembrou!!",
+      body: message,
+    },
+    trigger: {
+      seconds: totalIntervalTime,
+      repeats: repeat,
+    },
+  });
+
+  addNewAlarmsAsyncStorage(groupName, type, id, message, totalIntervalTime, repeat)
+
+  //Criar uma verificação se o tempo que foi inserido para encerrar a tarefa
+  // é de fato maior que o tempo que foi inserido para começar a tarefa.
+  // e com isso gerar um mensagem para o usuário 
+  if (endMinute != null && endHour != null) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Delfos te lembrou!!",
+        body: `ENCERRAMENTO ${message}`,
+      },
+      trigger: {
+        seconds: totalIntervalTime,
+        repeats: repeat,
+      },
+    });
+
+    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO ${message}`, totalIntervalTime)
+  }
+}
+
+export async function scheduleNotificationDaily(groupName: string, message: string, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
+
+  const type = "daily";
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Delfos te lembrou!!",
+      body: message,
+    },
+    trigger: {
+      minute: startMinute,
+      hour: startHour,
+      repeats: true,
+    },
+  });
+
+  addNewAlarmsAsyncStorage(groupName, type, id, message, undefined, undefined, undefined, startHour, startMinute);
+
+  if (endMinute != null && endHour != null) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Delfos te lembrou!!",
+        body: `ENCERRAMENTO! ${message} `,
+      },
+      trigger: {
+        minute: endMinute,
+        hour: endHour,
+        repeats: true,
+      },
+    });
+    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO! ${message} `, undefined, undefined, undefined, endHour, endMinute);
+  }
+}
+
+export async function scheduleNotificationWeekly(groupName: string, message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
+
+  const type = "weekly";
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Delfos te lembrou!!",
+      body: message,
+    },
+    trigger: {
+      weekday: weekday,
+      hour: startHour,
+      minute: startMinute,
+      repeats: true,
+    },
+  });
+
+  addNewAlarmsAsyncStorage(groupName, type, id, message, undefined, undefined, weekday, startHour, startMinute);
+
+  if (endMinute != null && endHour != null) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Delfos te lembrou!!",
+        body: `ENCERRAMENTO ${message}`,
+      },
+      trigger: {
+        weekday: weekday,
+        hour: endHour,
+        minute: endMinute,
+        repeats: true,
+      },
+    });
+
+    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO ${message}`, undefined, undefined, weekday, endHour, endMinute);
+  }
+}
 
 export function AddTodo() {
 
@@ -135,189 +319,6 @@ export function AddTodo() {
       });
     }
     return token;
-  }
-
-  async function addNewAlarmsAsyncStorage(
-    type: string,
-    idAlarm: string,
-    message: string,
-    seconds?: number,
-    repeat?: boolean,
-    weekday?: number,
-    hour?: number,
-    minute?: number,
-  ) {
-
-    try {
-      const dataKey = `@delfos:alarmsSchedule${groupSelected.groupName}`
-      const response = await AsyncStorage.getItem(dataKey);
-      const currentData = response ? JSON.parse(response) : [];
-
-      if (type == 'timeInterval') {
-        const newData = [
-          ...currentData,
-          {
-            identifier: idAlarm,
-            body: message,
-            trigger: {
-              type: type,
-              repeat: repeat,
-              seconds: seconds,
-            }
-          }
-        ]
-        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
-      }
-
-      if (type == "daily") {
-        const newData = [
-          ...currentData,
-          {
-            identifier: idAlarm,
-            body: message,
-            trigger: {
-              type: type,
-              repeat: true,
-              hour: hour,
-              minute: minute,
-            }
-          }
-        ]
-
-        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
-      }
-
-      if (type == "weekly") {
-        const newData = [
-          ...currentData,
-          {
-            identifier: idAlarm,
-            body: message,
-            trigger: {
-              type: type,
-              weekday: weekday,
-              repeat: true,
-              hour: hour,
-              minute: minute,
-            }
-          }
-        ]
-
-        await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
-      }
-
-
-
-    } catch (error) {
-      console.log(error)
-      Alert.alert('Erro', "Infelizmente não foi possível criar esse ToDo, tente novamente!")
-    }
-  }
-
-  async function scheduleNotificationSecond(message: string, repeat: boolean, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-
-    const type = "timeInterval"
-    const totalIntervalTime = startMinute * 60 + startHour * 3600;
-
-    const id = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Delfos te lembrou!!",
-        body: message,
-      },
-      trigger: {
-        seconds: totalIntervalTime,
-        repeats: repeat,
-      },
-    });
-
-    addNewAlarmsAsyncStorage(type, id, message, totalIntervalTime, repeat)
-
-    //Criar uma verificação se o tempo que foi inserido para encerrar a tarefa
-    // é de fato maior que o tempo que foi inserido para começar a tarefa.
-    // e com isso gerar um mensagem para o usuário 
-    if (endMinute != null && endHour != null) {
-      const id = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Delfos te lembrou!!",
-          body: `ENCERRAMENTO ${message}`,
-        },
-        trigger: {
-          seconds: totalIntervalTime,
-          repeats: repeat,
-        },
-      });
-
-      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO ${message}`, totalIntervalTime)
-    }
-  }
-
-  async function scheduleNotificationWeekly(message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
-
-    const type = "weekly";
-    const id = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Delfos te lembrou!!",
-        body: message,
-      },
-      trigger: {
-        weekday: weekday,
-        hour: startHour,
-        minute: startMinute,
-        repeats: true,
-      },
-    });
-
-    addNewAlarmsAsyncStorage(type, id, message, undefined, undefined, weekday, startHour, startMinute);
-
-    if (endMinute != null && endHour != null) {
-      const id = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Delfos te lembrou!!",
-          body: `ENCERRAMENTO ${message}`,
-        },
-        trigger: {
-          weekday: weekday,
-          hour: endHour,
-          minute: endMinute,
-          repeats: true,
-        },
-      });
-
-      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO ${message}`, undefined, undefined, weekday, endHour, endMinute);
-    }
-  }
-
-  async function scheduleNotificationDaily(message: string, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-
-    const type = "daily";
-    const id = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Delfos te lembrou!!",
-        body: message,
-      },
-      trigger: {
-        minute: startMinute,
-        hour: startHour,
-        repeats: true,
-      },
-    });
-
-    addNewAlarmsAsyncStorage(type, id, message, undefined, undefined, undefined, startHour, startMinute);
-
-    if (endMinute != null && endHour != null) {
-      const id = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Delfos te lembrou!!",
-          body: `ENCERRAMENTO! ${message} `,
-        },
-        trigger: {
-          minute: endMinute,
-          hour: endHour,
-          repeats: true,
-        },
-      });
-      addNewAlarmsAsyncStorage(type, id, `ENCERRAMENTO! ${message} `, undefined, undefined, undefined, endHour, endMinute);
-    }
   }
 
   //função só pra verificar todos os alarmes setados de TODOS os grupos
@@ -451,7 +452,7 @@ export function AddTodo() {
 
   }
 
-  async function handleConfirm() {
+  async function handleConfirm(groupName: string) {
     Alert.alert('Confirmado', 'Todo anotado com sucesso');
     //setAlarm();
     const startHourNumber = Number.parseInt(startHour);
@@ -464,17 +465,17 @@ export function AddTodo() {
     // SE TIVER ENCERRAMENTO SETAR COM INICIO E COM ENCERRAMENTO
     if (daily) {
       if (withEnd) {
-        scheduleNotificationDaily(message, startMinuteNumber, startHourNumber, endMinuteNumber, endHourNumber);
+        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber, endMinuteNumber, endHourNumber);
       } else {
-        scheduleNotificationDaily(message, startMinuteNumber, startHourNumber);
+        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
       }
     };
 
     if (weekly) {
       if (withEnd) {
-        scheduleNotificationWeekly(message, startMinuteNumber, startHourNumber, weekDay, endMinuteNumber, endHourNumber);
+        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay, endMinuteNumber, endHourNumber);
       } else {
-        scheduleNotificationWeekly(message, startMinuteNumber, startHourNumber, weekDay);
+        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
       }
     };
 
@@ -531,7 +532,7 @@ export function AddTodo() {
 
       console.log(hour, minute);
 
-      await scheduleNotificationSecond(message, repeat, minute, hour);
+      await scheduleNotificationSecond(groupName, message, repeat, minute, hour);
 
     }
   }
@@ -674,7 +675,7 @@ export function AddTodo() {
           </CancelButton>
         </GestureHandlerRootView>
         <GestureHandlerRootView>
-          <ConfirmButton onPress={handleConfirm}>
+          <ConfirmButton onPress={()=> handleConfirm(groupSelected.groupName)}>
             <Feather
               name="check"
               color={theme.colors.white}
