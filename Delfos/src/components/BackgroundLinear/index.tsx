@@ -1,9 +1,6 @@
 import React, { ReactNode } from "react";
-import { LinearGradientProps } from "expo-linear-gradient";
-import theme from '../../global/theme';
-import { LinearGradientColor } from './styles';
-import { View } from "react-native";
-
+import theme from "../../global/theme";
+import { LinearGradientColor } from "./styles";
 
 interface Props {
   children?: ReactNode;
@@ -12,7 +9,6 @@ interface Props {
 }
 
 export function BackgroundLinear({ checked, children, type }: Props) {
-
   let color1 = theme.colors.primary;
   let color2 = theme.colors.primary_light;
 
@@ -21,16 +17,14 @@ export function BackgroundLinear({ checked, children, type }: Props) {
     color2 = theme.colors.secondary;
   }
 
-  if (checked){
+  if (checked) {
     color1 = theme.colors.primary_dark;
     color2 = theme.colors.primary_dark;
   }
 
   return (
-    <LinearGradientColor
-      colors={[color1, color2]}
-    >
+    <LinearGradientColor colors={[color1, color2]}>
       {children}
     </LinearGradientColor>
-  )
+  );
 }

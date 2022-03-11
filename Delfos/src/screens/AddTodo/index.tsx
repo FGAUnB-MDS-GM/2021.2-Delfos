@@ -1,24 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Platform } from "react-native";
-import { addDays, format } from 'date-fns';
-import { Feather } from '@expo/vector-icons';
+import { addDays, format } from "date-fns";
+import { Feather } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { PermissionStatus } from 'expo-modules-core';
-import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 import { BackgroundLinear } from "../../components/BackgroundLinear";
 import { MenuButton } from "../../components/MenuButton";
-import { TodoCard } from "../../components/TodoCard";
 import { WeekDayButton } from "../../components/WeekDayButton";
 
 import {
-  Calendar,
   DayProps,
   generateInterval,
-  MarkedDateProps
+  MarkedDateProps,
 } from "../../components/Calendar";
 
 import {
@@ -39,8 +36,7 @@ import {
   InputTime,
   InputTimeText,
   WeekDaySelectBox,
-
-} from './styles';
+} from "./styles";
 import { RectButtonProps } from "react-native-gesture-handler";
 import theme from "../../global/theme";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -52,7 +48,7 @@ interface RentalPeriod {
 }
 
 interface ToggleButton extends RectButtonProps {
-  isActive: boolean
+  isActive: boolean;
 }
 
 interface idAlarms {
@@ -64,7 +60,7 @@ interface Params {
   groupSelected: GroupProps;
 }
 
-//setando o padrão de notificações 
+//setando o padrão de notificações
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -81,16 +77,14 @@ async function addNewAlarmsAsyncStorage(
   repeat?: boolean,
   weekday?: number,
   hour?: number,
-  minute?: number,
-
+  minute?: number
 ) {
-
   try {
-    const dataKey = `@delfos:alarmsSchedule${groupName}`
+    const dataKey = `@delfos:alarmsSchedule${groupName}`;
     const response = await AsyncStorage.getItem(dataKey);
     const currentData = response ? JSON.parse(response) : [];
 
-    if (type == 'timeInterval') {
+    if (type == "timeInterval") {
       const newData = [
         ...currentData,
         {
@@ -100,9 +94,9 @@ async function addNewAlarmsAsyncStorage(
             type: type,
             repeat: repeat,
             seconds: seconds,
-          }
-        }
-      ]
+          },
+        },
+      ];
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
     }
 
@@ -117,9 +111,9 @@ async function addNewAlarmsAsyncStorage(
             repeat: true,
             hour: hour,
             minute: minute,
-          }
-        }
-      ]
+          },
+        },
+      ];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
     }
@@ -136,24 +130,30 @@ async function addNewAlarmsAsyncStorage(
             repeat: true,
             hour: hour,
             minute: minute,
-          }
-        }
-      ]
+          },
+        },
+      ];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
     }
-
-
-
   } catch (error) {
-    console.log(error)
-    Alert.alert('Erro', "Infelizmente não foi possível criar esse ToDo, tente novamente!")
+    Alert.alert(
+      "Erro",
+      "Infelizmente não foi possível criar esse ToDo, tente novamente!"
+    );
   }
 }
 
-export async function scheduleNotificationSecond(groupName: string, message: string, repeat: boolean, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-
-  const type = "timeInterval"
+export async function scheduleNotificationSecond(
+  groupName: string,
+  message: string,
+  repeat: boolean,
+  startMinute: number,
+  startHour: number,
+  endMinute?: number,
+  endHour?: number
+) {
+  const type = "timeInterval";
   const totalIntervalTime = startMinute * 60 + startHour * 3600;
 
   const id = await Notifications.scheduleNotificationAsync({
@@ -167,11 +167,18 @@ export async function scheduleNotificationSecond(groupName: string, message: str
     },
   });
 
-  addNewAlarmsAsyncStorage(groupName, type, id, message, totalIntervalTime, repeat)
+  addNewAlarmsAsyncStorage(
+    groupName,
+    type,
+    id,
+    message,
+    totalIntervalTime,
+    repeat
+  );
 
   //Criar uma verificação se o tempo que foi inserido para encerrar a tarefa
   // é de fato maior que o tempo que foi inserido para começar a tarefa.
-  // e com isso gerar um mensagem para o usuário 
+  // e com isso gerar um mensagem para o usuário
   if (endMinute != null && endHour != null) {
     const id = await Notifications.scheduleNotificationAsync({
       content: {
@@ -184,12 +191,24 @@ export async function scheduleNotificationSecond(groupName: string, message: str
       },
     });
 
-    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO ${message}`, totalIntervalTime)
+    addNewAlarmsAsyncStorage(
+      groupName,
+      type,
+      id,
+      `ENCERRAMENTO ${message}`,
+      totalIntervalTime
+    );
   }
 }
 
-export async function scheduleNotificationDaily(groupName: string, message: string, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
-
+export async function scheduleNotificationDaily(
+  groupName: string,
+  message: string,
+  startMinute: number,
+  startHour: number,
+  endMinute?: number,
+  endHour?: number
+) {
   const type = "daily";
   const id = await Notifications.scheduleNotificationAsync({
     content: {
@@ -203,7 +222,17 @@ export async function scheduleNotificationDaily(groupName: string, message: stri
     },
   });
 
-  addNewAlarmsAsyncStorage(groupName, type, id, message, undefined, undefined, undefined, startHour, startMinute);
+  addNewAlarmsAsyncStorage(
+    groupName,
+    type,
+    id,
+    message,
+    undefined,
+    undefined,
+    undefined,
+    startHour,
+    startMinute
+  );
 
   if (endMinute != null && endHour != null) {
     const id = await Notifications.scheduleNotificationAsync({
@@ -217,12 +246,29 @@ export async function scheduleNotificationDaily(groupName: string, message: stri
         repeats: true,
       },
     });
-    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO! ${message} `, undefined, undefined, undefined, endHour, endMinute);
+    addNewAlarmsAsyncStorage(
+      groupName,
+      type,
+      id,
+      `ENCERRAMENTO! ${message} `,
+      undefined,
+      undefined,
+      undefined,
+      endHour,
+      endMinute
+    );
   }
 }
 
-export async function scheduleNotificationWeekly(groupName: string, message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
-
+export async function scheduleNotificationWeekly(
+  groupName: string,
+  message: string,
+  startMinute: number,
+  startHour: number,
+  weekday: number,
+  endMinute?: number,
+  endHour?: number
+) {
   const type = "weekly";
   const id = await Notifications.scheduleNotificationAsync({
     content: {
@@ -237,7 +283,17 @@ export async function scheduleNotificationWeekly(groupName: string, message: str
     },
   });
 
-  addNewAlarmsAsyncStorage(groupName, type, id, message, undefined, undefined, weekday, startHour, startMinute);
+  addNewAlarmsAsyncStorage(
+    groupName,
+    type,
+    id,
+    message,
+    undefined,
+    undefined,
+    weekday,
+    startHour,
+    startMinute
+  );
 
   if (endMinute != null && endHour != null) {
     const id = await Notifications.scheduleNotificationAsync({
@@ -253,37 +309,48 @@ export async function scheduleNotificationWeekly(groupName: string, message: str
       },
     });
 
-    addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO ${message}`, undefined, undefined, weekday, endHour, endMinute);
+    addNewAlarmsAsyncStorage(
+      groupName,
+      type,
+      id,
+      `ENCERRAMENTO ${message}`,
+      undefined,
+      undefined,
+      weekday,
+      endHour,
+      endMinute
+    );
   }
 }
 
 export function AddTodo() {
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //quando for carregar a tela verifica se ter as permissões para emitir notificações
 
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   //Usar asyncStorege para salvar esse Array
   const route = useRoute();
   const { groupSelected } = route.params as Params;
 
-
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token!));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token!)
+    );
 
     // aqui ele pode executar uma ação quando ou a notificação é feita o usuário ainda está na tela ou quando ele clica na notificação
     // (eu acho ainda estou testand pra ver o que dá certo)
-    const notificationListener = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(!notification);
-      console.log(notification);
-    });
+    const notificationListener = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(!notification);
+      }
+    );
 
-    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-
-    });
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        return;
+      });
     return () => {
       //tirando a notificação da lista de agendadas, pois ela já foi executada
       Notifications.removeNotificationSubscription(notificationListener);
@@ -294,28 +361,28 @@ export function AddTodo() {
   async function registerForPushNotificationsAsync() {
     let token;
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
+      if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert("Must use physical device for Push Notifications");
     }
 
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: "#FF231F7C",
       });
     }
     return token;
@@ -324,41 +391,45 @@ export function AddTodo() {
   //função só pra verificar todos os alarmes setados de TODOS os grupos
   async function alarmesSetados() {
     const alarmes = await Notifications.getAllScheduledNotificationsAsync();
-    console.log(alarmes);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
-  const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
-  const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
+  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>(
+    {} as DayProps
+  );
+  const [markedDates, setMarkedDates] = useState<MarkedDateProps>(
+    {} as MarkedDateProps
+  );
+  const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
+    {} as RentalPeriod
+  );
 
   const [weekDay, setWeekDay] = useState(0);
-  const [startHour, setStartHour] = useState('');
-  const [startMinute, setStartMinute] = useState('');
-  const [endHour, setEndHour] = useState('');
-  const [endMinute, setEndMinute] = useState('');
-  const [message, setMessage] = useState('');
+  const [startHour, setStartHour] = useState("");
+  const [startMinute, setStartMinute] = useState("");
+  const [endHour, setEndHour] = useState("");
+  const [endMinute, setEndMinute] = useState("");
+  const [message, setMessage] = useState("");
   const [repeat, setRepeat] = useState(false);
   const [daily, setDaily] = useState(false);
   const [weekly, setWeekly] = useState(false);
   const [withEnd, setWithEnd] = useState(false);
-
 
   const [notificationButton, setNotificationButton] = useState(false);
 
   const navigation = useNavigation();
 
   function handleOpenModalGrupos() {
-    Alert.alert("abrir modal")
+    Alert.alert("abrir modal");
     /* abre o modal com os grupos de ToDos criados pelo usuário*/
   }
   function handleTest() {
-    Alert.alert("teste2")
+    Alert.alert("teste2");
     /* marcar como feito e desfeito*/
   }
 
   function getPlatformDate(date: Date) {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       return addDays(date, 1);
     } else {
       return date;
@@ -366,10 +437,8 @@ export function AddTodo() {
   }
 
   function handleChangeDate(date: DayProps) {
-
     let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
     let end = date;
-
 
     if (start.timestamp > end.timestamp) {
       start = end;
@@ -386,11 +455,14 @@ export function AddTodo() {
     const endDate = Object.keys(interval)[Object.keys(interval).length - 1];
 
     setRentalPeriod({
-      startFormatted: format(getPlatformDate(new Date(firstDate)), 'dd/MM/yyyy'),
-      endFormatted: format(getPlatformDate(new Date(endDate)), 'dd/MM/yyyy'),
-    })
+      startFormatted: format(
+        getPlatformDate(new Date(firstDate)),
+        "dd/MM/yyyy"
+      ),
+      endFormatted: format(getPlatformDate(new Date(endDate)), "dd/MM/yyyy"),
+    });
 
-    setWeekDay(weekDayConvert(new Date(firstDate).getDay()))
+    setWeekDay(weekDayConvert(new Date(firstDate).getDay()));
   }
   function weekDayConvert(weekDay: number) {
     switch (weekDay) {
@@ -404,10 +476,8 @@ export function AddTodo() {
   function handleRepeatButton() {
     if (!repeat) {
       setRepeat(true);
-      console.log('eita')
     } else {
       setRepeat(false);
-      console.log('uepa!!')
     }
   }
 
@@ -415,10 +485,8 @@ export function AddTodo() {
     if (!daily) {
       setDaily(true);
       setWeekly(false);
-      console.log('daily true')
     } else {
       setDaily(false);
-      console.log('daily false')
     }
   }
 
@@ -426,11 +494,9 @@ export function AddTodo() {
     if (!weekly) {
       setWeekly(true);
       setDaily(false);
-      console.log('weekly true')
     } else {
       setWeekly(false);
       setWeekDay(0);
-      console.log('weekly false')
     }
   }
 
@@ -443,69 +509,93 @@ export function AddTodo() {
   }
 
   function handleSetWeekDay(weekDay: number) {
-    setWeekDay(weekDay)
-    console.log(weekDay)
+    setWeekDay(weekDay);
   }
 
   async function handleCancel() {
-    navigation.navigate('Home');
-
+    navigation.navigate("Home" as any);
   }
 
   async function handleConfirm(groupName: string) {
-    Alert.alert('Confirmado', 'Todo anotado com sucesso');
+    Alert.alert("Confirmado", "Todo anotado com sucesso");
     //setAlarm();
     const startHourNumber = Number.parseInt(startHour);
     const startMinuteNumber = Number.parseInt(startMinute);
     const endHourNumber = Number.parseInt(endHour);
     const endMinuteNumber = Number.parseInt(endMinute);
 
-    // FAZER A VERIFICAÇÃO SE O TEMPO DE ENCERRAMENTO É REALMENTE DEPOIS DO DE INICIO 
+    // FAZER A VERIFICAÇÃO SE O TEMPO DE ENCERRAMENTO É REALMENTE DEPOIS DO DE INICIO
     // E AINDA PREPARAR A LÓGICA DE CASO N TENHA TEMPO DE ENCERRAMENTO SETAR O ALARME APENAS COM O INICIO
     // SE TIVER ENCERRAMENTO SETAR COM INICIO E COM ENCERRAMENTO
     if (daily) {
       if (withEnd) {
-        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber, endMinuteNumber, endHourNumber);
+        scheduleNotificationDaily(
+          groupName,
+          message,
+          startMinuteNumber,
+          startHourNumber,
+          endMinuteNumber,
+          endHourNumber
+        );
       } else {
-        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
+        scheduleNotificationDaily(
+          groupName,
+          message,
+          startMinuteNumber,
+          startHourNumber
+        );
       }
-    };
+    }
 
     if (weekly) {
       if (withEnd) {
-        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay, endMinuteNumber, endHourNumber);
+        scheduleNotificationWeekly(
+          groupName,
+          message,
+          startMinuteNumber,
+          startHourNumber,
+          weekDay,
+          endMinuteNumber,
+          endHourNumber
+        );
       } else {
-        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
+        scheduleNotificationWeekly(
+          groupName,
+          message,
+          startMinuteNumber,
+          startHourNumber,
+          weekDay
+        );
       }
-    };
+    }
 
     if (!daily && !weekly) {
       let hour = startHourNumber - new Date().getHours();
       let minute = startMinuteNumber - new Date().getMinutes();
 
-      //lógica para pegar o intervalo de tempo entre o tempo atual e o 
+      //lógica para pegar o intervalo de tempo entre o tempo atual e o
       // tempo que foi setado pelo usuário
       if (hour == 0) {
         if (minute < 0) {
-          hour = 23 + hour
-          minute = 60 - (minute * (-1))
+          hour = 23 + hour;
+          minute = 60 - minute * -1;
         }
         if (minute == 0) {
-          hour += 24
+          hour += 24;
         }
       }
 
       if (hour < 0) {
-        hour = 24 + hour
+        hour = 24 + hour;
         if (minute < 0) {
-          hour -= 1
-          minute = 60 - (minute * (-1))
+          hour -= 1;
+          minute = 60 - minute * -1;
         }
       }
 
       if (minute < 0) {
-        minute = 60 + minute
-        hour = hour - 1
+        minute = 60 + minute;
+        hour = hour - 1;
       }
 
       //mesma lógica anterior, contudo agora aplicada para o horário de encerramento
@@ -514,48 +604,44 @@ export function AddTodo() {
 
       if (hourEnd == 0) {
         if (minuteEnd < 0) {
-          hourEnd = 23 + hourEnd
-          minuteEnd = 60 - (minuteEnd * (-1))
+          hourEnd = 23 + hourEnd;
+          minuteEnd = 60 - minuteEnd * -1;
         }
         if (minuteEnd == 0) {
-          hourEnd += 24
+          hourEnd += 24;
         }
       }
 
       if (hourEnd < 0) {
-        hourEnd = 24 + hourEnd
+        hourEnd = 24 + hourEnd;
         if (minuteEnd < 0) {
-          hourEnd -= 1
-          minuteEnd = 60 - (minuteEnd * (-1))
+          hourEnd -= 1;
+          minuteEnd = 60 - minuteEnd * -1;
         }
       }
 
-      console.log(hour, minute);
-
-      await scheduleNotificationSecond(groupName, message, repeat, minute, hour);
-
+      await scheduleNotificationSecond(
+        groupName,
+        message,
+        repeat,
+        minute,
+        hour
+      );
     }
   }
-
 
   return (
     <Container>
       <BackgroundLinear>
         <Header>
           <ButtonGroups>
-            <MenuButton
-              onPress={handleOpenModalGrupos}
-            />
+            <MenuButton onPress={handleOpenModalGrupos} />
           </ButtonGroups>
           <HeaderTitle>
             <TitleBox>
-              <Title>
-                Just Do it!
-              </Title>
+              <Title>Just Do it!</Title>
             </TitleBox>
-            <SubTitle>
-              Adicionar Todos
-            </SubTitle>
+            <SubTitle>Adicionar Todos</SubTitle>
           </HeaderTitle>
         </Header>
       </BackgroundLinear>
@@ -563,38 +649,31 @@ export function AddTodo() {
       <Listagem>
         <BackgroundLinear type="secondary">
           <InputTime>
-
             <InputTimeText onChangeText={setStartHour} />
             <TextButton style={{ fontSize: 15 }}> : </TextButton>
             <InputTimeText onChangeText={setStartMinute} />
 
-            {
-              withEnd &&
+            {withEnd && (
               <>
-                <TextButton style={{ fontSize: 15, margin: 10 }}>até</TextButton>
+                <TextButton style={{ fontSize: 15, margin: 10 }}>
+                  até
+                </TextButton>
 
                 <InputTimeText onChangeText={setEndHour} />
                 <TextButton style={{ fontSize: 15 }}> : </TextButton>
                 <InputTimeText onChangeText={setEndMinute} />
               </>
-            }
-
+            )}
           </InputTime>
         </BackgroundLinear>
 
         <BackgroundLinear>
-          <InputTodo
-            numberOfLines={1}
-            onChangeText={setMessage}
-          />
+          <InputTodo numberOfLines={1} onChangeText={setMessage} />
         </BackgroundLinear>
 
         <BackgroundLinear>
           <GestureHandlerRootView>
-            <ToggleButton
-              isActive={withEnd}
-              onPress={handleWithEndButton}
-            >
+            <ToggleButton isActive={withEnd} onPress={handleWithEndButton}>
               <TextButton>Tempo para encerrar</TextButton>
               <Feather
                 name={withEnd ? "toggle-right" : "toggle-left"}
@@ -607,10 +686,7 @@ export function AddTodo() {
 
         <BackgroundLinear>
           <GestureHandlerRootView>
-            <ToggleButton
-              isActive={repeat}
-              onPress={handleRepeatButton}
-            >
+            <ToggleButton isActive={repeat} onPress={handleRepeatButton}>
               <TextButton>Repetir em loop</TextButton>
               <Feather
                 name={repeat ? "toggle-right" : "toggle-left"}
@@ -623,10 +699,7 @@ export function AddTodo() {
 
         <BackgroundLinear>
           <GestureHandlerRootView>
-            <ToggleButton
-              isActive={daily}
-              onPress={handleDailyButton}
-            >
+            <ToggleButton isActive={daily} onPress={handleDailyButton}>
               <TextButton>Diário</TextButton>
               <Feather
                 name={daily ? "toggle-right" : "toggle-left"}
@@ -639,10 +712,7 @@ export function AddTodo() {
 
         <BackgroundLinear>
           <GestureHandlerRootView>
-            <ToggleButton
-              isActive={weekly}
-              onPress={handleWeeklyButton}
-            >
+            <ToggleButton isActive={weekly} onPress={handleWeeklyButton}>
               <TextButton>Semanal</TextButton>
               <Feather
                 name={weekly ? "toggle-right" : "toggle-left"}
@@ -653,34 +723,27 @@ export function AddTodo() {
           </GestureHandlerRootView>
         </BackgroundLinear>
 
-        {
-          weekly &&
+        {weekly && (
           <BackgroundLinear>
             <WeekDaySelectBox>
-              <WeekDayButton setWeekDay={handleSetWeekDay} weekDaySelected={weekDay} />
+              <WeekDayButton
+                setWeekDay={handleSetWeekDay}
+                weekDaySelected={weekDay}
+              />
             </WeekDaySelectBox>
           </BackgroundLinear>
-        }
-
+        )}
       </Listagem>
 
       <FinalButton>
         <GestureHandlerRootView>
           <CancelButton onPress={handleCancel}>
-            <Feather
-              name="x"
-              color={theme.colors.white}
-              size={30}
-            />
+            <Feather name="x" color={theme.colors.white} size={30} />
           </CancelButton>
         </GestureHandlerRootView>
         <GestureHandlerRootView>
-          <ConfirmButton onPress={()=> handleConfirm(groupSelected.groupName)}>
-            <Feather
-              name="check"
-              color={theme.colors.white}
-              size={30}
-            />
+          <ConfirmButton onPress={() => handleConfirm(groupSelected.groupName)}>
+            <Feather name="check" color={theme.colors.white} size={30} />
           </ConfirmButton>
         </GestureHandlerRootView>
       </FinalButton>

@@ -1,16 +1,14 @@
 import React from "react";
 
 import { RectButtonProps } from "react-native-gesture-handler";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import { useTheme } from "styled-components";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import {
-  Container
-} from './styles';
+import { Container } from "./styles";
 
 interface Props extends RectButtonProps {
-  black?: boolean,
+  black?: boolean;
 }
 
 export function MenuButton({ black, ...rest }: Props) {

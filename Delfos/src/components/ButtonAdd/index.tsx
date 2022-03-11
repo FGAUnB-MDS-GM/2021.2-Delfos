@@ -1,33 +1,28 @@
 import React from "react";
-import { GestureHandlerRootView, RectButtonProps } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  RectButtonProps,
+} from "react-native-gesture-handler";
 import { BackgroundLinear } from "../BackgroundLinear";
-import { Feather } from '@expo/vector-icons';
-import {IconProps} from '@expo/vector-icons/build/createIconSet';
+import { Feather } from "@expo/vector-icons";
 import { useTheme } from "styled-components";
 
-import {
-  Button,
-} from './styles'
+import { Button } from "./styles";
 
-
-interface Props extends RectButtonProps{
+interface Props extends RectButtonProps {
   icon: any;
 }
 
-export function ButtonAdd({icon, ...rest}: Props) {
-const theme = useTheme();
+export function ButtonAdd({ icon, ...rest }: Props) {
+  const theme = useTheme();
 
   return (
-      <BackgroundLinear>
-        <GestureHandlerRootView>
-          <Button {...rest}>
-            <Feather
-              name={icon}
-              size={40}
-              color={theme.colors.white}
-            />
-          </Button>
-        </GestureHandlerRootView>
-      </BackgroundLinear>
+    <BackgroundLinear>
+      <GestureHandlerRootView>
+        <Button {...rest}>
+          <Feather name={icon} size={40} color={theme.colors.white} />
+        </Button>
+      </GestureHandlerRootView>
+    </BackgroundLinear>
   );
 }

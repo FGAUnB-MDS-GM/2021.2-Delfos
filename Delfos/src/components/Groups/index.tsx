@@ -2,9 +2,9 @@ import React, { useCallback, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
 import { BackgroundLinear } from "../BackgroundLinear";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
 import { useFocusEffect } from "@react-navigation/native";
 
 import {
@@ -14,21 +14,21 @@ import {
   Content,
   Title,
   InputNameGroup,
-
-} from './styles';
+} from "./styles";
 
 import { ButtonAdd } from "../ButtonAdd";
 import { GroupButton } from "../GroupButton";
 import { Alert, Modal, View } from "react-native";
 import { CancelButton, ConfirmButton } from "../../screens/AddTodo/styles";
-import { AlarmsCheckedProps, TriggerAlarmsCheckedProps } from "../../screens/Home";
-
+import {
+  AlarmsCheckedProps,
+  TriggerAlarmsCheckedProps,
+} from "../../screens/Home";
 
 export interface GroupProps {
   groupName: string;
   enable: boolean;
 }
-
 
 interface Props {
   handleSelectGroup: (group: GroupProps) => void;
@@ -36,28 +36,25 @@ interface Props {
   deleteGroup: (group: GroupProps) => void;
 }
 
-export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Props) {
-
+export function Groups({
+  handleSelectGroup,
+  verifyStatusGroup,
+  deleteGroup,
+}: Props) {
   const [asyncGroups, setAsyncGroups] = useState<GroupProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalCreateGroup, setModalCreateGroup] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
-  const [groupAlarms, setGroupAlarms] = useState<AlarmsCheckedProps[]>([])
+  const [groupAlarms, setGroupAlarms] = useState<AlarmsCheckedProps[]>([]);
   const [modalDeleteGroup, setModalDeleteGroup] = useState(false);
 
   const theme = useTheme();
 
-  function teste() {
-    console.log("teste")
-  }
-
   function handleCreateGroup() {
     setModalCreateGroup(true);
-
   }
 
   async function handleConfirmCreateGroup() {
-
     try {
       const dataKey = `@delfos:localgroups`;
       const response = await AsyncStorage.getItem(dataKey);
@@ -67,17 +64,15 @@ export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Pr
         ...currentData,
         {
           groupName: newGroupName,
-          enable: true
-        }
-      ]
+          enable: true,
+        },
+      ];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
       setModalCreateGroup(false);
     } catch (error) {
-      console.log(error)
-      Alert.alert('Erro', "Infelizmente não foi possível criar o grupo")
+      Alert.alert("Erro", "Infelizmente não foi possível criar o grupo");
     }
-
   }
 
   function handleCancelCreateGroup() {
@@ -90,7 +85,7 @@ export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Pr
     try {
       await AsyncStorage.clear();
     } catch (error) {
-      console.log('Error', error)
+      
       Alert.alert("Erro", "Não foi possível limpar");
     }
   }
@@ -104,21 +99,24 @@ export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Pr
     setAsyncGroups(responseArray);
   }
 
-  useFocusEffect(useCallback(() => {
-    loadGroups()
-  }, [asyncGroups]))
+  useFocusEffect(
+    useCallback(() => {
+      loadGroups();
+    }, [asyncGroups])
+  );
 
   return (
     <Container>
       <Group
         data={asyncGroups}
-        keyExtractor={item => item.groupName}
+        keyExtractor={(item) => item.groupName}
         renderItem={({ item }) => (
           <GroupButton
             enable={item.enable}
-            id={item.groupName} onPress={() => handleSelectGroup(item)}
+            id={item.groupName}
+            onPress={() => handleSelectGroup(item)}
             disableGroup={() => verifyStatusGroup(item)}
-            deleteGroup={()=> deleteGroup(item)}
+            deleteGroup={() => deleteGroup(item)}
           />
         )}
       />
@@ -131,30 +129,27 @@ export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Pr
       <Modal visible={modalCreateGroup}>
         <Overlay>
           <Content>
-            <Title>
-              Nome do Grupo
-            </Title>
+            <Title>Nome do Grupo</Title>
             <InputNameGroup onChangeText={setNewGroupName} />
-            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", paddingHorizontal: 10, marginTop: 15 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                paddingHorizontal: 10,
+                marginTop: 15,
+              }}
+            >
               <GestureHandlerRootView>
                 <CancelButton onPress={handleCancelCreateGroup}>
-                  <Feather
-                    name="x"
-                    color={theme.colors.white}
-                    size={30}
-                  />
+                  <Feather name="x" color={theme.colors.white} size={30} />
                 </CancelButton>
               </GestureHandlerRootView>
               <GestureHandlerRootView>
                 <ConfirmButton onPress={handleConfirmCreateGroup}>
-                  <Feather
-                    name="check"
-                    color={theme.colors.white}
-                    size={30}
-                  />
+                  <Feather name="check" color={theme.colors.white} size={30} />
                 </ConfirmButton>
               </GestureHandlerRootView>
-
             </View>
           </Content>
         </Overlay>
@@ -164,29 +159,26 @@ export function Groups({ handleSelectGroup, verifyStatusGroup, deleteGroup }: Pr
       <Modal visible={modalDeleteGroup}>
         <Overlay>
           <Content>
-            <Title>
-              Tem certeza que deseja deletar?
-            </Title>
-            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", paddingHorizontal: 10, marginTop: 15 }}>
+            <Title>Tem certeza que deseja deletar?</Title>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                paddingHorizontal: 10,
+                marginTop: 15,
+              }}
+            >
               <GestureHandlerRootView>
                 <CancelButton onPress={handleCancelCreateGroup}>
-                  <Feather
-                    name="x"
-                    color={theme.colors.white}
-                    size={30}
-                  />
+                  <Feather name="x" color={theme.colors.white} size={30} />
                 </CancelButton>
               </GestureHandlerRootView>
               <GestureHandlerRootView>
                 <ConfirmButton onPress={handleConfirmCreateGroup}>
-                  <Feather
-                    name="check"
-                    color={theme.colors.white}
-                    size={30}
-                  />
+                  <Feather name="check" color={theme.colors.white} size={30} />
                 </ConfirmButton>
               </GestureHandlerRootView>
-
             </View>
           </Content>
         </Overlay>

@@ -1,0 +1,19 @@
+{
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": { "project": ["./tsconfig.json"] },
+    "plugins": [
+        "unused-imports",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "no-unused-vars": [
+            "warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+        ]
+    },
+    "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
+}

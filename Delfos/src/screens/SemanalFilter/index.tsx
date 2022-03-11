@@ -13,16 +13,15 @@ import {
   Title,
   SubTitle,
   Listagem,
-} from './styles';
+} from "./styles";
 
 export function SemanalFilter() {
-
   function handleOpenModalGrupos() {
-    Alert.alert("abrir modal")
+    Alert.alert("abrir modal");
     /* abre o modal com os grupos de ToDos criados pelo usuário*/
   }
   function handleTest() {
-    Alert.alert("teste2")
+    Alert.alert("teste2");
     /* marcar como feito e desfeito*/
   }
 
@@ -31,25 +30,19 @@ export function SemanalFilter() {
       <BackgroundLinear>
         <Header>
           <ButtonGroups>
-            <MenuButton
-              onPress={handleOpenModalGrupos}
-            />
+            <MenuButton onPress={handleOpenModalGrupos} />
           </ButtonGroups>
           <HeaderTitle>
             <TitleBox>
-              <Title>
-                Just Do it!
-              </Title>
+              <Title>Just Do it!</Title>
             </TitleBox>
-            <SubTitle>
-              To-do semanais
-            </SubTitle>
+            <SubTitle>To-do semanais</SubTitle>
           </HeaderTitle>
         </Header>
       </BackgroundLinear>
 
       <Listagem>
-        <TodoCard onPress={handleTest}/>
+        <TodoCard onPress={handleTest as any} />
       </Listagem>
     </Container>
   );

@@ -8,8 +8,7 @@ import {
 } from './styles';
 import { useTheme } from "styled-components";
 
-interface Props extends RectButtonProps {
-}
+type Props = RectButtonProps
 
 export function SearchButton({ ...rest }: Props) {
 

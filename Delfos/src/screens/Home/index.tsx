@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import { useTheme } from "styled-components";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as Notifications from 'expo-notifications';
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
+import * as Notifications from "expo-notifications";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NotificationRequest } from "expo-notifications";
 import { useNavigation } from "@react-navigation/native";
@@ -24,7 +24,7 @@ import {
   ButtonAddTodo,
   TitleBox,
   Content,
-} from './styles';
+} from "./styles";
 
 import { BackgroundLinear } from "../../components/BackgroundLinear";
 import { MenuButton } from "../../components/MenuButton";
@@ -33,12 +33,14 @@ import { TodoCard } from "../../components/TodoCard";
 import { ModalView } from "../../components/ModalView";
 import { Groups } from "../../components/Groups";
 import { ButtonAdd } from "../../components/ButtonAdd";
-import { scheduleNotificationDaily, scheduleNotificationSecond, scheduleNotificationWeekly } from "../AddTodo";
-
-
+import {
+  scheduleNotificationDaily,
+  scheduleNotificationSecond,
+  scheduleNotificationWeekly,
+} from "../AddTodo";
 
 export interface TriggerAlarmsCheckedProps {
-  type: string,
+  type: string;
   repeat?: boolean;
   hour?: number;
   minute?: number;
@@ -61,20 +63,39 @@ export function Home() {
   const theme = useTheme();
   const [alarmsArray, setAlarmsArray] = useState<NotificationRequest[]>([]);
   const navigation = useNavigation();
-  const [alarmsCheckeds, setAlarmsCheckeds] = useState<AlarmsCheckedProps[]>([]);
+  const [alarmsCheckeds, setAlarmsCheckeds] = useState<AlarmsCheckedProps[]>(
+    []
+  );
   const [alarmsGroup, setAlarmsGroup] = useState<AlarmsCheckedProps[]>([]);
   const [openModal, setOpenModal] = useState(false);
-  const [groupSelected, setGroupSelected] = useState<GroupProps>({} as GroupProps);
+  const [groupSelected, setGroupSelected] = useState<GroupProps>(
+    {} as GroupProps
+  );
   const [asyncGroups, setAsyncGroups] = useState<GroupProps[]>([]);
 
+  const getKeys = async () => {
+    console.log(await AsyncStorage.getItem("@delfos:alarmsScheduleGrupo1"));
+    console.log(await AsyncStorage.getItem("@delfos:alarmsScheduleundefined"));
+    console.log(await AsyncStorage.getItem("@delfos:localgroups"));
+    return await AsyncStorage.getAllKeys();
+  };
+
+  useEffect(() => {
+    const ActiveKeys = getKeys();
+    setTimeout(() => console.log(ActiveKeys), 1500);
+  }, [AsyncStorage]);
+
   async function handleSearch() {
-    Alert.alert("Buscando ToDos pelo nome")
+    Alert.alert("Buscando ToDos pelo nome");
     /* busca os ToDos criados pelo usuário pelo nome*/
     const teste = await Notifications.getAllScheduledNotificationsAsync();
-    console.log(teste)
   }
 
-  async function handleCheckTodo(idTodo: string, body: string | null, trigger: TriggerAlarmsCheckedProps) {
+  async function handleCheckTodo(
+    idTodo: string,
+    body: string | null,
+    trigger: TriggerAlarmsCheckedProps
+  ) {
     //Alert.alert(`testando o btt ${idTodo}`)
 
     try {
@@ -87,46 +108,43 @@ export function Home() {
         {
           identifier: idTodo,
           body: body,
-          trigger: trigger
-        }
-      ]
+          trigger: trigger,
+        },
+      ];
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
 
-      const remainingAlarms = alarmsGroup.filter(item => item.identifier != idTodo);
+      const remainingAlarms = alarmsGroup.filter(
+        (item) => item.identifier != idTodo
+      );
 
-      const dataKey2 = `@delfos:alarmsSchedule${groupSelected.groupName}`
+      const dataKey2 = `@delfos:alarmsSchedule${groupSelected.groupName}`;
       await AsyncStorage.setItem(dataKey2, JSON.stringify(remainingAlarms));
 
       await Notifications.cancelScheduledNotificationAsync(idTodo);
-
     } catch (error) {
-      console.log(error)
-      Alert.alert('Erro', "Infelizmente não foi possível marcar como feito")
+      Alert.alert("Erro", "Infelizmente não foi possível marcar como feito");
     }
   }
 
   async function loadAlarmsChecked() {
-
     try {
       const dataKey = `@delfos:alarmschecked${groupSelected.groupName}`;
       const response = await AsyncStorage.getItem(dataKey);
       const localAlarmsCheckeds = response ? JSON.parse(response) : [];
       setAlarmsCheckeds(localAlarmsCheckeds);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   }
 
   async function loadAlarmsGroup() {
     try {
-      const dataKey = `@delfos:alarmsSchedule${groupSelected.groupName}`
+      const dataKey = `@delfos:alarmsSchedule${groupSelected.groupName}`;
       const response = await AsyncStorage.getItem(dataKey);
       const scheduleAlarmsGroup = response ? JSON.parse(response) : [];
       setAlarmsGroup(scheduleAlarmsGroup);
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -136,45 +154,52 @@ export function Home() {
       const response = await AsyncStorage.getItem(dataKey);
       const currentGroups = response ? JSON.parse(response) : [];
       setAsyncGroups(currentGroups);
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   function handleScheduleCheckTodo(item: AlarmsCheckedProps) {
     ScheduleCheckTodo(item);
-    console.log(item);
   }
 
   async function ScheduleCheckTodo(item: AlarmsCheckedProps) {
     if (item.trigger.type == "daily") {
-      scheduleNotificationDaily(groupSelected.groupName, item.body!, item.trigger.minute!, item.trigger.hour!);
+      scheduleNotificationDaily(
+        groupSelected.groupName,
+        item.body!,
+        item.trigger.minute!,
+        item.trigger.hour!
+      );
       handleDelete(item.identifier);
-
     } else {
-      scheduleNotificationWeekly(groupSelected.groupName, item.body!, item.trigger.minute!, item.trigger.hour!, item.trigger.weekday!)
+      scheduleNotificationWeekly(
+        groupSelected.groupName,
+        item.body!,
+        item.trigger.minute!,
+        item.trigger.hour!,
+        item.trigger.weekday!
+      );
       handleDelete(item.identifier);
     }
-
   }
 
   function handleAdd() {
     /* aidicona um todo e deve encaminhar para telade criação de ToDo*/
-    navigation.navigate('AddTodo', { groupSelected });
+    navigation.navigate("AddTodo" as never, { groupSelected } as never);
   }
 
   async function getAlarms() {
     const response = await Notifications.getAllScheduledNotificationsAsync();
     setAlarmsArray(response);
-    //console.log(response);
+    //;
   }
 
   function handleOpenModal() {
     //Comando para limpar o AsyncStorage :
     //const dataKey = `@delfos:alarmschecked`;
     //AsyncStorage.setItem(dataKey, "")
-    console.log('Open Modal')
+
     setOpenModal(true);
   }
 
@@ -187,42 +212,41 @@ export function Home() {
     if (group.enable) {
       setDisable(group.groupName, group.enable);
     } else {
-      setEnable(group.groupName, group.enable)
+      setEnable(group.groupName, group.enable);
     }
   }
 
   async function setDisable(id: string, enable: boolean) {
     //Adicionando os Todos agendados para a lista de marcados
     try {
+      const newMarkedTodo: {
+        identifier: string;
+        body: string | null;
+        trigger: TriggerAlarmsCheckedProps;
+      }[] = [];
 
-      const newMarkedTodo: { identifier: string; body: string | null; trigger: TriggerAlarmsCheckedProps; }[] = [];
-
-      alarmsGroup.forEach(item => {
+      alarmsGroup.forEach((item) => {
         newMarkedTodo.push({
           identifier: item.identifier,
           body: item.body,
-          trigger: item.trigger
-        })
-      })
+          trigger: item.trigger,
+        });
+      });
 
-      const newData = [
-        ...alarmsCheckeds,
-        ...newMarkedTodo,
-      ]
+      const newData = [...alarmsCheckeds, ...newMarkedTodo];
       const dataKey2 = `@delfos:alarmschecked${id}`;
       await AsyncStorage.setItem(dataKey2, JSON.stringify(newData));
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
 
     //Exlcuindo todos os Todos marcados, pois agora eles estão como marcados
     try {
-      setAlarmsGroup(alarmsGroup.splice(0, alarmsGroup.length))
-      const dataKey = `@delfos:alarmsSchedule${id}`
+      setAlarmsGroup(alarmsGroup.splice(0, alarmsGroup.length));
+      const dataKey = `@delfos:alarmsSchedule${id}`;
       await AsyncStorage.setItem(dataKey, JSON.stringify(alarmsGroup));
     } catch (error) {
-
+      console.log(error);
     }
 
     try {
@@ -232,21 +256,20 @@ export function Home() {
 
       setAsyncGroups(currentGroups);
 
-      const alteredArray = asyncGroups.filter(item => item.groupName != id)
+      const alteredArray = asyncGroups.filter((item) => item.groupName != id);
 
       const newData = [
         ...alteredArray,
         {
           groupName: id,
-          enable: false
-        }
-      ]
+          enable: false,
+        },
+      ];
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
 
-      setOpenModal(false)
-
+      setOpenModal(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -258,75 +281,78 @@ export function Home() {
 
       setAsyncGroups(currentGroups);
 
-      const alteredArray = asyncGroups.filter(item => item.groupName != id)
+      const alteredArray = asyncGroups.filter((item) => item.groupName != id);
 
       const newData = [
         ...alteredArray,
         {
           groupName: id,
-          enable: true
-        }
-      ]
+          enable: true,
+        },
+      ];
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
-      setOpenModal(false)
+      setOpenModal(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   async function deleteGroup(group: GroupProps) {
-
     try {
       const dataKey = `@delfos:localgroups`;
       const dataKey2 = `@delfos:alarmschecked${group.groupName}`;
-      const dataKey3 = `@delfos:alarmsSchedule${group.groupName}`
+      const dataKey3 = `@delfos:alarmsSchedule${group.groupName}`;
 
       const response = await AsyncStorage.getItem(dataKey);
       const currentGroups = response ? JSON.parse(response) : [];
 
       setAsyncGroups(currentGroups);
 
-      const alteredArray = asyncGroups.filter(item => item.groupName != group.groupName)
+      const alteredArray = asyncGroups.filter(
+        (item) => item.groupName != group.groupName
+      );
 
-      const newData = [
-        ...alteredArray
-      ]
+      const newData = [...alteredArray];
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
 
-      alarmsGroup.forEach(item => {
+      alarmsGroup.forEach((item) => {
         Notifications.cancelScheduledNotificationAsync(item.identifier);
-      })
+      });
 
       await AsyncStorage.removeItem(dataKey2);
       await AsyncStorage.removeItem(dataKey3);
 
-      setOpenModal(false)
+      setOpenModal(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   async function handleDelete(id: string) {
     try {
-
       const dataKey = `@delfos:alarmschecked${groupSelected.groupName}`;
 
-      const remainingAlarmsChekeds = alarmsCheckeds.filter(item => item.identifier != id);
+      const remainingAlarmsChekeds = alarmsCheckeds.filter(
+        (item) => item.identifier != id
+      );
 
-      await AsyncStorage.setItem(dataKey, JSON.stringify(remainingAlarmsChekeds));
+      await AsyncStorage.setItem(
+        dataKey,
+        JSON.stringify(remainingAlarmsChekeds)
+      );
     } catch (error) {
-      console.log(error)
-      Alert.alert("Erro", "Infelizmente não foi possível remarcar essa ToDo")
-
+      Alert.alert("Erro", "Infelizmente não foi possível remarcar essa ToDo");
     }
   }
 
-  useFocusEffect(useCallback(() => {
-    getAlarms();
-    loadAlarmsChecked();
-    loadAlarmsGroup();
-    loadGroups();
-  }, [alarmsCheckeds]));
+  useFocusEffect(
+    useCallback(() => {
+      getAlarms();
+      loadAlarmsChecked();
+      loadAlarmsGroup();
+      loadGroups();
+    }, [alarmsCheckeds])
+  );
 
   return (
     <Container>
@@ -334,65 +360,63 @@ export function Home() {
         <BackgroundLinear>
           <Header>
             <ButtonGroups>
-              <MenuButton
-                onPress={handleOpenModal}
-              />
+              <MenuButton onPress={handleOpenModal} />
             </ButtonGroups>
             <HeaderHome>
-
               <TitleBox>
-                <Title>
-                  Delfos!
-                </Title>
+                <Title>Delfos!</Title>
               </TitleBox>
               <SubTitle>
-                {groupSelected.groupName ? groupSelected.groupName : "Selecione um Grupo!"}
+                {groupSelected.groupName
+                  ? groupSelected.groupName
+                  : "Selecione um Grupo!"}
               </SubTitle>
               <Search>
-
-                <SearchInput>
-                </SearchInput>
+                <SearchInput></SearchInput>
 
                 <SearchButton onPress={handleSearch} />
-
               </Search>
             </HeaderHome>
           </Header>
         </BackgroundLinear>
 
-
-
         <ListagemChecked
           data={alarmsGroup}
-          keyExtractor={item => item.identifier}
-          renderItem={({ item }) =>
+          keyExtractor={(item) => item.identifier}
+          renderItem={({ item }) => (
             <TodoCard
-              onPress={() => handleCheckTodo(item.identifier, item.body, item.trigger)}
+              onPress={() =>
+                handleCheckTodo(item.identifier, item.body, item.trigger)
+              }
               name={item.body}
               trigger={item.trigger}
-            />}
+            />
+          )}
         />
 
         <ListagemChecked
           data={alarmsCheckeds}
-          keyExtractor={item => item.identifier}
-          renderItem={({ item }) =>
+          keyExtractor={(item) => item.identifier}
+          renderItem={({ item }) => (
             <TodoCard
               checked={true}
               onPress={() => handleScheduleCheckTodo(item)}
               name={item.body}
               trigger={item.trigger}
               handleDelete={() => handleDelete(item.identifier)}
-            />}
+            />
+          )}
         />
-
-
       </Content>
       <Footer>
         <ButtonAdd icon="plus-circle" onPress={handleAdd} />
       </Footer>
       <ModalView visible={openModal}>
-        <Groups handleSelectGroup={getSelectedGroup} verifyStatusGroup={verifyStatusGroup} deleteGroup={deleteGroup} />
+        <Groups
+          handleSelectGroup={getSelectedGroup}
+          verifyStatusGroup={verifyStatusGroup}
+          deleteGroup={deleteGroup}
+        />
       </ModalView>
     </Container>
   );
