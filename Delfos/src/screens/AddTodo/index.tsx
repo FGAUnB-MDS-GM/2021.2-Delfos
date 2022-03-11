@@ -100,7 +100,8 @@ async function addNewAlarmsAsyncStorage(
             type: type,
             repeat: repeat,
             seconds: seconds,
-          }
+          },
+          checked: false
         }
       ]
       await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
@@ -221,6 +222,36 @@ export async function scheduleNotificationDaily(groupName: string, message: stri
   }
 }
 
+export async function scheduleNotificationDailyWithoutAdd(groupName: string, message: string, startMinute: number, startHour: number, endMinute?: number, endHour?: number) {
+
+  const type = "daily";
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Delfos te lembrou!!",
+      body: message,
+    },
+    trigger: {
+      minute: startMinute,
+      hour: startHour,
+      repeats: true,
+    },
+  });
+
+  if (endMinute != null && endHour != null) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Delfos te lembrou!!",
+        body: `ENCERRAMENTO! ${message} `,
+      },
+      trigger: {
+        minute: endMinute,
+        hour: endHour,
+        repeats: true,
+      },
+    });
+  }
+}
+
 export async function scheduleNotificationWeekly(groupName: string, message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
 
   const type = "weekly";
@@ -254,6 +285,40 @@ export async function scheduleNotificationWeekly(groupName: string, message: str
     });
 
     addNewAlarmsAsyncStorage(groupName, type, id, `ENCERRAMENTO ${message}`, undefined, undefined, weekday, endHour, endMinute);
+  }
+}
+
+export async function scheduleNotificationWeeklyWithoutAdd(groupName: string, message: string, startMinute: number, startHour: number, weekday: number, endMinute?: number, endHour?: number) {
+
+  const type = "weekly";
+  const id = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Delfos te lembrou!!",
+      body: message,
+    },
+    trigger: {
+      weekday: weekday,
+      hour: startHour,
+      minute: startMinute,
+      repeats: true,
+    },
+  });
+
+
+  if (endMinute != null && endHour != null) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Delfos te lembrou!!",
+        body: `ENCERRAMENTO ${message}`,
+      },
+      trigger: {
+        weekday: weekday,
+        hour: endHour,
+        minute: endMinute,
+        repeats: true,
+      },
+    });
+
   }
 }
 
@@ -533,6 +598,8 @@ export function AddTodo() {
       console.log(hour, minute);
 
       await scheduleNotificationSecond(groupName, message, repeat, minute, hour);
+
+      navigation.goBack();
 
     }
   }

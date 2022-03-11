@@ -49,7 +49,11 @@ export function SemanalFilter() {
       </BackgroundLinear>
 
       <Listagem>
-        <TodoCard onPress={handleTest}/>
+      <TodoCard
+          name={"teste Semanal"}
+          trigger={{type: "teste"}}
+          onPress={handleTest}
+        />
       </Listagem>
     </Container>
   );

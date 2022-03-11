@@ -3,7 +3,7 @@ import {FlatListProps, FlatList, TextInput, TextInputProps } from 'react-native'
 import theme from '../../global/theme';
 import { RectButton } from 'react-native-gesture-handler';
 import { NotificationRequest } from "expo-notifications";
-import { AlarmsCheckedProps } from '.';
+import { AlarmsProps } from '.';
 
 export const Container = styled.View`
   justify-content: space-between;
@@ -87,14 +87,7 @@ export const SearchInput = styled(TextInput).attrs({
     border-right-width: 2px;
 `;
 
-export const Listagem = styled(FlatList as new (props: FlatListProps<NotificationRequest>)=> FlatList<NotificationRequest>).attrs({
-  contentContainerStyle:{
-    padding: 10,
-  }
-})`
-`;
-
-export const ListagemChecked = styled(FlatList as new (props: FlatListProps<AlarmsCheckedProps>)=> FlatList<AlarmsCheckedProps>).attrs({
+export const Listagem = styled(FlatList as new (props: FlatListProps<AlarmsProps>)=> FlatList<AlarmsProps>).attrs({
   contentContainerStyle:{
     padding: 10,
   }
@@ -118,5 +111,16 @@ export const ButtonAddTodo = styled(RectButton)`
 
 `;
 
+export const RefreshButtonView = styled.View`
+  position: absolute;
+  bottom: 80px; 
+  right: 22px; 
+  background-color: ${({theme})=> theme.colors.primary}; 
+  width: 50px; 
+  height: 50px; 
+  border-radius: 25px; 
+  align-items: center; 
+  justify-content: center;
+`;
 
 

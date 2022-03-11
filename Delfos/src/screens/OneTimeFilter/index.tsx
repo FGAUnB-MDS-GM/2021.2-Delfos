@@ -50,7 +50,7 @@ export function OneTimeFilter() {
 
       <Listagem>
         <TodoCard
-          name={"teste"}
+          name={"teste único"}
           trigger={{type: "teste"}}
           onPress={handleTest}
         />
