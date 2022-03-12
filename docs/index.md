@@ -28,6 +28,14 @@
 - [Canvas MVP](https://miro.com/app/board/uXjVOK02Oh0=/)
 - [Vídeo de apresentação das entregas](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto)
 
+## Unidade 2 - Atualizada
+
+- [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade2_2entrega)
+- [Backlog do Produto](https://fgaunb-mds-gm.github.io/2021.2-Delfos/backlog)
+- [Quadro Kanbam](https://trello.com/b/z3gzOWUr/kanban)
+- [Canvas MVP](https://miro.com/app/board/uXjVOK02Oh0=/)
+- [Vídeo de apresentação das entregas](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto)
+
 ## Unidade 3
 
 ## Unidade 4
