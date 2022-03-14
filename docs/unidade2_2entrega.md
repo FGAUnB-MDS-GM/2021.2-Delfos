@@ -125,9 +125,9 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 
 | Papel                 | Atribuições                                                                               | Responsável | Participantes                  |
 |-----------------------|-------------------------------------------------------------------------------------------|-------------|--------------------------------|
-| Desenvolvedor         | Desenvolver e codificar o aplicativo, realizar os testes unitários, e fazer refatorações. | Renann      | João, Nicolas, Rafael, Tiago   |
-| Product Owner         | Organizar e desenvolver o escopo do produto, das sprints e validar as entregas.           | João        | Nicolas, Rafael, Renann, Tiago |
-| Analista de Qualidade | Garantir a qualidade do produto e das entregas e inspecionar o código.                    | Tiago       | João, Nicolas, Rafael, Renann  |
+| Desenvolvedor         | Desenvolver e codificar o aplicativo, realizar os testes unitários, e fazer refatorações. | Renann      | Nicolas, Rafael, Tiago   |
+| Product Owner         | Organizar e desenvolver o escopo do produto, das sprints e validar as entregas.           | Rafael        | Nicolas, Renann, Tiago |
+| Analista de Qualidade | Garantir a qualidade do produto e das entregas e inspecionar o código.                    | Tiago       | Nicolas, Rafael, Renann  |
 
 ## Planejamento das Fases e/ou Iterações do Projeto
 
