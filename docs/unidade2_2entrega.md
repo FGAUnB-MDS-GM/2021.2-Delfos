@@ -7,7 +7,6 @@ theme: jekyll-theme-architect
 # O Projeto
 
 ## Versão 0.12
-[Template do documento](https://docs.google.com/document/d/19BKNKYkIJTsT76UW47YChdQIxYEuyy6_r2m8N6qFm7M/edit#)
 
 ## Autores
 
