@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 
-import { BackgroundLinear } from "../../components/BackgroundLinear";
-import { MenuButton } from "../../components/MenuButton";
-import { WeekDayButton } from "../../components/WeekDayButton";
 
 import {
   Container,
@@ -29,11 +27,16 @@ import {
   InputTime,
   InputTimeText,
   WeekDaySelectBox,
-
+  
 } from './styles';
+
+import { BackgroundLinear } from "../../components/BackgroundLinear";
+import { MenuButton } from "../../components/MenuButton";
+import { WeekDayButton } from "../../components/WeekDayButton";
 import theme from "../../components/theme/theme";
-import { useNavigation, useRoute } from "@react-navigation/native";
+
 import { GroupProps } from '../../../models/groups'
+
 import {
   scheduleNotificationTimeInterval,
    scheduleNotificationDaily,
@@ -53,26 +56,16 @@ Notifications.setNotificationHandler({
 
 export function AddTodo() {
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //quando for carregar a tela verifica se ter as permissões para emitir notificações
+  ///Configurações do Expo Notifications///
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
-  //Usar asyncStorege para salvar esse Array
-  interface Params {
-    groupSelected: GroupProps;
-  }
   
-  const route = useRoute();
-  const { groupSelected } = route.params as Params;
-
-
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token!));
 
-    // aqui ele pode executar uma ação quando ou a notificação é feita o usuário ainda está na tela ou quando ele clica na notificação
-    // (eu acho ainda estou testand pra ver o que dá certo)
+    // executar uma ação quando: ou a notificação é feita e o usuário ainda está na tela 
+    //ou quando ele clica na notificação e abre o app
     const notificationListener = Notifications.addNotificationReceivedListener(notification => {
       setNotification(!notification);
       console.log(notification);
@@ -120,9 +113,14 @@ export function AddTodo() {
     }
     return token;
   }
+  ///Configurações do Expo Notifications///
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  interface Params {
+    groupSelected: GroupProps;
+  }
   
+  const route = useRoute();
+  const { groupSelected } = route.params as Params;
   const [weekDay, setWeekDay] = useState(0);
   const [startHour, setStartHour] = useState('');
   const [startMinute, setStartMinute] = useState('');
@@ -133,7 +131,6 @@ export function AddTodo() {
   const [daily, setDaily] = useState(false);
   const [weekly, setWeekly] = useState(false);
   const [withEnd, setWithEnd] = useState(false);
-
   const navigation = useNavigation();
 
 
@@ -180,15 +177,13 @@ export function AddTodo() {
     navigation.navigate('Home');
   }
 
+  //Confirma a criação do ToDo (falta fazer a validção do que foi preenchido)
   async function handleConfirm(groupName: string) {
     const startHourNumber = Number.parseInt(startHour);
     const startMinuteNumber = Number.parseInt(startMinute);
     const endHourNumber = Number.parseInt(endHour);
     const endMinuteNumber = Number.parseInt(endMinute);
 
-    // FAZER A VERIFICAÇÃO SE O TEMPO DE ENCERRAMENTO É REALMENTE DEPOIS DO DE INICIO 
-    // E AINDA PREPARAR A LÓGICA DE CASO N TENHA TEMPO DE ENCERRAMENTO SETAR O ALARME APENAS COM O INICIO
-    // SE TIVER ENCERRAMENTO SETAR COM INICIO E COM ENCERRAMENTO
     if (daily) {
       if (withEnd) {
         scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
@@ -221,11 +216,6 @@ export function AddTodo() {
     <Container>
       <BackgroundLinear>
         <Header>
-          <ButtonGroups>
-            <MenuButton
-              onPress={()=> {}}
-            />
-          </ButtonGroups>
           <HeaderTitle>
             <TitleBox>
               <Title>

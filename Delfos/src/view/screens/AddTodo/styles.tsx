@@ -1,4 +1,4 @@
-import { TextInput } from "react-native";
+
 import styled from "styled-components/native";
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
 

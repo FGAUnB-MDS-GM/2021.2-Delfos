@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BackgroundLinear } from "../BackgroundLinear";
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from "styled-components";

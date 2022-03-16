@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import { LinearGradient, LinearGradientProps } from "expo-linear-gradient";
-import { ReactNode } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+
 
 export const LinearGradientColor = styled(LinearGradient).attrs({
   style: {

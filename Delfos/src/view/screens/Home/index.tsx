@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
 
 import {
@@ -12,6 +11,9 @@ import {
   Search,
   SearchInput,
   Listagem,
+  CreateGroup,
+  WellcomeCard,
+  WellcomeMessage,
   Footer,
   TitleBox,
   Content,
@@ -29,9 +31,9 @@ import { ToDoProps } from "../../../models/toDos";
 import { GroupProps } from "../../../models/groups";
 
 import {
-  checkToDo, 
-  deleteToDo, 
-  filterToDoMessage, 
+  checkToDo,
+  deleteToDo,
+  filterToDoMessage,
   loadToDos,
   scheduleCheckedToDo
 } from '../../../control/todoControl'
@@ -43,7 +45,7 @@ export function Home() {
   const navigation = useNavigation();
   const [toDos, setToDos] = useState<ToDoProps[]>([]);
   const [groupSelected, setGroupSelected] = useState<GroupProps>({} as GroupProps);
-  const [toDoSearch, setToDoSearch]= useState('')
+  const [toDoSearch, setToDoSearch] = useState('')
 
   const { group } = getContext();
 
@@ -55,11 +57,12 @@ export function Home() {
   async function handleSearch(ToDoMessage: string) {
     const ToDosFiltred = await filterToDoMessage(groupSelected, ToDoMessage);
     setToDos(ToDosFiltred);
-    
+
   }
 
   async function handleRefreshToDos() {
-    refreshToDos()
+    await refreshToDos();
+    setGroupSelected(group);
   }
 
   async function handleCheckTodo(ToDo: ToDoProps) {
@@ -67,7 +70,7 @@ export function Home() {
     await refreshToDos();
   }
 
-  async function handleScheduleCheckedToDo(ToDo: ToDoProps){
+  async function handleScheduleCheckedToDo(ToDo: ToDoProps) {
     await scheduleCheckedToDo(groupSelected, ToDo);
     await refreshToDos();
   }
@@ -81,7 +84,7 @@ export function Home() {
     await refreshToDos();
   }
 
-  async function refreshToDos(){
+  async function refreshToDos() {
     const ToDos = await loadToDos(groupSelected)
     setToDos(ToDos)
   }
@@ -90,12 +93,6 @@ export function Home() {
     setGroupSelected(group);
     console.log('carregou')
   }, [group]);
-
-  /** 
-  useFocusEffect(()=>{
-    refreshToDos();
-  })
-*/
 
   return (
     <Container>
@@ -118,28 +115,40 @@ export function Home() {
                 {groupSelected.groupName ? groupSelected.groupName : "Selecione um Grupo!"}
               </SubTitle>
               <Search>
-                <SearchInput onChangeText={setToDoSearch}/>
-                <SearchButton onPress={()=> handleSearch(toDoSearch)} />
+                <SearchInput onChangeText={setToDoSearch} />
+                <SearchButton onPress={() => handleSearch(toDoSearch)} />
 
               </Search>
             </HeaderHome>
           </Header>
         </BackgroundLinear>
 
-        <Listagem
-          data={toDos}
-          keyExtractor={item => item.identifier}
-          renderItem={({ item }) =>
-            <TodoCard
-              identifier={item.identifier}
-              onPress={() => handleCheckTodo(item)}
-              message={item.message}
-              trigger={item.trigger}
-              checked={item.checked}
-              handleDelete={() => handleDelete(item)}
-              schedulechekedToDo={()=> handleScheduleCheckedToDo(item)}
-            />}
-        />
+        {groupSelected.groupName ?
+          <Listagem
+            data={toDos}
+            keyExtractor={item => item.identifier}
+            renderItem={({ item }) =>
+              <TodoCard
+                identifier={item.identifier}
+                onPress={() => handleCheckTodo(item)}
+                message={item.message}
+                trigger={item.trigger}
+                checked={item.checked}
+                handleDelete={() => handleDelete(item)}
+                schedulechekedToDo={() => handleScheduleCheckedToDo(item)}
+              />}
+          />
+          :
+          <CreateGroup>
+            <WellcomeCard>
+              <WellcomeMessage>
+                Bem vindo! {"\n"}
+                Crie seu primeiro Grupo, antes de anotar um ToDo!
+              </WellcomeMessage>
+              <ButtonAdd icon="folder-plus" onPress={handleListGroups}/>
+            </WellcomeCard>
+          </CreateGroup>
+        }
 
       </Content>
       <Footer>

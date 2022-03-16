@@ -1,8 +1,6 @@
 import styled from 'styled-components/native';
-import {FlatListProps, FlatList, TextInput, TextInputProps } from 'react-native';
-import theme from '../../components/theme/theme';
+import {FlatListProps, FlatList, TextInput } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { NotificationRequest } from "expo-notifications";
 
 import { ToDoProps } from '../../../models/toDos';
 
@@ -23,7 +21,6 @@ export const Header = styled.View`
 
 export const Content = styled.View`
   flex: 1;
-
 `;
 
 export const ButtonGroups = styled.View`
@@ -93,6 +90,30 @@ export const Listagem = styled(FlatList as new (props: FlatListProps<ToDoProps>)
     padding: 10,
   }
 })`
+`;
+
+export const CreateGroup = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
+`;
+
+export const WellcomeCard = styled.View`
+  width: 100%;
+  height: 300px;
+  background-color: ${({theme})=> theme.colors.secondary};
+  padding: 0px 10px;
+  justify-content: space-evenly;
+  border-width: 5px;
+  border-radius: 20px;
+`;
+
+export const  WellcomeMessage = styled.Text`
+  font-size: 20px;
+  font-family: ${({ theme }) => theme.fonts.text};
+  color: ${({theme})=> theme.colors.text};
+  align-self: center;
 `;
 
 export const Footer = styled.View`

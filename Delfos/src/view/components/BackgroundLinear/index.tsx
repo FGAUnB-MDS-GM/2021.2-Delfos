@@ -1,9 +1,6 @@
 import React, { ReactNode } from "react";
-import { LinearGradientProps } from "expo-linear-gradient";
 import theme from '../theme/theme';
 import { LinearGradientColor } from './styles';
-import { View } from "react-native";
-
 
 interface Props {
   children?: ReactNode;

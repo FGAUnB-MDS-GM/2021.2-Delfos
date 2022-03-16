@@ -1,6 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
 import { GroupProps } from "../../../models/groups";
 import { ToDoProps } from "../../../models/toDos";
 import { BackgroundLinear } from "../../components/BackgroundLinear";

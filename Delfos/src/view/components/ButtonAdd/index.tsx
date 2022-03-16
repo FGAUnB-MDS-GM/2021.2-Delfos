@@ -2,7 +2,6 @@ import React from "react";
 import { GestureHandlerRootView, RectButtonProps } from "react-native-gesture-handler";
 import { BackgroundLinear } from "../BackgroundLinear";
 import { Feather } from '@expo/vector-icons';
-import {IconProps} from '@expo/vector-icons/build/createIconSet';
 import { useTheme } from "styled-components";
 
 import {

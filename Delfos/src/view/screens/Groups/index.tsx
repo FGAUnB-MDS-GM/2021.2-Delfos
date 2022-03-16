@@ -59,6 +59,7 @@ export function Groups() {
   async function handleDeleteGroup(group: GroupProps) {
     await deleteGroup(group);
     await refreshGroups();
+    selectGroup({}as GroupProps);
   }
 
   async function refreshGroups() {

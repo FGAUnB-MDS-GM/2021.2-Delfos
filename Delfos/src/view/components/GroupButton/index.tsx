@@ -2,13 +2,14 @@ import React from "react";
 import { View } from "react-native";
 import { GestureHandlerRootView, RectButton, RectButtonProps } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
+import { useTheme } from "styled-components";
 
 import {
   Container,
   ViewButton,
   TextButton,
 } from './styles';
-import { useTheme } from "styled-components";
+
 
 interface Props extends RectButtonProps {
   id: string;
