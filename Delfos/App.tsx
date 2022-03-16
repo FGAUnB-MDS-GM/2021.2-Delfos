@@ -7,13 +7,11 @@ import { Roboto_500Medium } from '@expo-google-fonts/roboto';
 
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
-import theme from './src/global/theme';
+import theme from './src/view/components/theme/theme';
 
-import { Home } from './src/screens/Home';
-import { OneTimeFilter } from './src/screens/OneTimeFilter';
-import { SemanalFilter } from './src/screens/SemanalFilter';
-import { Routes } from './src/routes';
+import { Routes } from './src/view/routes';
 
+import { ContextProvider, getContext } from './src/control/contextControl';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,14 +19,18 @@ export default function App() {
     Roboto_500Medium,
   });
 
-  if (!fontsLoaded) {
+  const { load } = getContext();
+
+  if (!fontsLoaded || load) {
     return <AppLoading />
   }
 
   return (
     <ThemeProvider theme={theme}>
-        <StatusBar style="dark" />
+      <StatusBar style="dark" />
+      <ContextProvider>
         <Routes />
+      </ContextProvider>
     </ThemeProvider>
   );
 }
