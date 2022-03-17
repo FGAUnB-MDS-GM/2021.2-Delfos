@@ -45,3 +45,11 @@ Uma plataforma simples e conveniente que vai acabar com a sua desorganização!
  - [Quadro Kanbam](https://trello.com/b/z3gzOWUr/kanban)
  - [Canvas MVP](https://miro.com/app/board/uXjVOK02Oh0=/)
  - [Vídeo de apresentação das entregas](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto)
+
+ ### Unidade 3 - 17 de Março de 2022
+
+ - [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade3)
+ - Modelo de Classes do Produto - Presente no Docs do Projeto
+ - Modelo de Arquitetura do Produto - Presente no Docs do Projeto.
+ - [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
+ - [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)

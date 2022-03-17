@@ -48,26 +48,14 @@ De maneira intuitiva proporcionar ao cliente uma forma de se organizar e se lemb
 
 ### Requisitos Funcionais
 
-- Deverá ser possível criar atividades
-- Deverá ser possível deletar atividades
-- Deverá ser possível editar atividades
-- Deverá ser possível buscar e filtrar atividades
-- Deverá ser possível configurar um horário no qual será emitida uma notificação sobre determinada atividade
-- Deverá ser possível agrupar atividades
-- Deverá haver um calendário para que em cada dia possam ser adicionadas atividades
-- Deverá ser possível configurar atividades para se repetir em determinados dias da semana até que o usuário a desmarque(ex.: lavar roupa toda segunda)
-
-
-
 | N°  | Requisitos Funcionais	                                                             | Prioridade |
 |-----|-----------------------------------------------------------------------------------|------------|
 | RF1 | Deverá ser possível cadastrar atividades                                          | Alta       |
 | RF2 | Deverá ser possível deletar atividades                                            | Alta       |
 | RF3 | Deverá ser possível editar atividades                                             | Alta       |
 | RF4 | Deverá ser possível visualizar atividades                                         | Alta       |
-| RF5 | Deverá ser possível filtrar atividades                                            | Média      |
+| RF5 | Deverá ser possível buscar atividades                                            | Média      |
 | RF6 | Deverá ser possível agrupar atividades                                            | Média      |
-| RF7 | Deverá haver um calendário para que em cada dia possam ser adicionadas atividades | Baixa      |
 
 Prioridades:
 - Alta - Funcionalidade básica e essencial para o sistema
@@ -77,15 +65,6 @@ Prioridades:
 
 ### Requisitos Não-funcionais
 
-- O app não precisará de conexão com a internet para funcionar
-- Haverá disponibilidade tanto para sistemas Android quanto para IOS
-- Ocupará no máximo 500 mb de  memória do dispositivo
-- O app terá um widget para que fique destacado na área de trabalho
-- O app deve ser desenvolvido em react-native
-- O versionamento do app deve ser feito pelo GitHub
-- A aplicação deve ser documentada através do GitPages
-
-
 | Classificação  | Requisitos Não-funcionais                                          | Prioridade |
 |----------------|--------------------------------------------------------------------|------------|
 |  Implementação | A aplicação deve ser documentada através do GitPages               | Alta       |
@@ -94,6 +73,7 @@ Prioridades:
 | Portabilidade  | Haverá disponibilidade tanto para sistemas Android quanto para IOS | Alta       |
 |  Produto       | Ocupará no máximo 500 mb de  memória do dispositivo                | Média      |
 | Usabilidade    | O app não precisará de conexão com a internet para funcionar       | Média      |
+| Usabilidade    | Deverá ser possível consultar agenda por meio de um calendário.    | Média      |
 | Funcionalidade | O app terá um widget para que fique destacado na área de trabalho  | Baixa      |
 
 ## Mínimo Produto Viável (MVP)
@@ -137,6 +117,44 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 | Desenvolver funcionalidades da aplicação   | Desenvolvimento das funções que o produto vai desempenhar                                                                                                         | React Native + Typescript                 |
 | Verificar se os requisitos foram atendidos | Testar o produto em dispositivos reais e verificar se todas as funções estão de acordo com os requisitos                                                          | Expo                                      |
 
+# Visão Geral do Projeto
+
+## Organização do Projeto
+
+| Papel                 | Atribuições                                                                               | Responsável | Participantes                  |
+|-----------------------|-------------------------------------------------------------------------------------------|-------------|--------------------------------|
+| Desenvolvedor         | Desenvolver e codificar o aplicativo, realizar os testes unitários, e fazer refatorações. | Renann      | Nicolas, Rafael, Tiago   |
+| Product Owner         | Organizar e desenvolver o escopo do produto, das sprints e validar as entregas.           | Rafael        | Nicolas, Renann, Tiago |
+| Analista de Qualidade | Garantir a qualidade do produto e das entregas e inspecionar o código.                    | Tiago       | Nicolas, Rafael, Renann  |
+
+## Planejamento das Fases e/ou Iterações do Projeto
+
+| Release  | Entrega                                                                                                                 | Data Prevista |
+|----------|-------------------------------------------------------------------------------------------------------------------------|---------------|
+| Sprint 1 | Definição do Produto e do Projeto                                                                                       | 03/02/2022    |
+| Sprint 2 | Backlog, Documento de Visão do Produto e Projeto Ampliada, Canvas MVP, e Kanban do Projeto.                             | 24/02/2022    |
+| Sprint 3 | Modelo de Classes de Produto, Modelo de Arquitetura do Projeto (Visão Lógica); e Protótipos de Interface do Aplicativo. | 17/03/2022    |
+| Sprint 4 | Codificação dos Requisitos RF1, RF2, RF3, RF4                                                                           | 07/04/2022    |
+| Sprint 5 | Codificação dos Requisitos RF5, RF6, RF7                                                                                | 12/04/2022    |
+
+## Matriz de Comunicação
+
+| Descrição                                  | Área/Envolvidos                           | Periodicidade | Produtos Gerados                                              |
+|--------------------------------------------|-------------------------------------------|---------------|---------------------------------------------------------------|
+| Acompanhamento das Atividades em Andamento | Equipe do Projeto                         | Semanal       | Ata de Reunião e Relatório de Situação da Sprint e do Projeto |
+| Comunicar Situação do Projeto              | Equipe do Projeto Professor da Disciplina | Semanal       | Ata de Reunião e Relatório de Situação do Projeto             |
+| Acompanhamento dos riscos                  | Equipe do Projeto                         | Quinzenal     | Ata de reunião e Relatório de Situação do Projeto             |
+
+## Gerenciamento de Riscos
+
+    - Problemas de comunicação entre a equipe.
+    - Dificuldades de aprendizado das tecnologias necessarias para o desenvolvimento do produto.
+    - Pouco tempo dedicado ao desenvolvimento e documentação do projeto.
+
+## Critérios de Replanejamento
+
+    É recomendado agendar uma ou mais reuniões entre o grupo para resolver e planejar a resolução viável do problema encontrado, e apresenta-la para o professor.
+
 # Lições aprendidas
 
 ## Unidade 1
@@ -163,7 +181,7 @@ Lições aprendidas na unidade 5
 
 ## Referência
 
-# [Video de apresentação](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto "Link do Youtube")
+# [Video de apresentação](https://youtu.be/tAvqrmDL-co "Link do Youtube")
 
 [Voltar ao inicio](#header)
 
