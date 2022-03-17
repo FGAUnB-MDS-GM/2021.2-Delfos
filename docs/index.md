@@ -42,7 +42,7 @@
 - [Modelo de Classes do Produto](https://lucid.app/lucidchart/c57dc78b-1cc6-4c68-ad25-610f7a6556ab/edit?invitationId=inv_44da9ec7-1b71-43da-82b2-21045bb74c83)
 - Modelo de Arquitetura do Produto - Presente no Docs do Projeto.
 - [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
-- [Vídeo de apresentação da entrega](https://www.youtube.com)
+- [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
 
 ## Unidade 4
 
