@@ -36,7 +36,13 @@
 - [Canvas MVP](https://miro.com/app/board/uXjVOK02Oh0=/)
 - [Vídeo de apresentação das entregas](https://www.youtube.com/watch?v=BQ_ug8QKp8s&ab_channel=NicolasRoberto)
 
-## Unidade 3
+## Unidade 3 - 17 de Março de 2022
+
+- [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade3)
+- [Modelo de Classes do Produto](https://lucid.app/lucidchart/c57dc78b-1cc6-4c68-ad25-610f7a6556ab/edit?invitationId=inv_44da9ec7-1b71-43da-82b2-21045bb74c83)
+- Modelo de Arquitetura do Produto - Presente no Docs do Projeto.
+- [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
+- [Vídeo de apresentação da entrega](https://www.youtube.com)
 
 ## Unidade 4
 
