@@ -10,6 +10,7 @@ import { OneTimeFilter } from "../screens/OneTimeFilter";
 import { SemanalFilter } from "../screens/SemanalFilter";
 import { AddTodo } from "../screens/AddTodo";
 import { Groups } from "../screens/Groups";
+import { Splash } from "../screens/Splash";
 
 export type AppRoutesParamList = {
   Home: undefined;
@@ -17,7 +18,8 @@ export type AppRoutesParamList = {
   SemanalFilter: undefined;
   AddTodo: undefined;
   TabRoutes: undefined;
-  Groups: undefined
+  Groups: undefined;
+  Splash: undefined;
 };
 
 export function AppRoutes() {
@@ -27,6 +29,11 @@ export function AppRoutes() {
   return (
     <Navigator>
 
+      <Screen
+        name="Splash"
+        component={Splash}
+        options={{ headerShown: false }}
+      />
       <Screen
         name="TabRoutes"
         component={TabRoutes}

@@ -27,7 +27,6 @@ import {
   InputTime,
   InputTimeText,
   WeekDaySelectBox,
-  
 } from './styles';
 
 import { BackgroundLinear } from "../../components/BackgroundLinear";

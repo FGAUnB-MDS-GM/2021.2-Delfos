@@ -3,8 +3,6 @@ import { Alert } from "react-native";
 
 import { GroupProps } from "../../models/groups";
 
-
-
 const dataKey = `@delfos:localgroups`
 
 //Busca o array de grupos

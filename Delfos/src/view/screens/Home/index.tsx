@@ -145,14 +145,18 @@ export function Home() {
                 Bem vindo! {"\n"}
                 Crie seu primeiro Grupo, antes de anotar um ToDo!
               </WellcomeMessage>
-              <ButtonAdd icon="folder-plus" onPress={handleListGroups}/>
+              <ButtonAdd icon="folder-plus" onPress={handleListGroups} />
             </WellcomeCard>
           </CreateGroup>
         }
 
       </Content>
       <Footer>
-        <ButtonAdd icon="plus-circle" onPress={handleAdd} />
+
+        {groupSelected.groupName ?
+          <ButtonAdd icon="plus-circle" onPress={handleAdd} />
+          : <></>
+        }
       </Footer>
       <RefreshButtonView>
         <RefreshButton onPress={handleRefreshToDos} />

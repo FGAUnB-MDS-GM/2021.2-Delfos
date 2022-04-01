@@ -5,7 +5,11 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "splash": {
+      "image": "./src/view/components/assets/splash.png",
+      "backgroundColor": "#30E4CF"
+    }
   },
   "name": "Delfos"
 }

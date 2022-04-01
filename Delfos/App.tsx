@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './src/view/components/theme/theme';
 
 import { Routes } from './src/view/routes';
+import { Splash} from './src/view/screens/Splash';
 
 import { ContextProvider, getContext } from './src/control/contextControl';
 
