@@ -48,8 +48,8 @@ Uma plataforma simples e conveniente que vai acabar com a sua desorganização!
  ### Unidade 3 - 17 de Março de 2022
 
  - [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade3)
- - Modelo de Classes do Produto - Presente no Docs do Projeto
- - Modelo de Arquitetura do Produto - Presente no Docs do Projeto.
+ - [Modelo de Classes do Produto](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/Delfos%20-%20Diagrama.pdf)
+ - [Modelo de Arquitetura do Produto](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/ModeloDeArquiteturaDelfos.pdf)
  - [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
  - [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
 
