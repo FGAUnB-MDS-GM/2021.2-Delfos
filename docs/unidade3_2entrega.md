@@ -171,13 +171,13 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 
 ## Diagrama de Arquitetura do Projeto
 
-![diagrama de arquitetura](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/arquitetura.png)
+![diagrama de arquitetura](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/arquitetura.PNG)
 
 ## Diagrama de "Classes" do Produto
 
-![diagrama de classes 1](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/dia_classes_1.png)
+![diagrama de classes 1](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/dia_classes_1.PNG)
 
-![diagrama de classes 2](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/dia_classes_2.png)
+![diagrama de classes 2](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/dia_classes_2.PNG)
 
 ![diagrama de classes 3](https://github.com/FGAUnB-MDS-GM/2021.2-Delfos/blob/main/docs/assets/dia_classes_3.PNG)
 
