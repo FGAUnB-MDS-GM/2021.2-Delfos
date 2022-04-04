@@ -97,7 +97,7 @@ Este backlog foi produzido de acordo com a abordagem ágil e seguindo a perspect
 | Gerenciamento de atividades | Filtro de atividades               | FA2 | Como usuário, eu quero poder ver todas as atividades de repetição semanal para saber o que terei que fazer frequentemente.         | Baixa      |
 | Gerenciamento de atividades | Filtro de atividades               | FA3 | Como usuário, eu quero ser capaz de buscar uma atividade através de pesquisa por texto para que eu a ache facilmente.              | Média      |
 | Gerenciamento de atividades |   Organização das atividades       | OA1 | Como usuário, eu quero poder agrupar atividades para que elas fiquem melhor organizadas.                                           | Média      |
-| Gerenciamento de atividades | Organização das atividades         | OA1 | Como usuário, eu quero um calendário para que em cada dia eu adicione, visualize ou edite atividades.                              | Baixa      |
+| Gerenciamento de atividades | Organização das atividades         | OA2 | Como usuário, eu quero um calendário para visualizar as atividades semanais                              | Baixa      |
 
 ## Prioridades:
 - Alta - Funcionalidade básica e essencial para o sistema
