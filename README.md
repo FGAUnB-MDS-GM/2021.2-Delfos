@@ -3,7 +3,6 @@
 ## Equipe:
 | Nome                          | Matrícula        |
 |:-----------------------------:|:----------------:|
-|João Ricardo Firmino de Almeida| 190046562        |
 |Nicolas Roberto de Queiroz     | 200042360        |
 |Rafael Xavier Canabrava        | 200026551        |
 |Renann de Oliveira Gomes       | 200043030        |
@@ -53,3 +52,9 @@ Uma plataforma simples e conveniente que vai acabar com a sua desorganização!
  - Modelo de Arquitetura do Produto - Presente no Docs do Projeto.
  - [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
  - [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
+
+### Unidade 3 - Atualizada
+
+- [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade3_2entrega)
+- [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
+- [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
