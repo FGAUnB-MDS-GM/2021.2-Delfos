@@ -58,3 +58,8 @@ Uma plataforma simples e conveniente que vai acabar com a sua desorganização!
 - [Documento de Requisitos](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade3_2entrega)
 - [Protótipo de Interface](https://www.figma.com/file/9luZlstA0pZRrJTQ0e4Qmv/MDS_2021-2?node-id=0%3A1)
 - [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
+
+### Unidade 4 - 07 de Abril de 2022
+
+- [Documento de Requisitos Atualizado](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade4)
+- [Vídeo de apresentação da entrega](https://youtu.be/tAvqrmDL-co)
