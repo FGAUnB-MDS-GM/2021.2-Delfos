@@ -9,9 +9,10 @@ import {
 import { useTheme } from "styled-components";
 
 interface Props extends RectButtonProps {
+  addNotes?: boolean;
 }
 
-export function RefreshButton({ ...rest }: Props) {
+export function RefreshButton({ addNotes, ...rest }: Props) {
 
   const theme = useTheme();
 
@@ -19,9 +20,9 @@ export function RefreshButton({ ...rest }: Props) {
     <GestureHandlerRootView>
       <Container {...rest}>
         <Feather
-          name="refresh-cw"
+          name={addNotes ? "plus" : "refresh-cw"}
           size={24}
-          color={theme.colors.text}
+          color={addNotes ? theme.colors.primary :theme.colors.text}
         />
       </Container>
     </GestureHandlerRootView>

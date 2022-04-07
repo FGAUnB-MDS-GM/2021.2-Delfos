@@ -11,6 +11,7 @@ import { SemanalFilter } from "../screens/SemanalFilter";
 import { AddTodo } from "../screens/AddTodo";
 import { Groups } from "../screens/Groups";
 import { Splash } from "../screens/Splash";
+import { Notes } from "../screens/Notes";
 
 export type AppRoutesParamList = {
   Home: undefined;
@@ -20,6 +21,7 @@ export type AppRoutesParamList = {
   TabRoutes: undefined;
   Groups: undefined;
   Splash: undefined;
+  Notes: undefined;
 };
 
 export function AppRoutes() {
@@ -105,6 +107,19 @@ export function TabRoutes() {
           tabBarIcon: (({ size, color }) =>
             <Feather
               name="calendar"
+              size={size}
+              color={color}
+            />
+          )
+        }}
+      />
+      <Screen
+        name="Notes"
+        component={Notes}
+        options={{
+          tabBarIcon: (({ size, color }) =>
+            <Feather
+              name="file-text"
               size={size}
               color={color}
             />

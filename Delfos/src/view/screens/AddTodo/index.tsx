@@ -186,7 +186,7 @@ export function AddTodo() {
     if (daily) {
       if (withEnd) {
         scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
-        scheduleNotificationDaily(groupName, `ENCERRAMENTO ${message}`, endMinuteNumber, endHourNumber);
+        scheduleNotificationDaily(groupName, `${message} END`, endMinuteNumber, endHourNumber);
       } else {
         scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
       }
@@ -194,7 +194,7 @@ export function AddTodo() {
     if (weekly) {
       if (withEnd) {
         scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
-        scheduleNotificationWeekly(groupName,`ENCERRAMENTO ${message}`, endMinuteNumber, endHourNumber, weekDay);
+        scheduleNotificationWeekly(groupName,`${message} END`, endMinuteNumber, endHourNumber, weekDay);
       } else {
         scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
       }
