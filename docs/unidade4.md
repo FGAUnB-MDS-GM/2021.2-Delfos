@@ -110,6 +110,25 @@ Este backlog foi produzido de acordo com a abordagem ágil e seguindo a perspect
 - FA - Filtro de Atividades
 - OA - Organização de Atividades
 
+# Critérios de Aceitação das Histórias
+
+|     História   (ID)    |     Critérios   de aceitação                                                                                                             |   |   |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------------------|---|---|
+|     FB1                |     Deverá ser possível escolher se a atividade é única,   diária ou semanal                                                             |   |   |
+|     FB2                |     Deverá ser possível deletar uma atividade só ou um grupo   inteiro de atividades                                                     |   |   |
+|     FB3                |     A edição deve ser disponível a todo momento para todos os   atributos de atividade                                                   |   |   |
+|     FB4                |     Todos os atributos da atividade devem ser mostrados ao   usuário de forma clara                                                      |   |   |
+|     FB5                |     Deverá ser possível escolher dias nesse calendário, bem   como destacá-los com alguma cor de preferência                             |   |   |
+|     FB6                |     Deverá ser possível escrever textos de qualquer tamanho no   post-it                                                                 |   |   |
+|     FB7                |     Um post-it poderá ser deletado a qualquer momento                                                                                    |   |   |
+|     FB8                |     O texto de um post-it poderá ser editado a qualquer   momento                                                                        |   |   |
+|     FB9                |     Deverá ser possível visualizar todos os post-its   existentes a qualquer momento                                                     |   |   |
+|     FB10               |     O gráfico deverá ser atualizado frequentemente e estar   sempre disponível para a visualização                                       |   |   |
+|     FA1                |     Todas as atividades de repetição única deverão estar   agrupadas em uma tela só para elas (além da tela principal e dos grupos)      |   |   |
+|     FA2                |     Todas as atividades de repetição semanal deverão estar   agrupadas em uma tela só para elas (além da tela principal e dos grupos)    |   |   |
+|     FA3                |     A caixa de pesquisa deverá estar na tela principal                                                                                   |   |   |
+|     OA1                |     A criação de grupos deve ser ilimitada e os mesmos devem   estar organizados em uma aba de grupos                                    |   |   |
+
 # Abordagem de desenvolvimento de software
 
 ## Metodologia
