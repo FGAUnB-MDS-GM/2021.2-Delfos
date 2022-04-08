@@ -112,7 +112,7 @@ export function Home() {
                 </Title>
               </TitleBox>
               <SubTitle>
-                {groupSelected.groupName ? groupSelected.groupName : "Selecione um Grupo!"}
+                {groupSelected.id ? groupSelected.groupName : "Selecione um Grupo!"}
               </SubTitle>
               <Search>
                 <SearchInput onChangeText={setToDoSearch} />
@@ -123,7 +123,7 @@ export function Home() {
           </Header>
         </BackgroundLinear>
 
-        {groupSelected.groupName ?
+        {groupSelected.id ?
           <Listagem
             data={toDos}
             keyExtractor={item => item.identifier}
@@ -153,7 +153,7 @@ export function Home() {
       </Content>
       <Footer>
 
-        {groupSelected.groupName ?
+        {groupSelected.id ?
           <ButtonAdd icon="plus-circle" onPress={handleAdd} />
           : <></>
         }

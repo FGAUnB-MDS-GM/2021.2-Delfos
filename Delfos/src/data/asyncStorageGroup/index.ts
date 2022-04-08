@@ -41,7 +41,7 @@ export async function removeGroupAsyncStorage(group: GroupProps) {
   try {
     const groups = await getAsyncStorageGroup();
 
-    const alteredGroups = groups.filter(item => item.groupName != group.groupName);
+    const alteredGroups = groups.filter(item => item.id != group.id);
 
     setAsyncStorageGroup(alteredGroups);
   } catch (error) {
