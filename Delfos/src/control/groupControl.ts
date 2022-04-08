@@ -25,8 +25,11 @@ import { ToDoProps } from "../models/toDos";
 
 //Cria um Group de acordo com nome forncecido
 export async function createGroup(groupName: string) {
+  const groups = await getAsyncStorageGroup();
+
   const newGroup: GroupProps =
   {
+    id: groups.length.toString(),
     groupName: groupName,
     enable: true,
   }
@@ -53,16 +56,17 @@ export async function verifyStatusGroup(group: GroupProps) {
 export async function disableGroup(group: GroupProps) {
   const groups = await getAsyncStorageGroup()
 
-  const newGroups = groups.filter(item => item.groupName != group.groupName)
+  const newGroups = groups.filter(item => item.id != group.id)
 
   newGroups.push({
+    id: group.id,
     groupName: group.groupName,
     enable: false
   })
 
   await setAsyncStorageGroup(newGroups);
 
-  const ToDos = await getAsyncStorageToDo(group.groupName);
+  const ToDos = await getAsyncStorageToDo(group.id);
   const newToDos: ToDoProps[] = ToDos.map(item => {
     return { ...item, checked: true }
   })
@@ -73,7 +77,7 @@ export async function disableGroup(group: GroupProps) {
     }
   })
 
-  await setAsyncStorageToDos(group.groupName, newToDos);
+  await setAsyncStorageToDos(group.id, newToDos);
 }
 
 //Ativa o grupo e marca todos os ToDos dele como "checked: false"
@@ -81,16 +85,17 @@ export async function disableGroup(group: GroupProps) {
 export async function enableGroup(group: GroupProps) {
   const groups = await getAsyncStorageGroup()
 
-  const newGroups = groups.filter(item => item.groupName != group.groupName)
+  const newGroups = groups.filter(item => item.id != group.id)
 
   newGroups.push({
+    id: group.id,
     groupName: group.groupName,
     enable: true
   })
 
   await setAsyncStorageGroup(newGroups);
 
-  const ToDos = await getAsyncStorageToDo(group.groupName);
+  const ToDos = await getAsyncStorageToDo(group.id);
 
   const newToDos = await Promise.all(ToDos.map(async item => {
     if (item.checked = true) {
@@ -109,7 +114,7 @@ export async function enableGroup(group: GroupProps) {
     return { ...item, checked: false }
   }));
 
-  setAsyncStorageToDos(group.groupName, newToDos)
+  setAsyncStorageToDos(group.id, newToDos)
 }
 
 //Remove o grupo do Array de grupos 
@@ -119,7 +124,7 @@ export async function deleteGroup(group: GroupProps) {
 
   await removeGroupAsyncStorage(group);
 
-  const ToDos = await getAsyncStorageToDo(group.groupName);
+  const ToDos = await getAsyncStorageToDo(group.id);
 
   ToDos.forEach(item => {
     if (item.checked != true) {
@@ -127,7 +132,7 @@ export async function deleteGroup(group: GroupProps) {
     }
   })
 
-  await deleteToDoArrayAsyncStorage(group.groupName);
+  await deleteToDoArrayAsyncStorage(group.id);
 }
 
 

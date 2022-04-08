@@ -11,7 +11,7 @@ import { getTimeInterval } from "./notificationControl";
 
 
 export async function loadToDos(group: GroupProps) {
-  const ToDos = await getAsyncStorageToDo(group.groupName)
+  const ToDos = await getAsyncStorageToDo(group.id)
   return ToDos;
 }
 
@@ -20,14 +20,14 @@ export async function loadToDos(group: GroupProps) {
 export async function checkToDo(group: GroupProps, ToDo: ToDoProps) {
   await Notifications.cancelScheduledNotificationAsync(ToDo.identifier);
 
-  const ToDos = await getAsyncStorageToDo(group.groupName)
+  const ToDos = await getAsyncStorageToDo(group.id)
   const newToDos: ToDoProps[] = ToDos.map(item => {
     if (item.identifier == ToDo.identifier) {
       return { ...item, checked: true }
     }
     return { ...item }
   })
-  await setAsyncStorageToDos(group.groupName, newToDos);
+  await setAsyncStorageToDos(group.id, newToDos);
 }
 
 // Ativa o alarme do ToDo no Expo Notifications
@@ -78,7 +78,7 @@ export async function scheduleCheckedToDo(group: GroupProps, ToDo: ToDoProps) {
     })
   }
 
-  const ToDos = await getAsyncStorageToDo(group.groupName);
+  const ToDos = await getAsyncStorageToDo(group.id);
   const newToDos: ToDoProps[] = ToDos.map(item => {
     if (item.identifier == ToDo.identifier) {
       return { ...item, identifier: id, checked: false }
@@ -86,19 +86,19 @@ export async function scheduleCheckedToDo(group: GroupProps, ToDo: ToDoProps) {
     return { ...item }
   })
 
-  await setAsyncStorageToDos(group.groupName, newToDos)
+  await setAsyncStorageToDos(group.id, newToDos)
 }
 
 //OBS: essa função só pode ser executada com ToDos, que já estejam marcados
 //Deleta um ToDo do Array de ToDos daquele grupo
 export async function deleteToDo(group: GroupProps, ToDo: ToDoProps) {
-  await removeToDoAsyncStorage(group.groupName, ToDo)
+  await removeToDoAsyncStorage(group.id, ToDo)
 }
 
 //Cria um ToDo e adiciona ele no Array de ToDo
 // do nome do Group fornecido
 export async function createToDo(
-  groupName: string,
+  groupId: string,
   identifier: string,
   message: string,
   type: string,
@@ -120,14 +120,14 @@ export async function createToDo(
     },
     checked: checked
   }
-  await addToDoAsyncStorage(groupName, newToDo)
+  await addToDoAsyncStorage(groupId, newToDo)
 
 }
 
 //Cria um alarme único com o Expo Notifications e 
 // crian um ToDo logo em seguida
 export async function scheduleNotificationTimeInterval(
-  groupName: string,
+  groupId: string,
   message: string,
   repeat: boolean,
   startMinute: number,
@@ -147,13 +147,13 @@ export async function scheduleNotificationTimeInterval(
     },
   });
 
-  createToDo(groupName, id, message, type, repeat, startHour, startMinute, undefined, false);
+  await createToDo(groupId, id, message, type, repeat, startHour, startMinute, undefined, false);
 }
 
 //Cria um alarme diário com o Expo Notifications e 
 // cria um ToDo logo em seguida
 export async function scheduleNotificationDaily(
-  groupName: string,
+  groupId: string,
   message: string,
   startMinute: number,
   startHour: number,) {
@@ -170,14 +170,14 @@ export async function scheduleNotificationDaily(
     },
   });
 
-  createToDo(groupName, id, message, type, true, startHour, startMinute, undefined, false)
+  await createToDo(groupId, id, message, type, true, startHour, startMinute, undefined, false)
 
 }
 
 //Cria um alarme semanal com o Expo Notifications e 
 // cria um ToDo logo em seguida
 export async function scheduleNotificationWeekly(
-  groupName: string,
+  groupId: string,
   message: string,
   startMinute: number,
   startHour: number,
@@ -195,11 +195,11 @@ export async function scheduleNotificationWeekly(
       repeats: true,
     },
   });
-  createToDo(groupName, id, message, type, true, startHour, startMinute, weekday, false)
+  await createToDo(groupId, id, message, type, true, startHour, startMinute, weekday, false)
 }
 
 export async function filterToDoMessage(group: GroupProps, ToDoMessage: string){
-  const ToDos = await getAsyncStorageToDo(group.groupName);
+  const ToDos = await getAsyncStorageToDo(group.id);
   const ToDosFiltred = ToDos.filter(item => item.message == ToDoMessage);
   return ToDosFiltred
 }

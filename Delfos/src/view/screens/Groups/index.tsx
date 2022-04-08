@@ -83,7 +83,7 @@ export function Groups() {
           </Header>
           <GroupList
             data={asyncGroups}
-            keyExtractor={item => item.groupName}
+            keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <GroupButton
                 enable={item.enable}

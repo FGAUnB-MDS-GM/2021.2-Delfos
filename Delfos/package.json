@@ -37,7 +37,8 @@
     "react-native-screens": "^3.11.0",
     "react-native-web": "0.17.1",
     "styled-components": "^5.3.3",
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.17",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

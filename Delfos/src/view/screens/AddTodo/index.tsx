@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -7,6 +7,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import * as Yup from 'yup';
+
 
 
 import {
@@ -38,9 +40,10 @@ import { GroupProps } from '../../../models/groups'
 
 import {
   scheduleNotificationTimeInterval,
-   scheduleNotificationDaily,
-   scheduleNotificationWeekly
-  } from '../../../control/todoControl'
+  scheduleNotificationDaily,
+  scheduleNotificationWeekly
+} from '../../../control/todoControl'
+import { startOfMinute } from "date-fns";
 
 
 //setando o padrão de notificações 
@@ -59,7 +62,7 @@ export function AddTodo() {
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
-  
+
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token!));
 
@@ -74,13 +77,13 @@ export function AddTodo() {
       console.log(response);
 
     });
-    
+
     return () => {
       //tirando a notificação da lista de agendadas, pois ela já foi executada
       Notifications.removeNotificationSubscription(notificationListener);
       Notifications.removeNotificationSubscription(responseListener);
     };
-    
+
   }, []);
 
   async function registerForPushNotificationsAsync() {
@@ -117,7 +120,7 @@ export function AddTodo() {
   interface Params {
     groupSelected: GroupProps;
   }
-  
+
   const route = useRoute();
   const { groupSelected } = route.params as Params;
   const [weekDay, setWeekDay] = useState(0);
@@ -177,34 +180,188 @@ export function AddTodo() {
   }
 
   //Confirma a criação do ToDo (falta fazer a validção do que foi preenchido)
-  async function handleConfirm(groupName: string) {
-    const startHourNumber = Number.parseInt(startHour);
-    const startMinuteNumber = Number.parseInt(startMinute);
-    const endHourNumber = Number.parseInt(endHour);
-    const endMinuteNumber = Number.parseInt(endMinute);
+  async function handleConfirm(groupId: string) {
+
+    function convertStringToNumber(numberINstring: string) {
+      if (numberINstring === '') {
+        numberINstring = '-1'
+        const number = Number.parseInt(numberINstring);
+        return number;
+      } else {
+        const number = Number.parseInt(numberINstring);
+        return number;
+      }
+    }
+
+    const startHourNumber = convertStringToNumber(startHour);
+    const startMinuteNumber = convertStringToNumber(startMinute);
+    const endHourNumber = convertStringToNumber(endHour);
+    const endMinuteNumber = convertStringToNumber(endMinute);
+
+    const schemaDaily = Yup.object().shape({
+      message: Yup.string()
+        .required('A mensagem do ToDo é obrigatória'),
+      minute: Yup.number()
+        .required('O minuto para inciar é obrigatório')
+        .min(0, "O minuto para inciar não pode ser menor que 0").max(59, "O minuto para inciar não pode ser maior que 59"),
+      hour: Yup.number()
+        .required('A hora para inciar é obrigatória')
+        .min(0, "A hora para inciar não pode ser menor que 0").max(23, "A hora para inciar não pode ser maior que 23"),
+    });
+
+    const schemaDailyWithEnd = Yup.object().shape({
+      message: Yup.string()
+        .required('A mensagem do ToDo é obrigatória'),
+      minute: Yup.number()
+        .required('O minuto para inciar é obrigatório')
+        .min(0, "O minuto para inciar não pode ser menor que 0").max(59, "O minuto para inciar não pode ser maior que 59"),
+      hour: Yup.number()
+        .required('A hora para inciar é obrigatória')
+        .min(0, "A hora para inciar não pode ser menor que 0").max(23, "A hora para inciar não pode ser maior que 23"),
+      endMinute: Yup.number()
+        .required('O minuto para encerrar é obrigatório')
+        .min(0, "O minuto para encerrar não pode ser menor que 0").max(59, "O minuto para encerrar não pode ser maior que 59"),
+      endHour: Yup.number()
+        .required('A hora para encerrar é obrigatória')
+        .min(0, "A hora para encerrar não pode ser menor que 0").max(23, "A hora para encerrar não pode ser maior que 23"),
+    });
+
+    const schemaWeekly = Yup.object().shape({
+      message: Yup.string()
+        .required('A mensagem do ToDo é obrigatória'),
+      minute: Yup.number()
+        .required('O minuto para inciar é obrigatório')
+        .min(0, "O minuto para inciar não pode ser menor que 0").max(59, "O minuto para inciar não pode ser maior que 59"),
+      hour: Yup.number()
+        .required('A hora para inciar é obrigatória')
+        .min(0, "A hora para inciar não pode ser menor que 0").max(23, "A hora para inciar não pode ser maior que 23"),
+      weekDay: Yup.number()
+        .required('Escolha o dia da semana, por favor!')
+        .min(1, 'Escolha o dia da semana, por favor!')
+    });
+
+    const schemaWeeklyWithEnd = Yup.object().shape({
+      message: Yup.string()
+        .required('A mensagem do ToDo é obrigatória'),
+      minute: Yup.number()
+        .required('O minuto para inciar é obrigatório')
+        .min(0, "O minuto para inciar não pode ser menor que 0").max(59, "O minuto para inciar não pode ser maior que 59"),
+      hour: Yup.number()
+        .required('A hora para inciar é obrigatória')
+        .min(0, "A hora para inciar não pode ser menor que 0").max(23, "A hora para inciar não pode ser maior que 23"),
+      endMinute: Yup.number()
+        .required('O minuto para encerrar é obrigatório')
+        .min(0, "O minuto para encerrar não pode ser menor que 0").max(59, "O minuto para encerrar não pode ser maior que 59"),
+      endHour: Yup.number()
+        .required('A hora para encerrar é obrigatória')
+        .min(0, "A hora para encerrar não pode ser menor que 0").max(23, "A hora para encerrar não pode ser maior que 23"),
+      weekDay: Yup.number()
+        .required('Escolha o dia da semana, por favor!')
+        .min(1, 'Escolha o dia da semana, por favor!')
+    });
 
     if (daily) {
       if (withEnd) {
-        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
-        scheduleNotificationDaily(groupName, `ENCERRAMENTO ${message}`, endMinuteNumber, endHourNumber);
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber,
+            endMinute: endMinuteNumber,
+            endHour: endHourNumber,
+          }
+          await schemaDailyWithEnd.validate(data);
+          await scheduleNotificationDaily(groupId, message, startMinuteNumber, startHourNumber);
+          await scheduleNotificationDaily(groupId, `${message} END`, endMinuteNumber, endHourNumber);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       } else {
-        scheduleNotificationDaily(groupName, message, startMinuteNumber, startHourNumber);
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber
+          }
+          await schemaDaily.validate(data);
+          await scheduleNotificationDaily(groupId, message, startMinuteNumber, startHourNumber);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       }
     };
     if (weekly) {
       if (withEnd) {
-        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
-        scheduleNotificationWeekly(groupName,`ENCERRAMENTO ${message}`, endMinuteNumber, endHourNumber, weekDay);
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber,
+            endMinute: endMinuteNumber,
+            endHour: endHourNumber,
+            weekDay: weekDay
+          }
+          await schemaWeeklyWithEnd.validate(data);
+          await scheduleNotificationWeekly(groupId, message, startMinuteNumber, startHourNumber, weekDay);
+          await scheduleNotificationWeekly(groupId, `${message} END`, endMinuteNumber, endHourNumber, weekDay);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       } else {
-        scheduleNotificationWeekly(groupName, message, startMinuteNumber, startHourNumber, weekDay);
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber,
+            weekDay: weekDay
+          }
+          await schemaWeekly.validate(data);
+          await scheduleNotificationWeekly(groupId, message, startMinuteNumber, startHourNumber, weekDay);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       }
     };
     if (!daily && !weekly) {
-      if(withEnd){ 
-        scheduleNotificationTimeInterval(groupName, message, repeat, startMinuteNumber, startHourNumber);
-        scheduleNotificationTimeInterval(groupName, `ENCERRAMENTO ${message}`, repeat, endMinuteNumber, endHourNumber);
+      if (withEnd) {
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber,
+            endMinute: endMinuteNumber,
+            endHour: endHourNumber,
+          }
+          await schemaDailyWithEnd.validate(data);
+          await scheduleNotificationTimeInterval(groupId, message, repeat, startMinuteNumber, startHourNumber);
+          await scheduleNotificationTimeInterval(groupId, `${message} END`, repeat, endMinuteNumber, endHourNumber);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       } else {
-        scheduleNotificationTimeInterval(groupName, message, repeat, startMinuteNumber, startHourNumber);
+        try {
+          const data = {
+            message: message,
+            minute: startMinuteNumber,
+            hour: startHourNumber
+          }
+          await schemaDaily.validate(data);
+          await scheduleNotificationTimeInterval(groupId, message, repeat, startMinuteNumber, startHourNumber);
+        } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+            return Alert.alert('Opa', error.message);
+          }
+        }
       }
     }
     navigation.navigate('Home');
@@ -232,18 +389,18 @@ export function AddTodo() {
         <BackgroundLinear type="secondary">
           <InputTime>
 
-            <InputTimeText onChangeText={setStartHour} />
+            <InputTimeText onChangeText={setStartHour} value={startHour} />
             <TextButton style={{ fontSize: 15 }}> : </TextButton>
-            <InputTimeText onChangeText={setStartMinute} />
+            <InputTimeText onChangeText={setStartMinute} value={startMinute} />
 
             {
               withEnd &&
               <>
                 <TextButton style={{ fontSize: 15, margin: 10 }}>até</TextButton>
 
-                <InputTimeText onChangeText={setEndHour} />
+                <InputTimeText onChangeText={setEndHour} value={endHour} />
                 <TextButton style={{ fontSize: 15 }}> : </TextButton>
-                <InputTimeText onChangeText={setEndMinute} />
+                <InputTimeText onChangeText={setEndMinute} value={endMinute} />
               </>
             }
 
@@ -343,7 +500,7 @@ export function AddTodo() {
           </CancelButton>
         </GestureHandlerRootView>
         <GestureHandlerRootView>
-          <ConfirmButton onPress={()=> handleConfirm(groupSelected.groupName)}>
+          <ConfirmButton onPress={() => handleConfirm(groupSelected.id)}>
             <Feather
               name="check"
               color={theme.colors.white}

@@ -5,8 +5,8 @@ import { ToDoProps } from "../../models/toDos"
 const datakey = `@delfos:alarmsSchedule <>` ;
 
 //Busca o array do ToDos de determinado grupo
-export async function getAsyncStorageToDo(groupName: string){
-  const dataKey = `@delfos:alarmsSchedule${groupName}` ;
+export async function getAsyncStorageToDo(groupId: string){
+  const dataKey = `@delfos:alarmsSchedule${groupId}` ;
   const response = await AsyncStorage.getItem(dataKey);
   const ToDos: ToDoProps[] = response ? JSON.parse(response) : [];
 
@@ -14,29 +14,29 @@ export async function getAsyncStorageToDo(groupName: string){
 }
 
 //Sobrecreve o array de ToDos
-export async function setAsyncStorageToDos(groupName: string ,ToDos: ToDoProps[]){
-  const dataKey = `@delfos:alarmsSchedule${groupName}` ;
+export async function setAsyncStorageToDos(groupId: string ,ToDos: ToDoProps[]){
+  const dataKey = `@delfos:alarmsSchedule${groupId}` ;
   await AsyncStorage.setItem(dataKey, JSON.stringify(ToDos));
 }
 
 //Adiciona um novo ToDo no array de ToDos
-export async function addToDoAsyncStorage(groupName: string, ToDo: ToDoProps){
-  const ToDos = await getAsyncStorageToDo(groupName)
+export async function addToDoAsyncStorage(groupId: string, ToDo: ToDoProps){
+  const ToDos = await getAsyncStorageToDo(groupId)
   const newToDos: ToDoProps[] = 
   [
     ...ToDos,
     ToDo,
   ]
-  await setAsyncStorageToDos(groupName, newToDos)
+  await setAsyncStorageToDos(groupId, newToDos)
 }
 
 //Remove um ToDo do array de ToDos
-export async function removeToDoAsyncStorage(groupName: string, ToDo: ToDoProps){
-  const ToDos = await getAsyncStorageToDo(groupName)
+export async function removeToDoAsyncStorage(groupId: string, ToDo: ToDoProps){
+  const ToDos = await getAsyncStorageToDo(groupId)
   
   const remainingToDos = ToDos.filter(item=> item.identifier != ToDo.identifier);
 
-  setAsyncStorageToDos(groupName, remainingToDos);
+  setAsyncStorageToDos(groupId, remainingToDos);
 }
 
 //Deleta o array de ToDos
