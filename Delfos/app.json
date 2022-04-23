@@ -3,12 +3,20 @@
     "name": "Delfos",
     "slug": "Delfos",
     "version": "1.0.0",
+    "icon": "./src/view/components/assets/icon.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "splash": {
       "image": "./src/view/components/assets/splash.png",
       "backgroundColor": "#30E4CF"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/view/components/assets/icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.nyndo.Delfos"
     }
   },
   "name": "Delfos"
