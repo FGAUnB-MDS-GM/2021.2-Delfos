@@ -89,9 +89,12 @@ export function Home() {
     setToDos(ToDos)
   }
 
+  function handleEditToDo(EditToDo: ToDoProps){
+    navigation.navigate('AddTodo', { groupSelected, EditToDo })
+  }
+
   useEffect(() => {
     setGroupSelected(group);
-    console.log('carregou')
   }, [group]);
 
   return (
@@ -134,6 +137,7 @@ export function Home() {
                 message={item.message}
                 trigger={item.trigger}
                 checked={item.checked}
+                handleEditToDo={()=> handleEditToDo(item)}
                 handleDelete={() => handleDelete(item)}
                 schedulechekedToDo={() => handleScheduleCheckedToDo(item)}
               />}

@@ -15,6 +15,7 @@ import {
   Title,
   SubTitle,
   Listagem,
+  Footer
 } from './styles';
 
 import {
@@ -24,6 +25,7 @@ import {
   scheduleCheckedToDo
 } from "../../../control/todoControl";
 import { getContext } from "../../../control/contextControl";
+import { ButtonAdd } from "../../components/ButtonAdd";
 
 export function SemanalFilter() {
   const navigation = useNavigation()
@@ -40,7 +42,7 @@ export function SemanalFilter() {
     refreshToDosWeekly()
   }
 
-  async function handleScheduleCheckedToDo(ToDo: ToDoProps){
+  async function handleScheduleCheckedToDo(ToDo: ToDoProps) {
     await scheduleCheckedToDo(groupSelected, ToDo);
   }
 
@@ -55,12 +57,20 @@ export function SemanalFilter() {
     setToDosWeekly(ToDosFiltred)
   }
 
+  function handleEditToDo(EditToDo: ToDoProps) {
+    navigation.navigate('AddTodo', { groupSelected, EditToDo })
+  }
+
+  function handleCalendarScreen(){
+    navigation.navigate('CalendarScreen', {toDosWeekly});
+  }
+
   useEffect(() => {
     refreshToDosWeekly();
     setGroupSelected(group);
   }, [group])
 
-  useFocusEffect(()=>{
+  useFocusEffect(() => {
     refreshToDosWeekly();
   })
 
@@ -96,10 +106,16 @@ export function SemanalFilter() {
             message={item.message}
             trigger={item.trigger}
             checked={item.checked}
+            handleEditToDo={() => handleEditToDo(item)}
             handleDelete={() => handleDelete(item)}
-            schedulechekedToDo={()=> handleScheduleCheckedToDo(item)}
+            schedulechekedToDo={() => handleScheduleCheckedToDo(item)}
           />}
       />
+
+      <Footer>
+        <ButtonAdd icon='calendar' onPress={handleCalendarScreen} />
+      </Footer>
+
     </Container>
   );
 }

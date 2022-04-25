@@ -12,6 +12,7 @@ import { AddTodo } from "../screens/AddTodo";
 import { Groups } from "../screens/Groups";
 import { Splash } from "../screens/Splash";
 import { Notes } from "../screens/Notes";
+import { CalendarScreen } from "../screens/CalendarScreen";
 
 export type AppRoutesParamList = {
   Home: undefined;
@@ -22,6 +23,7 @@ export type AppRoutesParamList = {
   Groups: undefined;
   Splash: undefined;
   Notes: undefined;
+  CalendarScreen: undefined;
 };
 
 export function AppRoutes() {
@@ -49,6 +51,11 @@ export function AppRoutes() {
       <Screen
         name="Groups"
         component={Groups}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="CalendarScreen"
+        component={CalendarScreen}
         options={{ headerShown: false }}
       />
     </Navigator>

@@ -59,3 +59,6 @@ export const MarkedIcon = styled(RectButton)<CheckedProps>`
   border-radius: 10px;
 `;
 
+export const EditTodoView = styled(RectButton)`
+`;
+

@@ -1,12 +1,6 @@
 import styled from "styled-components/native";
-import { FlatListProps, FlatList } from "react-native";
 
-import { ToDoProps } from '../../../models/toDos';
-
-export const Container = styled.View`
-  flex: 1
-  
-`;
+export const Container = styled.View``;
 
 export const Header = styled.View`
   width: 100%;
@@ -53,18 +47,3 @@ export const SubTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.text};
   color: ${({theme})=> theme.colors.text};
 `;
-
-export const Listagem = styled(FlatList as new (props: FlatListProps<ToDoProps>)=> FlatList<ToDoProps>).attrs({
-  contentContainerStyle:{
-    padding: 10,
-  }
-})`
-`;
-
-export const Footer = styled.View`
-  padding: 10px;
-  justify-content: flex-end;
-`;
-
-
-

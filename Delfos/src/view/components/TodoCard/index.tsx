@@ -16,14 +16,16 @@ import {
   Hours,
   MarkedIcon,
   Details,
+  EditTodoView,
 } from './styles';
 
 interface Props extends RectButtonProps, ToDoProps {
   handleDelete: () => void;
   schedulechekedToDo: () => void;
+  handleEditToDo: () => void;
 }
 
-export function TodoCard({ message, trigger, checked, handleDelete, schedulechekedToDo, onPress, ...rest }: Props) {
+export function TodoCard({ message, trigger, checked, handleDelete, schedulechekedToDo, handleEditToDo, onPress, ...rest }: Props) {
   const theme = useTheme()
 
   function getDayWeekName(weekDayNumber: number) {
@@ -36,16 +38,20 @@ export function TodoCard({ message, trigger, checked, handleDelete, schedulechek
   return (
     <BackgroundLinear checked={checked}>
       <Container>
-        <ToDo>
-          {message} {trigger.repeat && "loop"}
-        </ToDo>
+        <GestureHandlerRootView style={{flex:1}}>
+          <EditTodoView onPress={handleEditToDo}>
+            <ToDo>
+              {message} {trigger.type == "timeInterval" && trigger.repeat && "Repeat"}
+            </ToDo>
+          </EditTodoView>
+        </GestureHandlerRootView>
         <Details>
           <DatesAndHour>
             <Dates checked={checked}>
               {trigger.weekday ? getDayWeekName(trigger.weekday) : trigger.type == "daily" ? "diário" : "Único"}
             </Dates>
             <Hours checked={checked}>
-              {trigger.hour}
+              {trigger.hour} :
               {trigger.minute}
             </Hours>
           </DatesAndHour>

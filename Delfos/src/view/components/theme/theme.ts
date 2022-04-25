@@ -11,6 +11,16 @@ export default {
     success: '#34E430',
     cancel: '#EB3838',
     overlay: 'rgba(0,0,0,0.7)',
+    color1: '#F01E1E',
+    color2: '#FCC028',
+    color3: '#FFF72F',
+    color4: '#4BFB5D',
+    color5: '#2D35ED',
+    color6: '#8933F8',
+    color7: '#F226B9',
+    color8: '#655F5F',
+    color9: '#14FF00',
+    color10: '#00D1FF'
   },
 
   fonts: {

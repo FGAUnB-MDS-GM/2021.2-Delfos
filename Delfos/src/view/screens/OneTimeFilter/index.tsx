@@ -57,6 +57,10 @@ export function OneTimeFilter() {
     setToDosTimeInterval(ToDosFiltred)
   }
 
+  function handleEditToDo(EditToDo: ToDoProps){
+    navigation.navigate('AddTodo', { groupSelected, EditToDo })
+  }
+
   useEffect(() => {
     refreshToDosTimeInterval();
     setGroupSelected(group);
@@ -98,6 +102,7 @@ export function OneTimeFilter() {
             message={item.message}
             trigger={item.trigger}
             checked={item.checked}
+            handleEditToDo={()=> handleEditToDo(item)}
             handleDelete={() => handleDelete(item)}
             schedulechekedToDo={() => handleScheduleCheckedToDo(item)}
           />}

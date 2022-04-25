@@ -52,16 +52,9 @@ export function Notes() {
 
   async function handleCreateNote() {
     let newNote: NotesProps;
-    if (!notes.length) {
-      newNote = {
-        id: "1",
-        content: text
-      }
-    } else {
-      newNote = {
-        id: (notes.length + 2).toString(),
-        content: text
-      }
+    newNote = {
+      id: (notes.length * Math.random()).toString(),
+      content: text
     }
     await createNote(newNote);
     setOpenModal(false);
@@ -81,7 +74,7 @@ export function Notes() {
 
   }
 
-  async function handleDeleteNote(note: NotesProps){
+  async function handleDeleteNote(note: NotesProps) {
     await deleteNote(note);
     setSelectedNote({} as NotesProps);
     setOpenModal(false);
@@ -160,10 +153,10 @@ export function Notes() {
                 </GestureHandlerRootView>
               </DeleteButtonView>
             }
-            <InputTextNote 
+            <InputTextNote
               multiline
               textAlignVertical="auto"
-              onChangeText={setText} defaultValue={selectedNote.content} 
+              onChangeText={setText} defaultValue={selectedNote.content}
             />
             <ButtoonView>
               <GestureHandlerRootView>

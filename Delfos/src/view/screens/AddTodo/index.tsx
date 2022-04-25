@@ -41,9 +41,11 @@ import { GroupProps } from '../../../models/groups'
 import {
   scheduleNotificationTimeInterval,
   scheduleNotificationDaily,
-  scheduleNotificationWeekly
+  scheduleNotificationWeekly,
+  deleteToDo
 } from '../../../control/todoControl'
 import { startOfMinute } from "date-fns";
+import { ToDoProps } from "../../../models/toDos";
 
 
 //setando o padrão de notificações 
@@ -119,10 +121,12 @@ export function AddTodo() {
 
   interface Params {
     groupSelected: GroupProps;
+    EditToDo: ToDoProps;
   }
 
   const route = useRoute();
   const { groupSelected } = route.params as Params;
+  const { EditToDo } = route.params as Params;
   const [weekDay, setWeekDay] = useState(0);
   const [startHour, setStartHour] = useState('');
   const [startMinute, setStartMinute] = useState('');
@@ -179,7 +183,7 @@ export function AddTodo() {
     navigation.navigate('Home');
   }
 
-  //Confirma a criação do ToDo (falta fazer a validção do que foi preenchido)
+  //Confirma a criação do ToDo 
   async function handleConfirm(groupId: string) {
 
     function convertStringToNumber(numberINstring: string) {
@@ -260,6 +264,9 @@ export function AddTodo() {
         .min(1, 'Escolha o dia da semana, por favor!')
     });
 
+    if(EditToDo){
+      await deleteToDo(groupSelected, EditToDo)
+    }
     if (daily) {
       if (withEnd) {
         try {
@@ -367,6 +374,16 @@ export function AddTodo() {
     navigation.navigate('Home');
   }
 
+  useEffect(() => {
+    if(EditToDo){
+      setStartHour(EditToDo.trigger.hour!.toString())
+      setStartMinute(EditToDo.trigger.minute!.toString())
+      setMessage(EditToDo.message)
+      setDaily(EditToDo.trigger.type == 'daily')
+      setWeekly(EditToDo.trigger.type == "weekly")
+      setWeekDay(EditToDo.trigger.weekday!)
+    }
+  },[]);
 
   return (
     <Container>
@@ -389,9 +406,9 @@ export function AddTodo() {
         <BackgroundLinear type="secondary">
           <InputTime>
 
-            <InputTimeText onChangeText={setStartHour} value={startHour} />
+            <InputTimeText onChangeText={setStartHour} defaultValue={EditToDo ? EditToDo.trigger.hour?.toString() : ""}/>
             <TextButton style={{ fontSize: 15 }}> : </TextButton>
-            <InputTimeText onChangeText={setStartMinute} value={startMinute} />
+            <InputTimeText onChangeText={setStartMinute} defaultValue={EditToDo ? EditToDo.trigger.minute?.toString() : ""} />
 
             {
               withEnd &&
@@ -411,6 +428,7 @@ export function AddTodo() {
           <InputTodo
             numberOfLines={1}
             onChangeText={setMessage}
+            defaultValue={EditToDo ? EditToDo.message : ""}
           />
         </BackgroundLinear>
 
