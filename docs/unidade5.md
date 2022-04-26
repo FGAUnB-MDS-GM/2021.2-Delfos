@@ -211,6 +211,25 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
     - Dificuldades de aprendizado das tecnologias necessarias para o desenvolvimento do produto.
     - Pouco tempo dedicado ao desenvolvimento e documentação do projeto.
 
+## Estratégias de Teste
+
+### Teste Funcional - Unitário - TODOS FB - Automático
+
+    Usaremos o Jest e o Testing Library
+    1 - Testar a função de criar um ToDo
+    2 - Testar a função de deletar um ToDo
+    3 - Testar a função de editar um ToDo
+    4 - Testar a renderização da lista de ToDos
+    5 - Testar a função de criar um Post it
+    6 - Testar a função de deletar Post it
+    7 - Testar a edição de Post it
+    8 - Visualizar a listagem de Post it
+
+### Teste de Usabilidade - Sistema - Todas as histórias - Manual
+
+    Será usado um google Forms e o APK da versão mais recente do app.
+    Com o APK gerado, iremos pedir para pessoas aleatórias usarem o app por um tempo de 5 a 8 minutos e em seguida responderem um questionário.
+
 ## Critérios de Replanejamento
 
     É recomendado agendar uma ou mais reuniões entre o grupo para resolver e planejar a resolução viável do problema encontrado, e apresenta-la para o professor.
