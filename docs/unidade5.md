@@ -84,23 +84,21 @@ Prioridades:
 
 Este backlog foi produzido de acordo com a abordagem ágil e seguindo a perspectiva do SAFe, na qual uma função geral é classificada como “épico”. Desse épico derivam as “features”, que são como divisões de funcionalidades menores ainda, as histórias de usuário.
 
-|                   Épico                   | Feature                      | ID   | História de usuário	                                                                                                                | Prioridade |
-|:-----------------------------------------:|------------------------------|------|------------------------------------------------------------------------------------------------------------------------------------|------------|
-|               Gerenciamento de atividades | Funções básicas de atividade | FB1  | Como usuário, eu quero ser capaz de cadastrar uma atividade para que eu seja lembrado da mesma depois.                             | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB2  | Como usuário, eu quero ser capaz de deletar uma atividade caso ela não aconteça mais.                                              | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB3  | Como usuário, eu quero ser capaz de editar uma atividade para que eu altere um horário, nome ou descrição da mesma.                | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB4  | Como usuário, eu quero ser capaz de visualizar uma atividade para saber os detalhes da mesma.                                      | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB5  | Como usuário, eu quero ser capaz de visualizar em um calendário minhas atividades semanais.                                        | Média      |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB6  | Como usuário, eu quero ser capaz de cadastrar post-its.                                                                            | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB7  | Como usuário, eu quero ser capaz de deletar post-its.                                                                              | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB8  | Como usuário, eu quero ser capaz de editar post-its.                                                                               | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB9  | Como usuário, eu quero ser capaz de visualizar post-its.                                                                           | Alta       |
-| Gerenciamento de atividades               | Funções básicas de atividade | FB10 | Como usuário, eu quero ser capaz de ver em um gráfico minha taxa de conclusão de atividades em um dia.                             | Média      |
-| Gerenciamento de atividades               |     Filtro de atividades     | FA1  | Como usuário, eu quero poder ver todas as atividades de repetição única para ter noção do que será resolvido em um dia/horário só. | Baixa      |
-| Gerenciamento de atividades               | Filtro de atividades         | FA2  | Como usuário, eu quero poder ver todas as atividades de repetição semanal para saber o que terei que fazer frequentemente.         | Baixa      |
-| Gerenciamento de atividades               | Filtro de atividades         | FA3  | Como usuário, eu quero ser capaz de buscar uma atividade através de pesquisa por texto para que eu a ache facilmente.              | Média      |
-| Gerenciamento de atividades               |   Organização das atividades | OA1  | Como usuário, eu quero poder agrupar atividades para que elas fiquem melhor organizadas.                                           | Média      |
-| Gerenciamento de atividades               | Organização das atividades   | OA2  | Como usuário, eu quero um calendário para visualizar as atividades semanais.                                                       | Baixa      |
+|            Épico            |            Feature           |  ID |                                                         História de usuário                                                        | Prioridade |
+|:---------------------------:|:----------------------------:|:---:|:----------------------------------------------------------------------------------------------------------------------------------:|:----------:|
+| Gerenciamento de atividades | Funções básicas de atividade | FB1 |               Como usuário, eu quero ser capaz de cadastrar uma atividade para que eu seja lembrado da mesma depois.               |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB2 |                        Como usuário, eu quero ser capaz de deletar uma atividade caso ela não aconteça mais.                       |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB3 |         Como usuário, eu quero ser capaz de editar uma atividade para que eu altere um horário, nome ou descrição da mesma.        |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB4 |                    Como usuário, eu quero ser capaz de visualizar uma atividade para saber os detalhes da mesma.                   |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB5 |                                       Como usuário, eu quero ser capaz de cadastrar post-its.                                      |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB6 |                                        Como usuário, eu quero ser capaz de deletar post-its.                                       |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB7 |                                        Como usuário, eu quero ser capaz de editar post-its.                                        |    Alta    |
+| Gerenciamento de atividades | Funções básicas de atividade | FB8 |                                      Como usuário, eu quero ser capaz de visualizar post-its.                                      |    Alta    |
+| Gerenciamento de atividades |     Filtro de atividades     | FA1 | Como usuário, eu quero poder ver todas as atividades de repetição única para ter noção do que será resolvido em um dia/horário só. |    Baixa   |
+| Gerenciamento de atividades |     Filtro de atividades     | FA2 |     Como usuário, eu quero poder ver todas as atividades de repetição semanal para saber o que terei que fazer frequentemente.     |    Baixa   |
+| Gerenciamento de atividades |     Filtro de atividades     | FA3 |        Como usuário, eu quero ser capaz de buscar uma atividade através de pesquisa por texto para que eu a ache facilmente.       |    Média   |
+| Gerenciamento de atividades |  Organização das atividades  | OA1 |                      Como usuário, eu quero poder agrupar atividades para que elas fiquem melhor organizadas.                      |    Média   |
+| Gerenciamento de atividades |  Organização das atividades  | OA2 |                            Como usuário, eu quero um calendário para visualizar as atividades semanais.                            |    Baixa   |
 
 ## Legenda:
 - Alta - Funcionalidade básica e essencial para o sistema
@@ -118,16 +116,15 @@ Este backlog foi produzido de acordo com a abordagem ágil e seguindo a perspect
 |      FB2      |                          Deverá ser possível deletar uma atividade só ou um grupo inteiro de atividades                         |
 |      FB3      |                         A edição deve ser disponível a todo momento para todos os atributos de atividade                        |
 |      FB4      |                            Todos os atributos da atividade devem ser nitidamente mostrados ao usuário                           |
-|      FB5      |          Deverá ser possível escolher dias futuros nesse calendário, bem como destacá-los com alguma cor de preferência         |
-|      FB6      |                                     Deverá ser possível escrever e editar textos no post-it                                     |
-|      FB7      |                                        Um post-it poderá ser deletado a qualquer momento                                        |
-|      FB8      |                                   O texto de um post-it poderá ser editado a qualquer momento                                   |
-|      FB9      |                          Deverá ser possível visualizar todos os post-its existentes a qualquer momento                         |
-|      FB10     |                   O gráfico deverá ser atualizado frequentemente e estar sempre disponível para a visualização                  |
+|      FB5      |                                     Deverá ser possível escrever e editar textos no post-it                                     |
+|      FB6      |                                        Um post-it poderá ser deletado a qualquer momento                                        |
+|      FB7      |                                   O texto de um post-it poderá ser editado a qualquer momento                                   |
+|      FB8      |                          Deverá ser possível visualizar todos os post-its existentes a qualquer momento                         |
 |      FA1      |  Todas as atividades de repetição única deverão estar agrupadas em uma tela só para elas (além da tela principal e dos grupos)  |
 |      FA2      | Todas as atividades de repetição semanal deverão estar agrupadas em uma tela só para elas (além da tela principal e dos grupos) |
 |      FA3      |                                        A caixa de pesquisa deverá estar na tela principal                                       |
 |      OA1      |                 A criação de grupos deve ser ilimitada e os mesmos devem estar organizados em uma aba de grupos                 |
+|      OA2      |                       O calendário deve ser visível e os dias com atividades semanais devem ficar marcados                      |
 
 # Abordagem de desenvolvimento de software
 
