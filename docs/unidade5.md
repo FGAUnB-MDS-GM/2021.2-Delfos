@@ -207,9 +207,9 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 
 ## Gerenciamento de Riscos
 
-    - Problemas de comunicação entre a equipe.
-    - Dificuldades de aprendizado das tecnologias necessarias para o desenvolvimento do produto.
-    - Pouco tempo dedicado ao desenvolvimento e documentação do projeto.
+- Problemas de comunicação entre a equipe.
+- Dificuldades de aprendizado das tecnologias necessarias para o desenvolvimento do produto.
+- Pouco tempo dedicado ao desenvolvimento e documentação do projeto.
 
 ## Estratégias de Teste
 
@@ -227,8 +227,8 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 
 ### Teste de Usabilidade - Sistema - Todas as histórias - Manual
 
-    Será usado um google Forms e o APK da versão mais recente do app.
-    Com o APK gerado, iremos pedir para pessoas aleatórias usarem o app por um tempo de 5 a 8 minutos e em seguida responderem um questionário.
+Será usado um google Forms e o APK da versão mais recente do app.
+Com o APK gerado, iremos pedir para pessoas aleatórias usarem o app por um tempo de 5 a 8 minutos e em seguida responderem um questionário.
 
 ## Critérios de Replanejamento
 
