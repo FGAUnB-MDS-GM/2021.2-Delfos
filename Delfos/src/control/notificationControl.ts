@@ -95,3 +95,9 @@ export async function notificationWeekly(
   });
   return id;
 }
+
+//Lista todos os expo Notifications criado
+export async function getAllExpoNotifications(){
+  const response = await Notifications.getAllScheduledNotificationsAsync();
+  return response
+}

@@ -29,7 +29,7 @@ export async function createGroup(groupName: string) {
 
   const newGroup: GroupProps =
   {
-    id: groups.length.toString(),
+    id: (groups.length * Math.random() + Math.random()).toString(),
     groupName: groupName,
     enable: true,
   }
