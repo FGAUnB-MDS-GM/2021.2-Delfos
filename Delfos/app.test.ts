@@ -126,14 +126,4 @@ it('Check if ToDo is deleted', async () => {
 
 
 
-/** 
-it('checks if Group is created', async () => {
-  await createGroup("Grupo1");
-  const grupo = await loadGroups()
-
-  expect(grupo[0].groupName).toBe("Grupo1");
-})
-*/
-
-
 
