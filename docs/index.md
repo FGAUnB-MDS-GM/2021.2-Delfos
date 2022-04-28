@@ -4,7 +4,6 @@
 
 ## Autores
 
-### - João Ricardo Firmino de Almeida
 ### - Nicolas Roberto de Queiroz
 ### - Rafael Xavier Canabrava
 ### - Renann de Oliveira Gomes
