@@ -234,6 +234,10 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 Será usado um google Forms e o APK da versão mais recente do app.
 Com o APK gerado, iremos pedir para pessoas aleatórias usarem o app por um tempo de 5 a 8 minutos e em seguida responderem um questionário.
 
+[Link do Formulário](https://forms.gle/UccowGmi5UCiJgHo8)
+
+[Link dos Resultados do Formulário](https://docs.google.com/spreadsheets/d/11Hp2kT0v-QFafs4yvewOwrlXlsWGp5Z3HE4MXqs6kDw/edit?usp=sharing)
+
 ## Critérios de Replanejamento
 
     É recomendado agendar uma ou mais reuniões entre o grupo para resolver e planejar a resolução viável do problema encontrado, e apresenta-la para o professor.
