@@ -22,7 +22,6 @@ Uma plataforma simples e conveniente que vai acabar com a sua desorganização!
  - Fácil e conveniente de usar.
  - Organiza as tarefas, com uma visão clara de seus contextos e grupos.
  - Cria lembretes e notifica o usuário na hora certa.
- - Funcionalidade de Widgets na tela inicial do celular, que te mostram suas tarefas de maneira mais acessivel.
 
 ## Entregas:
  ### Unidade 1 - 03 de Fevereiro de 2022
