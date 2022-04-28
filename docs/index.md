@@ -57,7 +57,6 @@
 
 ## Unidade 5 - 28 de Abril de 2022
 
-- [Documento de Requisitos Atualizado](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade5)
-- [Vídeo de apresentação da entrega](https://youtu.be/NsWH4T-moxU)
+- [Pages da Unidade](https://fgaunb-mds-gm.github.io/2021.2-Delfos/unidade5)
 
 [Voltar ao inicio](#header)

@@ -48,14 +48,18 @@ De maneira intuitiva proporcionar ao cliente uma forma de se organizar e se lemb
 
 ### Requisitos Funcionais
 
-| N°  | Requisitos Funcionais	                                                             | Prioridade |
-|-----|-----------------------------------------------------------------------------------|------------|
-| RF1 | Deverá ser possível cadastrar atividades                                          | Alta       |
-| RF2 | Deverá ser possível deletar atividades                                            | Alta       |
-| RF3 | Deverá ser possível editar atividades                                             | Alta       |
-| RF4 | Deverá ser possível visualizar atividades                                         | Alta       |
-| RF5 | Deverá ser possível buscar atividades                                            | Média      |
-| RF6 | Deverá ser possível agrupar atividades                                            | Média      |
+|  N°  |           Requisitos Funcionais           | Prioridade |
+|:----:|:-----------------------------------------:|:----------:|
+|  RF1 |  Deverá ser possível cadastrar atividades |    Alta    |
+|  RF2 |   Deverá ser possível deletar atividades  |    Alta    |
+|  RF3 |   Deverá ser possível editar atividades   |    Alta    |
+|  RF4 | Deverá ser possível visualizar atividades |    Alta    |
+|  RF5 |   Deverá ser possível buscar atividades   |    Média   |
+|  RF6 |   Deverá ser possível agrupar atividades  |    Média   |
+|  RF7 |   Deverá ser possível cadastrar post-its  |    Média   |
+|  RF8 |    Deverá ser possível deletar post-its   |    Média   |
+|  RF9 |    Deverá ser possível editar post-its    |    Média   |
+| Rf10 |  Deverá ser possível visualizar post-its  |    Média   |
 
 Prioridades:
 - Alta - Funcionalidade básica e essencial para o sistema
@@ -211,7 +215,7 @@ A comunicação do time será efetuada através do Whatsapp, e o gerenciamento d
 - Dificuldades de aprendizado das tecnologias necessarias para o desenvolvimento do produto.
 - Pouco tempo dedicado ao desenvolvimento e documentação do projeto.
 
-## Estratégias de Teste
+# Estratégias de Teste
 
 ### Teste Funcional - Unitário - TODOS FB - Automático
 
@@ -254,13 +258,8 @@ A quarta unidade foi uma unidade mais prática. O grupo aprendeu boas práticas 
 
 ## Unidade 5
 
-Lições aprendidas na unidade 5
+Na quinta unidade nós aprendemos a fazer e a resolver problemas relacionados com testes, sejam testes estes testes funcionais, ou de usabilidade. Aprendemos também como gerar o arquivo apk para finalizar o projeto.
 
-# Referências bibliográficas
-
-## Referência
-
-# [Video de apresentação](https://youtu.be/NsWH4T-moxU "Link do Youtube")
 
 [Voltar ao inicio](#header)
 
